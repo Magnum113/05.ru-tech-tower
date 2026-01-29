@@ -465,12 +465,33 @@ export class GameEngine {
 
   private drawCrescent(x: number, y: number, r: number) {
     this.ctx.save();
-    this.ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-    this.ctx.lineWidth = Math.max(1.5, r * 0.28);
-    this.ctx.lineCap = 'round';
+    this.ctx.translate(x, y);
+    this.ctx.rotate(Math.PI / 2);
+
+    const outerR = r;
+    const innerR = r * 0.72;
+    const offset = r * 0.35;
+
+    this.ctx.fillStyle = 'rgba(255,255,255,0.9)';
     this.ctx.beginPath();
-    this.ctx.arc(x, y, r, -0.3, Math.PI + 0.3);
-    this.ctx.stroke();
+    this.ctx.arc(0, 0, outerR, -1.15, 1.15);
+    this.ctx.arc(offset, 0, innerR, 1.15, -1.15, true);
+    this.ctx.closePath();
+    this.ctx.fill();
+
+    // Feathered tips: fade out to create tapering ends
+    const grad = this.ctx.createRadialGradient(0, 0, innerR * 0.6, 0, 0, outerR * 1.05);
+    grad.addColorStop(0, 'rgba(255,255,255,0)');
+    grad.addColorStop(0.7, 'rgba(255,255,255,0.15)');
+    grad.addColorStop(1, 'rgba(255,255,255,0.0)');
+    this.ctx.globalCompositeOperation = 'destination-out';
+    this.ctx.fillStyle = grad;
+    this.ctx.beginPath();
+    this.ctx.arc(0, -outerR * 0.92, outerR * 0.7, 0, Math.PI * 2);
+    this.ctx.arc(0, outerR * 0.92, outerR * 0.7, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    this.ctx.globalCompositeOperation = 'source-over';
     this.ctx.restore();
   }
 
