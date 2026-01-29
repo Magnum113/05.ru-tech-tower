@@ -469,7 +469,7 @@ export class GameEngine {
     this.ctx.rotate(Math.PI / 2);
 
     const outerR = r;
-    const innerR = r * 0.72;
+    const innerR = r * 0.6;
     const offset = r * 0.35;
 
     this.ctx.fillStyle = 'rgba(255,255,255,0.9)';
