@@ -7,6 +7,7 @@ const STORAGE_KEY = '05ru_tech_tower_best';
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(GameState.START);
+  const [leaderboardReturnState, setLeaderboardReturnState] = useState<GameState>(GameState.START);
   const [score, setScore] = useState<GameScore>({
     current: 0,
     best: parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10),
@@ -51,6 +52,15 @@ export default function App() {
     setGameState(GameState.PROMO_PAUSE);
   }, []);
 
+  const openLeaderboard = useCallback(() => {
+    setLeaderboardReturnState(gameState);
+    setGameState(GameState.LEADERBOARD);
+  }, [gameState]);
+
+  const closeLeaderboard = useCallback(() => {
+    setGameState(leaderboardReturnState);
+  }, [leaderboardReturnState]);
+
   const startGame = () => {
     setGameState(GameState.PLAYING);
     canvasRef.current?.startGame();
@@ -68,7 +78,7 @@ export default function App() {
 
   return (
     <div 
-      className="relative w-full h-screen overflow-hidden bg-[#0a0e29] select-none"
+      className="relative w-full h-screen overflow-hidden bg-[#15252B] select-none"
       onPointerDown={handleScreenTap}
     >
       <GameCanvas 
@@ -83,6 +93,8 @@ export default function App() {
         onStart={startGame}
         onResume={resumeGame}
         onRestart={restartGame}
+        onOpenLeaderboard={openLeaderboard}
+        onCloseLeaderboard={closeLeaderboard}
       />
       
       {/* Decorative scanline overlay */}

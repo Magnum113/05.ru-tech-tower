@@ -1,9 +1,9 @@
 export const COLORS = {
-  backgroundTop: '#0F172A', // Darker night blue
-  backgroundBottom: '#3B0764', // Deep purple
-  primaryRed: '#E30613', // 05.ru Brand Red
-  primaryRedLight: '#ff4d58',
-  primaryRedDark: '#a3000b',
+  backgroundTop: '#15252B', // Brand dark
+  backgroundBottom: '#0F1B20', // Deeper shade for gradient
+  primaryRed: '#FF2C00', // Brand bright
+  primaryRedLight: '#FF6A4D',
+  primaryRedDark: '#C81F00',
   text: '#ffffff',
   accentGold: '#FFD700',
   success: '#4ADE80',
@@ -38,3 +38,16 @@ export const getEmojiForLevel = (level: number): string => {
   if (level >= 6) return '🎧'; // Headphones
   return '📱'; // Phone
 };
+
+export const LEADERBOARD_ENTRIES = [
+  { name: 'StackMaster', score: 1284 },
+  { name: 'LunaShift', score: 1140 },
+  { name: 'TechNomad', score: 985 },
+  { name: 'RedFox', score: 840 },
+  { name: 'NightPixel', score: 765 },
+  { name: 'Skyline', score: 702 },
+  { name: 'ByteStorm', score: 641 },
+  { name: 'Maverick', score: 590 },
+  { name: 'NovaWave', score: 532 },
+  { name: 'IronStack', score: 480 },
+];

@@ -3,6 +3,7 @@ export enum GameState {
   PLAYING = 'PLAYING',
   GAME_OVER = 'GAME_OVER',
   PROMO_PAUSE = 'PROMO_PAUSE',
+  LEADERBOARD = 'LEADERBOARD',
 }
 
 export interface GameScore {
