@@ -19,6 +19,7 @@ interface UIOverlayProps {
 const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResume, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, nickname, promoReward }) => {
   const [copied, setCopied] = React.useState(false);
   const nextReward = PROMO_REWARDS.find(reward => reward.score > score.current) ?? null;
+  const remainingToReward = nextReward ? Math.max(0, nextReward.score - score.current) : 0;
   const activePromoCode = promoReward?.code ?? PROMO_REWARDS[PROMO_REWARDS.length - 1]?.code;
 
   const copyCode = () => {
@@ -97,7 +98,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
                   className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2 text-white/80"
                 >
                   <span className="text-xs uppercase tracking-widest text-white/50">{reward.score} очков</span>
-                  <span className="font-semibold text-white">{reward.discount} ₽ — код {reward.code}</span>
+                  <span className="font-semibold text-white">Скидка {reward.discount} ₽</span>
                 </div>
               ))}
             </div>
@@ -345,7 +346,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
 
           {upcoming.length > 0 && (
             <div className="mb-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-white/70">
-              Следующая цель: {upcoming[0].score} очков — {upcoming[0].discount} ₽ ({upcoming[0].code})
+              Следующая цель: {upcoming[0].score} очков — скидка {upcoming[0].discount} ₽
             </div>
           )}
 
@@ -365,11 +366,11 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
     return (
       <>
         {renderHUD()}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,520px)]">
-          <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/70 backdrop-blur">
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,520px)]">
+          <div className="rounded-full border border-white/10 bg-black/35 px-4 py-2 text-center text-xs text-white/80 backdrop-blur">
             {nextReward ? (
               <>
-                Следующая награда: <span className="text-white font-semibold">{nextReward.score} очков</span> — {nextReward.discount} ₽ ({nextReward.code})
+                До промокода: <span className="text-white font-semibold">{remainingToReward} этажей</span> — скидка {nextReward.discount} ₽
               </>
             ) : (
               <>

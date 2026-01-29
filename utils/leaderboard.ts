@@ -32,11 +32,17 @@ export const fetchLeaderboard = async (): Promise<LeaderboardEntry[]> => {
     .order('created_at', { ascending: true })
     .limit(10);
 
-  if (error || !data) return [];
+  if (error || !data) {
+    console.error('Supabase leaderboard fetch failed', error);
+    return [];
+  }
   return data as LeaderboardEntry[];
 };
 
 export const submitScore = async (nickname: string, score: number) => {
   if (!supabase || score <= 0) return;
-  await supabase.from('leaderboard_entries').insert({ nickname, score });
+  const { error } = await supabase.from('leaderboard_entries').insert({ nickname, score });
+  if (error) {
+    console.error('Supabase leaderboard insert failed', error);
+  }
 };
