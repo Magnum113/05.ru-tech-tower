@@ -18,6 +18,7 @@ interface UIOverlayProps {
 
 const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResume, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, nickname, promoReward }) => {
   const [copied, setCopied] = React.useState(false);
+  const [onboardingStep, setOnboardingStep] = React.useState(1);
   const nextReward = PROMO_REWARDS.find(reward => reward.score > score.current) ?? null;
   const remainingToReward = nextReward ? Math.max(0, nextReward.score - score.current) : 0;
   const activePromoCode = promoReward?.code ?? PROMO_REWARDS[PROMO_REWARDS.length - 1]?.code;
@@ -28,6 +29,12 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  React.useEffect(() => {
+    if (gameState !== GameState.START) {
+      setOnboardingStep(1);
+    }
+  }, [gameState]);
 
   // HUD (Always visible during play)
   const renderHUD = () => (
@@ -45,30 +52,64 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
 
   // 1. ONBOARDING & NARRATIVE
   if (gameState === GameState.START) {
+    if (onboardingStep === 1) {
+      return (
+        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md p-6 animate-in fade-in duration-500">
+          <div className="w-full max-w-md bg-[#15252B] border border-blue-500/20 rounded-2xl shadow-2xl p-6 relative overflow-hidden text-center">
+            
+            {/* Header */}
+            <div className="mb-6 relative">
+              <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full"></div>
+              <h1 className="relative text-3xl font-black text-white italic tracking-tighter uppercase transform -skew-x-3">
+                Высокие Технологии
+                <span className="block text-[#FF2C00] text-4xl mt-1">05.RU</span>
+              </h1>
+            </div>
+
+            {/* The Story */}
+            <div className="mb-8 space-y-3 text-gray-300 text-sm leading-relaxed">
+              <p>
+                🌙 <span className="text-yellow-400 font-bold">В Рамадан</span> мы хотим доставить радость в каждый дом!
+              </p>
+              <p>
+                Твоя задача — построить самую высокую башню из подарков и техники. Чем выше башня — тем больше людей получат свои заказы к празднику.
+              </p>
+              <p>
+                Каждый набранный балл мы переводим в рубли и отправляем на благотворительность в конце Рамадана.
+              </p>
+            </div>
+            
+            {/* CTA Button */}
+            <button 
+              onClick={() => setOnboardingStep(2)}
+              className="w-full group relative px-6 py-4 bg-[#FF2C00] text-white font-bold text-lg rounded-xl shadow-[0_4px_20px_rgba(255,44,0,0.4)] hover:bg-[#ff3b12] hover:scale-[1.02] transition-all duration-200 active:scale-95"
+            >
+              <span className="flex items-center justify-center gap-2">
+                <Play size={20} fill="currentColor" />
+                Начать стройку
+              </span>
+              <div className="absolute inset-0 rounded-xl border border-white/10"></div>
+            </button>
+
+            <button
+              onClick={onOpenLeaderboard}
+              className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+            >
+              <Crown size={18} />
+              Таблица лидеров
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md p-6 animate-in fade-in duration-500">
         <div className="w-full max-w-md bg-[#15252B] border border-blue-500/20 rounded-2xl shadow-2xl p-6 relative overflow-hidden text-center">
           
-          {/* Header */}
-          <div className="mb-6 relative">
-             <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full"></div>
-             <h1 className="relative text-3xl font-black text-white italic tracking-tighter uppercase transform -skew-x-3">
-               Высокие Технологии
-               <span className="block text-[#FF2C00] text-4xl mt-1">05.RU</span>
-             </h1>
-          </div>
-
-          {/* The Story */}
-          <div className="mb-6 space-y-3 text-gray-300 text-sm leading-relaxed">
-            <p>
-              🌙 <span className="text-yellow-400 font-bold">В Рамадан</span> мы хотим доставить радость в каждый дом!
-            </p>
-            <p>
-              Твоя задача — построить самую высокую башню из подарков и техники. Чем выше башня — тем больше людей получат свои заказы к празднику.
-            </p>
-            <p>
-              Каждый набранный балл мы переводим в рубли и отправляем на благотворительность в конце Рамадана.
-            </p>
+          <div className="mb-4 text-center">
+            <p className="text-[10px] uppercase tracking-widest text-white/50">Шаг 2 из 2</p>
+            <h2 className="text-2xl font-black text-white mt-2">Правила и награды</h2>
           </div>
 
           {/* Instructions */}
@@ -102,7 +143,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
                 </div>
               ))}
             </div>
-            <p className="mt-3 text-xs text-white/50">Достигни уровня — получи промокод сразу.</p>
+          <p className="mt-3 text-xs text-white/50">Достигни уровня — получи промокод сразу.</p>
           </div>
           
           {/* CTA Button */}
@@ -112,17 +153,16 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
           >
             <span className="flex items-center justify-center gap-2">
               <Play size={20} fill="currentColor" />
-              Начать стройку
+              Начать игру
             </span>
             <div className="absolute inset-0 rounded-xl border border-white/10"></div>
           </button>
 
           <button
-            onClick={onOpenLeaderboard}
-            className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+            onClick={() => setOnboardingStep(1)}
+            className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 hover:bg-white/10 transition-colors"
           >
-            <Crown size={18} />
-            Таблица лидеров
+            Назад
           </button>
         </div>
       </div>
