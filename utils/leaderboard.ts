@@ -41,8 +41,32 @@ export const fetchLeaderboard = async (): Promise<LeaderboardEntry[]> => {
 
 export const submitScore = async (nickname: string, score: number) => {
   if (!supabase || score <= 0) return;
-  const { error } = await supabase.from('leaderboard_entries').insert({ nickname, score });
-  if (error) {
-    console.error('Supabase leaderboard insert failed', error);
+  const { data, error: fetchError } = await supabase
+    .from('leaderboard_entries')
+    .select('score')
+    .eq('nickname', nickname)
+    .maybeSingle();
+
+  if (fetchError) {
+    console.error('Supabase leaderboard fetch failed', fetchError);
+    return;
+  }
+
+  if (!data) {
+    const { error: insertError } = await supabase.from('leaderboard_entries').insert({ nickname, score });
+    if (insertError) {
+      console.error('Supabase leaderboard insert failed', insertError);
+    }
+    return;
+  }
+
+  if (score > data.score) {
+    const { error: updateError } = await supabase
+      .from('leaderboard_entries')
+      .update({ score })
+      .eq('nickname', nickname);
+    if (updateError) {
+      console.error('Supabase leaderboard update failed', updateError);
+    }
   }
 };

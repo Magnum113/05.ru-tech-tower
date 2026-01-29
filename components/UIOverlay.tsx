@@ -21,6 +21,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
   const remainingToReward = nextReward ? Math.max(0, nextReward.score - score.current) : 0;
   const earnedReward = [...PROMO_REWARDS].reverse().find(reward => reward.score <= score.current) ?? null;
   const activePromoCode = earnedReward?.code ?? null;
+  const rewardProgress = nextReward ? Math.min(1, score.current / nextReward.score) : 1;
 
   const copyCode = () => {
     if (!activePromoCode) return;
@@ -374,18 +375,29 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
     return (
       <>
         {renderHUD()}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,520px)]">
-          <div className="rounded-full border border-white/10 bg-black/35 px-4 py-2 text-center text-xs text-white/80 backdrop-blur">
-            {nextReward ? (
-              <>
-                До промокода: <span className="text-white font-semibold">{remainingToReward} этажей</span> — скидка {nextReward.discount} ₽
-              </>
-            ) : (
-              <>
-                Все награды получены. Продолжай строить башню!
-              </>
-            )}
-          </div>
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,560px)]">
+          {nextReward ? (
+            <div className="rounded-2xl border border-white/10 bg-gradient-to-r from-black/45 via-black/35 to-black/45 px-4 py-3 text-white/90 backdrop-blur shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+              <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-white/60">
+                <span>До награды</span>
+                <span>{remainingToReward} этажей</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-sm">
+                <span className="font-semibold text-white">Скидка {nextReward.discount} ₽</span>
+                <span className="text-white/70">{score.current}/{nextReward.score}</span>
+              </div>
+              <div className="mt-3 h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-[#FF2C00] via-[#ff6a4d] to-[#FF2C00] shadow-[0_0_12px_rgba(255,44,0,0.6)]"
+                  style={{ width: `${Math.round(rewardProgress * 100)}%` }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-full border border-white/10 bg-black/35 px-4 py-2 text-center text-xs text-white/80 backdrop-blur">
+              Все награды получены. Продолжай строить башню!
+            </div>
+          )}
         </div>
       </>
     );

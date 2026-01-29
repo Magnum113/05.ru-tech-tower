@@ -35,6 +35,7 @@ export class GameEngine {
   private cameraY: number = 0;
   private state: GameState = GameState.START;
   private perfectStreak: number = 0;
+  private lastPlacement: { x: number; y: number; time: number } | null = null;
   
   private onScoreUpdate: (score: number) => void;
   private onGameOver: (score: number) => void;
@@ -195,6 +196,12 @@ export class GameEngine {
       width: newWidth,
     });
 
+    this.lastPlacement = {
+      x: newX + newWidth / 2,
+      y: current.y + GAME_CONFIG.blockHeight / 2,
+      time: Date.now(),
+    };
+
     this.score++;
     this.onScoreUpdate(this.score);
 
@@ -323,6 +330,25 @@ export class GameEngine {
       this.drawBlock(this.currentBlock);
     }
 
+    // Placement ring animation
+    if (this.lastPlacement) {
+      const elapsed = Date.now() - this.lastPlacement.time;
+      const t = Math.min(1, elapsed / 300);
+      if (t >= 1) {
+        this.lastPlacement = null;
+      } else {
+        const radius = 10 + t * 26;
+        this.ctx.save();
+        this.ctx.globalAlpha = 1 - t;
+        this.ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.arc(this.lastPlacement.x, this.lastPlacement.y, radius, 0, Math.PI * 2);
+        this.ctx.stroke();
+        this.ctx.restore();
+      }
+    }
+
     // Floating Texts (Rendered in world space or screen space? Better screen space usually, but here they are attached to blocks)
     // Actually let's render them in world space so they move with camera
     this.floatingTexts.forEach(ft => {
@@ -357,8 +383,13 @@ export class GameEngine {
     const depth = 12; // Deeper 3D effect
     
     // Main Face
+    this.ctx.save();
+    this.ctx.shadowColor = 'rgba(0,0,0,0.25)';
+    this.ctx.shadowBlur = 12;
+    this.ctx.shadowOffsetY = 4;
     this.ctx.fillStyle = color;
     this.ctx.fillRect(x, y, w, h);
+    this.ctx.restore();
     
     // Top Face (Light)
       this.ctx.fillStyle = COLORS.boxLight;
