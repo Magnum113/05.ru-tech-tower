@@ -1,13 +1,19 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import GameCanvas, { GameCanvasHandle } from './components/GameCanvas';
 import UIOverlay from './components/UIOverlay';
-import { GameState, GameScore } from './types';
+import { GameState, GameScore, LeaderboardEntry } from './types';
+import { LEADERBOARD_FALLBACK } from './constants';
+import { fetchLeaderboard, getOrCreateNickname, submitScore } from './utils/leaderboard';
 
 const STORAGE_KEY = '05ru_tech_tower_best';
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(GameState.START);
   const [leaderboardReturnState, setLeaderboardReturnState] = useState<GameState>(GameState.START);
+  const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>(
+    LEADERBOARD_FALLBACK.map(entry => ({ nickname: entry.name, score: entry.score }))
+  );
+  const nicknameRef = useRef<string>(getOrCreateNickname());
   const [score, setScore] = useState<GameScore>({
     current: 0,
     best: parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10),
@@ -46,6 +52,7 @@ export default function App() {
       localStorage.setItem(STORAGE_KEY, newBest.toString());
       return { current: finalScore, best: newBest };
     });
+    submitScore(nicknameRef.current, finalScore);
   }, []);
 
   const handlePromoTrigger = useCallback(() => {
@@ -55,6 +62,9 @@ export default function App() {
   const openLeaderboard = useCallback(() => {
     setLeaderboardReturnState(gameState);
     setGameState(GameState.LEADERBOARD);
+    fetchLeaderboard().then(data => {
+      if (data && data.length > 0) setLeaderboardEntries(data);
+    });
   }, [gameState]);
 
   const closeLeaderboard = useCallback(() => {
@@ -95,6 +105,8 @@ export default function App() {
         onRestart={restartGame}
         onOpenLeaderboard={openLeaderboard}
         onCloseLeaderboard={closeLeaderboard}
+        leaderboardEntries={leaderboardEntries}
+        nickname={nicknameRef.current}
       />
       
       {/* Decorative scanline overlay */}

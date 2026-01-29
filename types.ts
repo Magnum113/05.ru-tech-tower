@@ -19,3 +19,10 @@ export interface FloatingText {
   opacity: number;
   life: number;
 }
+
+export interface LeaderboardEntry {
+  id?: string;
+  nickname: string;
+  score: number;
+  created_at?: string;
+}

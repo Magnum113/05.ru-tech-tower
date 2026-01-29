@@ -18,7 +18,6 @@ export const GAME_CONFIG = {
   perfectTolerance: 3, // Tightened tolerance
   promoLevel: 25, // Updated goal
   promoCode: 'TOWER05',
-  bonusMax: 1000,
   comboThreshold: 3, // Consecutive perfects for bonus
   widthBonus: 20, // Pixel growth on combo
 };
@@ -39,7 +38,7 @@ export const getEmojiForLevel = (level: number): string => {
   return '📱'; // Phone
 };
 
-export const LEADERBOARD_ENTRIES = [
+export const LEADERBOARD_FALLBACK = [
   { name: 'StackMaster', score: 1284 },
   { name: 'LunaShift', score: 1140 },
   { name: 'TechNomad', score: 985 },
@@ -51,3 +50,8 @@ export const LEADERBOARD_ENTRIES = [
   { name: 'NovaWave', score: 532 },
   { name: 'IronStack', score: 480 },
 ];
+
+export const DONATION_PROGRESS = {
+  total: 284_500,
+  goal: 1_000_000,
+};
