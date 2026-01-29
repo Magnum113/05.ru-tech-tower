@@ -75,8 +75,8 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
   if (gameState === GameState.START) {
     if (onboardingStep === 1) {
       return (
-        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md p-6 animate-in fade-in duration-500">
-          <div className="w-full max-w-md bg-[#15252B] border border-blue-500/20 rounded-2xl shadow-2xl p-6 relative overflow-hidden text-center sm:mt-0">
+        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md p-4 sm:p-6 animate-in fade-in duration-500">
+          <div className="w-full max-w-md bg-[#15252B] border border-blue-500/20 rounded-2xl shadow-2xl p-6 relative overflow-hidden text-center -translate-y-5 sm:translate-y-0">
             
             {/* Header */}
             <div className="mb-6 relative">
