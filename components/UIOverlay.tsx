@@ -306,7 +306,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                     <Crown size={18} className="text-yellow-300 mt-0.5" />
                     <div>
                       <p className="font-semibold text-white">Награда за {earnedReward.score} очков</p>
-                      <p className="text-white/60">Скидка {earnedReward.discount} ₽ — промокод доступен ниже.</p>
+                      <p className="text-white/60">Ваша скидка на {earnedReward.discount} ₽.</p>
                     </div>
                   </div>
                   <div className="mt-3 bg-black/40 rounded-xl p-3 border border-dashed border-white/20 relative group cursor-pointer transition-colors hover:bg-black/60" onClick={copyCode}>
