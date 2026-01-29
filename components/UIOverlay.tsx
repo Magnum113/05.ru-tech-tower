@@ -164,7 +164,6 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                 </div>
               ))}
             </div>
-          <p className="mt-3 text-xs text-white/50">Достигни уровня — получи промокод сразу.</p>
           </div>
           
           {/* CTA Button */}
