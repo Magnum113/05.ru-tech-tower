@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import GameCanvas, { GameCanvasHandle } from './components/GameCanvas';
 import UIOverlay from './components/UIOverlay';
-import { GameState, GameScore, LeaderboardEntry } from './types';
-import { LEADERBOARD_FALLBACK } from './constants';
+import { GameState, GameScore, LeaderboardEntry, PromoReward } from './types';
 import { fetchLeaderboard, getOrCreateNickname, submitScore } from './utils/leaderboard';
 
 const STORAGE_KEY = '05ru_tech_tower_best';
@@ -10,10 +9,9 @@ const STORAGE_KEY = '05ru_tech_tower_best';
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(GameState.START);
   const [leaderboardReturnState, setLeaderboardReturnState] = useState<GameState>(GameState.START);
-  const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>(
-    LEADERBOARD_FALLBACK.map(entry => ({ nickname: entry.name, score: entry.score }))
-  );
+  const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
   const nicknameRef = useRef<string>(getOrCreateNickname());
+  const [promoReward, setPromoReward] = useState<PromoReward | null>(null);
   const [score, setScore] = useState<GameScore>({
     current: 0,
     best: parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10),
@@ -55,16 +53,15 @@ export default function App() {
     submitScore(nicknameRef.current, finalScore);
   }, []);
 
-  const handlePromoTrigger = useCallback(() => {
+  const handlePromoTrigger = useCallback((reward: PromoReward) => {
+    setPromoReward(reward);
     setGameState(GameState.PROMO_PAUSE);
   }, []);
 
   const openLeaderboard = useCallback(() => {
     setLeaderboardReturnState(gameState);
     setGameState(GameState.LEADERBOARD);
-    fetchLeaderboard().then(data => {
-      if (data && data.length > 0) setLeaderboardEntries(data);
-    });
+    fetchLeaderboard().then(setLeaderboardEntries);
   }, [gameState]);
 
   const closeLeaderboard = useCallback(() => {
@@ -107,6 +104,7 @@ export default function App() {
         onCloseLeaderboard={closeLeaderboard}
         leaderboardEntries={leaderboardEntries}
         nickname={nicknameRef.current}
+        promoReward={promoReward}
       />
       
       {/* Decorative scanline overlay */}

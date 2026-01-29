@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import { GameEngine } from '../utils/gameEngine';
+import { PromoReward } from '../types';
 
 interface GameCanvasProps {
   onScoreUpdate: (score: number) => void;
   onGameOver: (score: number) => void;
-  onPromoTrigger: () => void;
+  onPromoTrigger: (reward: PromoReward) => void;
 }
 
 export interface GameCanvasHandle {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { GameState, GameScore, LeaderboardEntry } from '../types';
-import { GAME_CONFIG, DONATION_PROGRESS } from '../constants';
+import { GameState, GameScore, LeaderboardEntry, PromoReward } from '../types';
+import { PROMO_REWARDS } from '../constants';
 import { Play, RotateCw, Trophy, Copy, Heart, Sparkles, Crown, ArrowLeft } from 'lucide-react';
 
 interface UIOverlayProps {
@@ -13,18 +13,17 @@ interface UIOverlayProps {
   onCloseLeaderboard: () => void;
   leaderboardEntries: LeaderboardEntry[];
   nickname: string;
+  promoReward: PromoReward | null;
 }
 
-const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResume, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, nickname }) => {
+const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResume, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, nickname, promoReward }) => {
   const [copied, setCopied] = React.useState(false);
-  const formatAmount = (value: number) => new Intl.NumberFormat('ru-RU').format(value);
-  const donationProgress = Math.min(
-    100,
-    Math.round((DONATION_PROGRESS.total / Math.max(1, DONATION_PROGRESS.goal)) * 100)
-  );
+  const nextReward = PROMO_REWARDS.find(reward => reward.score > score.current) ?? null;
+  const activePromoCode = promoReward?.code ?? PROMO_REWARDS[PROMO_REWARDS.length - 1]?.code;
 
   const copyCode = () => {
-    navigator.clipboard.writeText(GAME_CONFIG.promoCode);
+    if (!activePromoCode) return;
+    navigator.clipboard.writeText(activePromoCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -72,7 +71,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
           </div>
 
           {/* Instructions */}
-          <div className="bg-[#1a2f36] rounded-xl p-4 mb-8 text-left space-y-3 border border-white/5">
+          <div className="bg-[#1a2f36] rounded-xl p-4 mb-6 text-left space-y-3 border border-white/5">
             <h3 className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2">Как играть:</h3>
             <div className="flex items-start gap-3">
               <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FF2C00] text-white flex items-center justify-center text-xs font-bold">1</span>
@@ -87,6 +86,23 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
               <p className="text-xs text-gray-400">Делай идеальные укладки подряд для бонусов.</p>
             </div>
           </div>
+
+          {/* Rewards Ladder */}
+          <div className="bg-[#101e23] rounded-xl p-4 mb-6 text-left border border-white/5">
+            <h3 className="text-white/80 text-xs font-bold uppercase tracking-widest mb-3">Награды за уровни</h3>
+            <div className="space-y-2 text-sm">
+              {PROMO_REWARDS.map((reward) => (
+                <div
+                  key={reward.score}
+                  className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2 text-white/80"
+                >
+                  <span className="text-xs uppercase tracking-widest text-white/50">{reward.score} очков</span>
+                  <span className="font-semibold text-white">{reward.discount} ₽ — код {reward.code}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-xs text-white/50">Достигни уровня — получи промокод сразу.</p>
+          </div>
           
           {/* CTA Button */}
           <button 
@@ -99,23 +115,6 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
             </span>
             <div className="absolute inset-0 rounded-xl border border-white/10"></div>
           </button>
-
-          <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4 text-left">
-            <div className="flex items-center justify-between text-xs uppercase tracking-widest text-white/50">
-              <span>Собрано на благотворительность</span>
-              <span>{formatAmount(DONATION_PROGRESS.total)} ₽</span>
-            </div>
-            <div className="mt-3 h-2 w-full rounded-full bg-white/10 overflow-hidden">
-              <div
-                className="h-full rounded-full bg-[#FF2C00]"
-                style={{ width: `${donationProgress}%` }}
-              />
-            </div>
-            <div className="mt-2 flex items-center justify-between text-xs text-white/50">
-              <span>{donationProgress}%</span>
-              <span>Цель: {formatAmount(DONATION_PROGRESS.goal)} ₽</span>
-            </div>
-          </div>
 
           <button
             onClick={onOpenLeaderboard}
@@ -159,26 +158,32 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
             </div>
 
             <div className="space-y-2">
-              {entries.map((entry, index) => (
-                <div
-                  key={`${entry.nickname}-${entry.score}-${entry.id ?? index}`}
-                  className={`flex items-center justify-between rounded-2xl border px-4 py-3 ${
-                    index === 0
-                      ? 'border-yellow-400/30 bg-yellow-400/10 text-yellow-200'
-                      : 'border-white/10 bg-white/5 text-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-black ${
-                      index === 0 ? 'bg-yellow-400/20 text-yellow-200' : 'bg-white/10 text-white/70'
-                    }`}>
-                      {index + 1}
-                    </div>
-                    <span className="font-semibold">{entry.nickname}</span>
-                  </div>
-                  <div className="text-sm font-bold text-white/80">{entry.score}</div>
+              {entries.length === 0 ? (
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
+                  Лидеров пока нет. Сыграй первым и зафиксируй результат.
                 </div>
-              ))}
+              ) : (
+                entries.map((entry, index) => (
+                  <div
+                    key={`${entry.nickname}-${entry.score}-${entry.id ?? index}`}
+                    className={`flex items-center justify-between rounded-2xl border px-4 py-3 ${
+                      index === 0
+                        ? 'border-yellow-400/30 bg-yellow-400/10 text-yellow-200'
+                        : 'border-white/10 bg-white/5 text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-black ${
+                        index === 0 ? 'bg-yellow-400/20 text-yellow-200' : 'bg-white/10 text-white/70'
+                      }`}>
+                        {index + 1}
+                      </div>
+                      <span className="font-semibold">{entry.nickname}</span>
+                    </div>
+                    <div className="text-sm font-bold text-white/80">{entry.score}</div>
+                  </div>
+                ))
+              )}
             </div>
 
             <div className="mt-5 rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 px-4 py-3 text-sm text-white/80 flex items-center justify-between">
@@ -302,6 +307,8 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
 
   // PROMO REWARD SCREEN
   if (gameState === GameState.PROMO_PAUSE) {
+    const reward = promoReward ?? PROMO_REWARDS[PROMO_REWARDS.length - 1];
+    const upcoming = PROMO_REWARDS.filter(item => item.score > (reward?.score ?? 0));
     return (
       <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#15252B]/95 backdrop-blur-xl p-6 animate-in fade-in duration-500">
         <div className="w-full max-w-sm bg-gradient-to-br from-[#1a2f36] to-[#15252B] border border-[#FF2C00]/30 rounded-2xl p-6 text-center shadow-2xl relative overflow-hidden">
@@ -315,15 +322,18 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
             </div>
           </div>
 
-          <h3 className="text-2xl font-bold text-white mb-2">Невероятная высота!</h3>
-          <p className="text-blue-200 text-sm mb-6">
-            Ты построил отличную башню. Забирай заслуженный подарок к празднику!
+          <h3 className="text-2xl font-bold text-white mb-2">Награда открыта!</h3>
+          <p className="text-blue-200 text-sm mb-4">
+            Ты достиг уровня <span className="font-semibold text-white">{reward.score} очков</span>.
           </p>
+          <div className="mb-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">
+            Промокод на скидку <span className="font-bold text-white">{reward.discount} ₽</span>
+          </div>
           
           <div className="bg-black/40 rounded-xl p-4 border border-dashed border-white/20 mb-6 relative group cursor-pointer transition-colors hover:bg-black/60" onClick={copyCode}>
             <p className="text-[10px] text-white/40 uppercase mb-1 tracking-widest">Промокод</p>
             <div className="flex items-center justify-center gap-3">
-              <span className="text-[#FF2C00] font-mono text-2xl font-black tracking-widest">{GAME_CONFIG.promoCode}</span>
+              <span className="text-[#FF2C00] font-mono text-2xl font-black tracking-widest">{reward.code}</span>
               <Copy size={18} className="text-white/40 group-hover:text-white transition-colors" />
             </div>
             {copied && (
@@ -332,6 +342,12 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
               </div>
             )}
           </div>
+
+          {upcoming.length > 0 && (
+            <div className="mb-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-white/70">
+              Следующая цель: {upcoming[0].score} очков — {upcoming[0].discount} ₽ ({upcoming[0].code})
+            </div>
+          )}
 
           <button 
             onClick={onResume}
@@ -345,6 +361,27 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
   }
 
   // Playing State
+  if (gameState === GameState.PLAYING) {
+    return (
+      <>
+        {renderHUD()}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,520px)]">
+          <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/70 backdrop-blur">
+            {nextReward ? (
+              <>
+                Следующая награда: <span className="text-white font-semibold">{nextReward.score} очков</span> — {nextReward.discount} ₽ ({nextReward.code})
+              </>
+            ) : (
+              <>
+                Все награды получены. Продолжай строить башню!
+              </>
+            )}
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return renderHUD();
 };
 

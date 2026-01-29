@@ -4,6 +4,10 @@ export const COLORS = {
   primaryRed: '#FF2C00', // Brand bright
   primaryRedLight: '#FF6A4D',
   primaryRedDark: '#C81F00',
+  boxMain: '#CB9F7F',
+  boxLight: '#DCC0A6',
+  boxDark: '#B08363',
+  boxTape: '#E9D4BD',
   text: '#ffffff',
   accentGold: '#FFD700',
   success: '#4ADE80',
@@ -16,8 +20,6 @@ export const GAME_CONFIG = {
   speedIncrement: 0.25,
   maxSpeed: 18,
   perfectTolerance: 3, // Tightened tolerance
-  promoLevel: 25, // Updated goal
-  promoCode: 'TOWER05',
   comboThreshold: 3, // Consecutive perfects for bonus
   widthBonus: 20, // Pixel growth on combo
 };
@@ -38,20 +40,8 @@ export const getEmojiForLevel = (level: number): string => {
   return '📱'; // Phone
 };
 
-export const LEADERBOARD_FALLBACK = [
-  { name: 'StackMaster', score: 1284 },
-  { name: 'LunaShift', score: 1140 },
-  { name: 'TechNomad', score: 985 },
-  { name: 'RedFox', score: 840 },
-  { name: 'NightPixel', score: 765 },
-  { name: 'Skyline', score: 702 },
-  { name: 'ByteStorm', score: 641 },
-  { name: 'Maverick', score: 590 },
-  { name: 'NovaWave', score: 532 },
-  { name: 'IronStack', score: 480 },
+export const PROMO_REWARDS = [
+  { score: 10, code: 'RMLD', discount: 1000 },
+  { score: 20, code: 'HJKL', discount: 1500 },
+  { score: 30, code: 'KLSD', discount: 2000 },
 ];
-
-export const DONATION_PROGRESS = {
-  total: 284_500,
-  goal: 1_000_000,
-};

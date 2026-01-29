@@ -1,5 +1,5 @@
-import { COLORS, GAME_CONFIG, PERFECT_MESSAGES, getEmojiForLevel } from '../constants';
-import { GameState, FloatingText } from '../types';
+import { COLORS, GAME_CONFIG, PERFECT_MESSAGES, getEmojiForLevel, PROMO_REWARDS } from '../constants';
+import { GameState, FloatingText, PromoReward } from '../types';
 
 interface Block {
   x: number;
@@ -38,15 +38,16 @@ export class GameEngine {
   
   private onScoreUpdate: (score: number) => void;
   private onGameOver: (score: number) => void;
-  private onPromoTrigger: () => void;
+  private onPromoTrigger: (reward: PromoReward) => void;
   private animationId: number = 0;
+  private triggeredRewards = new Set<number>();
 
   constructor(
     canvas: HTMLCanvasElement, 
     callbacks: { 
       onScoreUpdate: (s: number) => void; 
       onGameOver: (s: number) => void;
-      onPromoTrigger: () => void;
+      onPromoTrigger: (reward: PromoReward) => void;
     }
   ) {
     this.canvas = canvas;
@@ -90,6 +91,7 @@ export class GameEngine {
     this.speed = GAME_CONFIG.initialSpeed;
     this.state = GameState.PLAYING;
     this.cameraY = 0;
+    this.triggeredRewards.clear();
     this.onScoreUpdate(0);
 
     // Initial Base Block
@@ -97,8 +99,8 @@ export class GameEngine {
       x: (this.canvas.width - GAME_CONFIG.baseWidth) / 2,
       y: this.canvas.height - 150,
       width: GAME_CONFIG.baseWidth,
-      color: COLORS.primaryRed,
-      emoji: '📦',
+      color: COLORS.boxMain,
+      emoji: '',
     };
     this.blocks.push(baseBlock);
 
@@ -120,7 +122,7 @@ export class GameEngine {
       x: -prevBlock.width,
       y: prevBlock.y - GAME_CONFIG.blockHeight,
       width: prevBlock.width,
-      color: COLORS.primaryRed,
+      color: COLORS.boxMain,
       emoji: nextEmoji,
     };
     
@@ -189,7 +191,7 @@ export class GameEngine {
         x: debrisX,
         y: current.y,
         width: debrisWidth,
-        color: COLORS.primaryRedDark,
+        color: COLORS.boxDark,
         emoji: '', 
         isDebris: true,
         vy: 2,
@@ -210,10 +212,13 @@ export class GameEngine {
     // Increase Speed
     this.speed = Math.min(GAME_CONFIG.maxSpeed, GAME_CONFIG.initialSpeed + (this.score * GAME_CONFIG.speedIncrement));
 
-    // Check Promo
-    if (this.score === GAME_CONFIG.promoLevel) {
+    // Check Promo Rewards
+    const reward = PROMO_REWARDS.find(item => item.score === this.score);
+    if (reward && !this.triggeredRewards.has(reward.score)) {
+      this.triggeredRewards.add(reward.score);
+      this.spawnNextBlock();
       this.state = GameState.PROMO_PAUSE;
-      this.onPromoTrigger();
+      this.onPromoTrigger(reward);
     } else {
       this.spawnNextBlock();
     }
@@ -376,7 +381,7 @@ export class GameEngine {
     this.ctx.fillRect(x, y, w, h);
     
     // Top Face (Light)
-    this.ctx.fillStyle = COLORS.primaryRedLight;
+      this.ctx.fillStyle = COLORS.boxLight;
     this.ctx.beginPath();
     this.ctx.moveTo(x, y);
     this.ctx.lineTo(x + depth, y - depth);
@@ -386,7 +391,7 @@ export class GameEngine {
     this.ctx.fill();
 
     // Side Face (Dark)
-    this.ctx.fillStyle = COLORS.primaryRedDark;
+    this.ctx.fillStyle = COLORS.boxDark;
     this.ctx.beginPath();
     this.ctx.moveTo(x + w, y);
     this.ctx.lineTo(x + w + depth, y - depth);
@@ -395,19 +400,37 @@ export class GameEngine {
     this.ctx.closePath();
     this.ctx.fill();
 
+    // Tape strip (front face)
+    this.ctx.fillStyle = COLORS.boxTape;
+    const tapeW = Math.max(10, Math.min(26, w * 0.18));
+    this.ctx.fillRect(x + w / 2 - tapeW / 2, y, tapeW, h);
+
+    // Tape strip (top face)
+    this.ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + w / 2 - tapeW / 2, y);
+    this.ctx.lineTo(x + w / 2 - tapeW / 2 + depth, y - depth);
+    this.ctx.lineTo(x + w / 2 + tapeW / 2 + depth, y - depth);
+    this.ctx.lineTo(x + w / 2 + tapeW / 2, y);
+    this.ctx.closePath();
+    this.ctx.fill();
+
+    // Subtle corrugation lines
+    this.ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+    this.ctx.lineWidth = 1;
+    const lineCount = Math.max(3, Math.floor(w / 40));
+    for (let i = 1; i <= lineCount; i++) {
+      const lx = x + (w * i) / (lineCount + 1);
+      this.ctx.beginPath();
+      this.ctx.moveTo(lx, y);
+      this.ctx.lineTo(lx, y + h);
+      this.ctx.stroke();
+    }
+
     // Edge Highlighting for polish
-    this.ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    this.ctx.strokeStyle = 'rgba(255,255,255,0.18)';
     this.ctx.lineWidth = 1;
     this.ctx.strokeRect(x, y, w, h);
-
-    // Emoji
-    if (emoji && w > 30) {
-        this.ctx.font = `${Math.min(h, w) * 0.6}px sans-serif`;
-        this.ctx.textAlign = 'center';
-        this.ctx.textBaseline = 'middle';
-        this.ctx.fillStyle = '#FFF'; // Emoji color standard? Canvas renders emojis in color usually
-        this.ctx.fillText(emoji, x + w/2, y + h/2 + 2);
-    }
   }
 
   private loop = () => {

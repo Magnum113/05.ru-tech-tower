@@ -26,3 +26,9 @@ export interface LeaderboardEntry {
   score: number;
   created_at?: string;
 }
+
+export interface PromoReward {
+  score: number;
+  code: string;
+  discount: number;
+}

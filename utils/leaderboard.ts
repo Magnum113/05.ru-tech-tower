@@ -23,8 +23,8 @@ export const getOrCreateNickname = () => {
   return nickname;
 };
 
-export const fetchLeaderboard = async (): Promise<LeaderboardEntry[] | null> => {
-  if (!supabase) return null;
+export const fetchLeaderboard = async (): Promise<LeaderboardEntry[]> => {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('leaderboard_entries')
     .select('id,nickname,score,created_at')
@@ -32,7 +32,7 @@ export const fetchLeaderboard = async (): Promise<LeaderboardEntry[] | null> => 
     .order('created_at', { ascending: true })
     .limit(10);
 
-  if (error || !data) return null;
+  if (error || !data) return [];
   return data as LeaderboardEntry[];
 };
 
