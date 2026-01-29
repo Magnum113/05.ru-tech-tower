@@ -2,7 +2,6 @@ export enum GameState {
   START = 'START',
   PLAYING = 'PLAYING',
   GAME_OVER = 'GAME_OVER',
-  PROMO_PAUSE = 'PROMO_PAUSE',
   LEADERBOARD = 'LEADERBOARD',
 }
 

@@ -1,5 +1,5 @@
-import { COLORS, GAME_CONFIG, PERFECT_MESSAGES, getEmojiForLevel, PROMO_REWARDS } from '../constants';
-import { GameState, FloatingText, PromoReward } from '../types';
+import { COLORS, GAME_CONFIG, PERFECT_MESSAGES, getEmojiForLevel } from '../constants';
+import { GameState, FloatingText } from '../types';
 
 interface Block {
   x: number;
@@ -38,23 +38,19 @@ export class GameEngine {
   
   private onScoreUpdate: (score: number) => void;
   private onGameOver: (score: number) => void;
-  private onPromoTrigger: (reward: PromoReward) => void;
   private animationId: number = 0;
-  private triggeredRewards = new Set<number>();
 
   constructor(
     canvas: HTMLCanvasElement, 
     callbacks: { 
       onScoreUpdate: (s: number) => void; 
       onGameOver: (s: number) => void;
-      onPromoTrigger: (reward: PromoReward) => void;
     }
   ) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
     this.onScoreUpdate = callbacks.onScoreUpdate;
     this.onGameOver = callbacks.onGameOver;
-    this.onPromoTrigger = callbacks.onPromoTrigger;
 
     this.initStars();
     this.resize();
@@ -91,7 +87,6 @@ export class GameEngine {
     this.speed = GAME_CONFIG.initialSpeed;
     this.state = GameState.PLAYING;
     this.cameraY = 0;
-    this.triggeredRewards.clear();
     this.onScoreUpdate(0);
 
     // Initial Base Block
@@ -105,12 +100,6 @@ export class GameEngine {
     this.blocks.push(baseBlock);
 
     this.spawnNextBlock();
-  }
-
-  public resume() {
-    if (this.state === GameState.PROMO_PAUSE) {
-      this.state = GameState.PLAYING;
-    }
   }
 
   private spawnNextBlock() {
@@ -212,16 +201,7 @@ export class GameEngine {
     // Increase Speed
     this.speed = Math.min(GAME_CONFIG.maxSpeed, GAME_CONFIG.initialSpeed + (this.score * GAME_CONFIG.speedIncrement));
 
-    // Check Promo Rewards
-    const reward = PROMO_REWARDS.find(item => item.score === this.score);
-    if (reward && !this.triggeredRewards.has(reward.score)) {
-      this.triggeredRewards.add(reward.score);
-      this.spawnNextBlock();
-      this.state = GameState.PROMO_PAUSE;
-      this.onPromoTrigger(reward);
-    } else {
-      this.spawnNextBlock();
-    }
+    this.spawnNextBlock();
   }
 
   private handlePerfectMatch(x: number, y: number) {

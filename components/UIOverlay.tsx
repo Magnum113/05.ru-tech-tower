@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameState, GameScore, LeaderboardEntry, PromoReward } from '../types';
+import { GameState, GameScore, LeaderboardEntry } from '../types';
 import { PROMO_REWARDS } from '../constants';
 import { Play, RotateCw, Trophy, Copy, Heart, Sparkles, Crown, ArrowLeft } from 'lucide-react';
 
@@ -7,21 +7,20 @@ interface UIOverlayProps {
   gameState: GameState;
   score: GameScore;
   onStart: () => void;
-  onResume: () => void;
   onRestart: () => void;
   onOpenLeaderboard: () => void;
   onCloseLeaderboard: () => void;
   leaderboardEntries: LeaderboardEntry[];
   nickname: string;
-  promoReward: PromoReward | null;
 }
 
-const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResume, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, nickname, promoReward }) => {
+const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, nickname }) => {
   const [copied, setCopied] = React.useState(false);
   const [onboardingStep, setOnboardingStep] = React.useState(1);
   const nextReward = PROMO_REWARDS.find(reward => reward.score > score.current) ?? null;
   const remainingToReward = nextReward ? Math.max(0, nextReward.score - score.current) : 0;
-  const activePromoCode = promoReward?.code ?? PROMO_REWARDS[PROMO_REWARDS.length - 1]?.code;
+  const earnedReward = [...PROMO_REWARDS].reverse().find(reward => reward.score <= score.current) ?? null;
+  const activePromoCode = earnedReward?.code ?? null;
 
   const copyCode = () => {
     if (!activePromoCode) return;
@@ -289,6 +288,30 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
                 </div>
               </div>
 
+              {earnedReward && (
+                <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
+                  <div className="flex items-start gap-3">
+                    <Crown size={18} className="text-yellow-300 mt-0.5" />
+                    <div>
+                      <p className="font-semibold text-white">Награда за {earnedReward.score} очков</p>
+                      <p className="text-white/60">Скидка {earnedReward.discount} ₽ — промокод доступен ниже.</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 bg-black/40 rounded-xl p-3 border border-dashed border-white/20 relative group cursor-pointer transition-colors hover:bg-black/60" onClick={copyCode}>
+                    <p className="text-[10px] text-white/40 uppercase mb-1 tracking-widest">Промокод</p>
+                    <div className="flex items-center justify-center gap-3">
+                      <span className="text-[#FF2C00] font-mono text-xl font-black tracking-widest">{earnedReward.code}</span>
+                      <Copy size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    </div>
+                    {copied && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-green-600/90 rounded-xl text-white text-sm font-bold backdrop-blur-sm">
+                        СКОПИРОВАНО!
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-col gap-3">
                 <button
                   onClick={onRestart}
@@ -340,61 +363,6 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onResu
           >
             <Crown size={16} />
             Таблица лидеров
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // PROMO REWARD SCREEN
-  if (gameState === GameState.PROMO_PAUSE) {
-    const reward = promoReward ?? PROMO_REWARDS[PROMO_REWARDS.length - 1];
-    const upcoming = PROMO_REWARDS.filter(item => item.score > (reward?.score ?? 0));
-    return (
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#15252B]/95 backdrop-blur-xl p-6 animate-in fade-in duration-500">
-        <div className="w-full max-w-sm bg-gradient-to-br from-[#1a2f36] to-[#15252B] border border-[#FF2C00]/30 rounded-2xl p-6 text-center shadow-2xl relative overflow-hidden">
-          
-          {/* Confetti Decoration (simulated with CSS/Elements) */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
-
-          <div className="mb-4 flex justify-center">
-            <div className="w-16 h-16 bg-[#FF2C00]/20 rounded-full flex items-center justify-center text-[#FF2C00]">
-              <Heart size={32} fill="currentColor" />
-            </div>
-          </div>
-
-          <h3 className="text-2xl font-bold text-white mb-2">Награда открыта!</h3>
-          <p className="text-blue-200 text-sm mb-4">
-            Ты достиг уровня <span className="font-semibold text-white">{reward.score} очков</span>.
-          </p>
-          <div className="mb-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">
-            Промокод на скидку <span className="font-bold text-white">{reward.discount} ₽</span>
-          </div>
-          
-          <div className="bg-black/40 rounded-xl p-4 border border-dashed border-white/20 mb-6 relative group cursor-pointer transition-colors hover:bg-black/60" onClick={copyCode}>
-            <p className="text-[10px] text-white/40 uppercase mb-1 tracking-widest">Промокод</p>
-            <div className="flex items-center justify-center gap-3">
-              <span className="text-[#FF2C00] font-mono text-2xl font-black tracking-widest">{reward.code}</span>
-              <Copy size={18} className="text-white/40 group-hover:text-white transition-colors" />
-            </div>
-            {copied && (
-              <div className="absolute inset-0 flex items-center justify-center bg-green-600/90 rounded-xl text-white text-sm font-bold backdrop-blur-sm">
-                СКОПИРОВАНО!
-              </div>
-            )}
-          </div>
-
-          {upcoming.length > 0 && (
-            <div className="mb-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-white/70">
-              Следующая цель: {upcoming[0].score} очков — скидка {upcoming[0].discount} ₽
-            </div>
-          )}
-
-          <button 
-            onClick={onResume}
-            className="w-full py-3 bg-[#FF2C00] text-white font-bold rounded-lg hover:bg-[#d82600] transition-colors shadow-lg"
-          >
-            ПРОДОЛЖИТЬ ИГРУ
           </button>
         </div>
       </div>

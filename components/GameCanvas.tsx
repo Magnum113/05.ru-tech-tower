@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import { GameEngine } from '../utils/gameEngine';
-import { PromoReward } from '../types';
 
 interface GameCanvasProps {
   onScoreUpdate: (score: number) => void;
   onGameOver: (score: number) => void;
-  onPromoTrigger: (reward: PromoReward) => void;
 }
 
 export interface GameCanvasHandle {
   startGame: () => void;
-  resumeGame: () => void;
   handleTap: () => void;
 }
 
@@ -21,9 +18,6 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>((props, ref) =>
   useImperativeHandle(ref, () => ({
     startGame: () => {
       engineRef.current?.start();
-    },
-    resumeGame: () => {
-      engineRef.current?.resume();
     },
     handleTap: () => {
       engineRef.current?.handleInput();
@@ -36,14 +30,13 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>((props, ref) =>
     const engine = new GameEngine(canvasRef.current, {
       onScoreUpdate: props.onScoreUpdate,
       onGameOver: props.onGameOver,
-      onPromoTrigger: props.onPromoTrigger,
     });
     engineRef.current = engine;
 
     return () => {
       engine.cleanup();
     };
-  }, [props.onScoreUpdate, props.onGameOver, props.onPromoTrigger]);
+  }, [props.onScoreUpdate, props.onGameOver]);
 
   return (
     <canvas

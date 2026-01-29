@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import GameCanvas, { GameCanvasHandle } from './components/GameCanvas';
 import UIOverlay from './components/UIOverlay';
-import { GameState, GameScore, LeaderboardEntry, PromoReward } from './types';
+import { GameState, GameScore, LeaderboardEntry } from './types';
 import { fetchLeaderboard, getOrCreateNickname, submitScore } from './utils/leaderboard';
 
 const STORAGE_KEY = '05ru_tech_tower_best';
@@ -11,7 +11,6 @@ export default function App() {
   const [leaderboardReturnState, setLeaderboardReturnState] = useState<GameState>(GameState.START);
   const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
   const nicknameRef = useRef<string>(getOrCreateNickname());
-  const [promoReward, setPromoReward] = useState<PromoReward | null>(null);
   const [score, setScore] = useState<GameScore>({
     current: 0,
     best: parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10),
@@ -53,11 +52,6 @@ export default function App() {
     submitScore(nicknameRef.current, finalScore);
   }, []);
 
-  const handlePromoTrigger = useCallback((reward: PromoReward) => {
-    setPromoReward(reward);
-    setGameState(GameState.PROMO_PAUSE);
-  }, []);
-
   const openLeaderboard = useCallback(() => {
     setLeaderboardReturnState(gameState);
     setGameState(GameState.LEADERBOARD);
@@ -78,11 +72,6 @@ export default function App() {
     canvasRef.current?.startGame();
   };
 
-  const resumeGame = () => {
-    setGameState(GameState.PLAYING);
-    canvasRef.current?.resumeGame();
-  };
-
   return (
     <div 
       className="relative w-full h-screen overflow-hidden bg-[#15252B] select-none"
@@ -92,19 +81,16 @@ export default function App() {
         ref={canvasRef}
         onScoreUpdate={updateScore}
         onGameOver={handleGameOver}
-        onPromoTrigger={handlePromoTrigger}
       />
       <UIOverlay 
         gameState={gameState}
         score={score}
         onStart={startGame}
-        onResume={resumeGame}
         onRestart={restartGame}
         onOpenLeaderboard={openLeaderboard}
         onCloseLeaderboard={closeLeaderboard}
         leaderboardEntries={leaderboardEntries}
         nickname={nicknameRef.current}
-        promoReward={promoReward}
       />
       
       {/* Decorative scanline overlay */}
