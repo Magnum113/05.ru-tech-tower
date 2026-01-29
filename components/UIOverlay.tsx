@@ -17,6 +17,7 @@ interface UIOverlayProps {
 const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, nickname }) => {
   const [copied, setCopied] = React.useState(false);
   const [onboardingStep, setOnboardingStep] = React.useState(1);
+  const [gameOverCooldown, setGameOverCooldown] = React.useState(false);
   const nextReward = PROMO_REWARDS.find(reward => reward.score > score.current) ?? null;
   const remainingToReward = nextReward ? Math.max(0, nextReward.score - score.current) : 0;
   const earnedReward = [...PROMO_REWARDS].reverse().find(reward => reward.score <= score.current) ?? null;
@@ -45,6 +46,15 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
     if (gameState !== GameState.START) {
       setOnboardingStep(1);
     }
+  }, [gameState]);
+
+  React.useEffect(() => {
+    if (gameState === GameState.GAME_OVER) {
+      setGameOverCooldown(true);
+      const timer = window.setTimeout(() => setGameOverCooldown(false), 1200);
+      return () => window.clearTimeout(timer);
+    }
+    setGameOverCooldown(false);
   }, [gameState]);
 
   // HUD (Always visible during play)
@@ -324,15 +334,17 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                 </div>
               )}
 
-              <div className="flex flex-col gap-3">
+              <div className={`flex flex-col gap-3 ${gameOverCooldown ? 'pointer-events-none opacity-80' : ''}`}>
                 <button
                   onClick={onRestart}
+                  disabled={gameOverCooldown}
                   className="w-full rounded-xl px-6 py-3 text-base font-bold transition-all bg-[#FF2C00] text-white hover:bg-[#ff3b12] hover:scale-[1.01] active:scale-95"
                 >
                   Сыграть ещё раз и увеличить сумму
                 </button>
                 <button
                   onClick={onOpenLeaderboard}
+                  disabled={gameOverCooldown}
                   className="w-full rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/70 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
                 >
                   <Crown size={16} />
@@ -361,9 +373,10 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
           </div>
         )}
 
-        <div className="flex flex-col items-center gap-3">
+        <div className={`flex flex-col items-center gap-3 ${gameOverCooldown ? 'pointer-events-none opacity-80' : ''}`}>
           <button 
             onClick={onRestart}
+            disabled={gameOverCooldown}
             className="px-8 py-3 bg-white text-[#15252B] font-bold text-lg rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2 shadow-lg"
           >
             <RotateCw size={20} />
@@ -371,6 +384,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
           </button>
           <button
             onClick={onOpenLeaderboard}
+            disabled={gameOverCooldown}
             className="px-6 py-2 rounded-full border border-white/15 bg-white/5 text-sm font-semibold text-white/70 hover:bg-white/10 transition-colors flex items-center gap-2"
           >
             <Crown size={16} />
