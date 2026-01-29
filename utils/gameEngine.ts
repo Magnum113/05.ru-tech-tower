@@ -18,6 +18,7 @@ interface Star {
   size: number;
   opacity: number;
   speed: number;
+  isCrescent?: boolean;
 }
 
 export class GameEngine {
@@ -76,6 +77,19 @@ export class GameEngine {
         opacity: Math.random(),
         speed: Math.random() * 0.05 + 0.01,
       });
+    }
+
+    // Add Ramadan crescents in place of some stars
+    const crescentCount = 7;
+    for (let i = 0; i < crescentCount; i++) {
+      const idx = Math.floor(Math.random() * this.stars.length);
+      this.stars[idx] = {
+        ...this.stars[idx],
+        isCrescent: true,
+        size: Math.random() * 3 + 3.5,
+        opacity: Math.random() * 0.6 + 0.4,
+        speed: Math.random() * 0.03 + 0.008,
+      };
     }
   }
 
@@ -305,15 +319,18 @@ export class GameEngine {
     this.ctx.fillStyle = grad;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Stars
+    // Stars + crescents
     this.ctx.fillStyle = '#FFF';
     this.stars.forEach(star => {
-      // Twinkle
       const alpha = Math.abs(Math.sin(Date.now() * star.speed)) * star.opacity;
       this.ctx.globalAlpha = alpha;
-      this.ctx.beginPath();
-      this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-      this.ctx.fill();
+      if (star.isCrescent) {
+        this.drawCrescent(star.x, star.y, star.size);
+      } else {
+        this.ctx.beginPath();
+        this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
     });
     this.ctx.globalAlpha = 1.0;
 
@@ -442,6 +459,21 @@ export class GameEngine {
     this.ctx.strokeStyle = 'rgba(255,255,255,0.18)';
     this.ctx.lineWidth = 1;
     this.ctx.strokeRect(x, y, w, h);
+  }
+
+  private drawCrescent(x: number, y: number, r: number) {
+    this.ctx.save();
+    this.ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    this.ctx.beginPath();
+    this.ctx.arc(x, y, r, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    this.ctx.globalCompositeOperation = 'destination-out';
+    this.ctx.beginPath();
+    this.ctx.arc(x + r * 0.35, y - r * 0.05, r * 0.85, 0, Math.PI * 2);
+    this.ctx.fill();
+    this.ctx.globalCompositeOperation = 'source-over';
+    this.ctx.restore();
   }
 
   private loop = () => {
