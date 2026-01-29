@@ -125,8 +125,8 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
     }
 
     return (
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md p-6 animate-in fade-in duration-500">
-        <div className="w-full max-w-md bg-[#15252B] border border-blue-500/20 rounded-2xl shadow-2xl p-6 relative overflow-hidden text-center">
+      <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/80 backdrop-blur-md p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto animate-in fade-in duration-500">
+        <div className="w-full max-w-md bg-[#15252B] border border-blue-500/20 rounded-2xl shadow-2xl p-6 relative overflow-hidden text-center my-auto">
           
           <div className="mb-4 text-center">
             <p className="text-[10px] uppercase tracking-widest text-white/50">Шаг 2 из 2</p>
