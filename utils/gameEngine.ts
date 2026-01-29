@@ -86,9 +86,9 @@ export class GameEngine {
       this.stars[idx] = {
         ...this.stars[idx],
         isCrescent: true,
-        size: Math.random() * 3 + 3.5,
-        opacity: Math.random() * 0.6 + 0.4,
-        speed: Math.random() * 0.03 + 0.008,
+        size: (Math.random() * 3 + 3.5) * 1.4,
+        opacity: Math.random() * 0.4 + 0.6,
+        speed: Math.random() * 0.015 + 0.004,
       };
     }
   }
@@ -322,7 +322,9 @@ export class GameEngine {
     // Stars + crescents
     this.ctx.fillStyle = '#FFF';
     this.stars.forEach(star => {
-      const alpha = Math.abs(Math.sin(Date.now() * star.speed)) * star.opacity;
+      const alpha = star.isCrescent
+        ? (0.75 + 0.25 * Math.sin(Date.now() * star.speed)) * star.opacity
+        : Math.abs(Math.sin(Date.now() * star.speed)) * star.opacity;
       this.ctx.globalAlpha = alpha;
       if (star.isCrescent) {
         this.drawCrescent(star.x, star.y, star.size);
@@ -463,16 +465,12 @@ export class GameEngine {
 
   private drawCrescent(x: number, y: number, r: number) {
     this.ctx.save();
-    this.ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    this.ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+    this.ctx.lineWidth = Math.max(1.5, r * 0.28);
+    this.ctx.lineCap = 'round';
     this.ctx.beginPath();
-    this.ctx.arc(x, y, r, 0, Math.PI * 2);
-    this.ctx.fill();
-
-    this.ctx.globalCompositeOperation = 'destination-out';
-    this.ctx.beginPath();
-    this.ctx.arc(x + r * 0.35, y - r * 0.05, r * 0.85, 0, Math.PI * 2);
-    this.ctx.fill();
-    this.ctx.globalCompositeOperation = 'source-over';
+    this.ctx.arc(x, y, r, -0.3, Math.PI + 0.3);
+    this.ctx.stroke();
     this.ctx.restore();
   }
 

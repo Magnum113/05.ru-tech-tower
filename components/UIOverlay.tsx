@@ -21,7 +21,18 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
   const remainingToReward = nextReward ? Math.max(0, nextReward.score - score.current) : 0;
   const earnedReward = [...PROMO_REWARDS].reverse().find(reward => reward.score <= score.current) ?? null;
   const activePromoCode = earnedReward?.code ?? null;
-  const rewardProgress = nextReward ? Math.min(1, score.current / nextReward.score) : 1;
+  const totalGoal = PROMO_REWARDS[PROMO_REWARDS.length - 1]?.score ?? 0;
+  const overallProgress = totalGoal > 0 ? Math.min(1, score.current / totalGoal) : 0;
+  const segmentCount = PROMO_REWARDS.length;
+  const segmentProgress = (index: number) => {
+    if (!totalGoal || segmentCount === 0) return 0;
+    const segmentSize = totalGoal / segmentCount;
+    const segmentStart = index * segmentSize;
+    const segmentEnd = segmentStart + segmentSize;
+    if (score.current <= segmentStart) return 0;
+    if (score.current >= segmentEnd) return 1;
+    return (score.current - segmentStart) / segmentSize;
+  };
 
   const copyCode = () => {
     if (!activePromoCode) return;
@@ -386,11 +397,27 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                 <span className="font-semibold text-white">Скидка {nextReward.discount} ₽</span>
                 <span className="text-white/70">{score.current}/{nextReward.score}</span>
               </div>
-              <div className="mt-3 h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#FF2C00] via-[#ff6a4d] to-[#FF2C00] shadow-[0_0_12px_rgba(255,44,0,0.6)]"
-                  style={{ width: `${Math.round(rewardProgress * 100)}%` }}
-                />
+              <div className="mt-3 grid grid-cols-3 gap-1">
+                {PROMO_REWARDS.map((reward, index) => {
+                  const fill = Math.round(segmentProgress(index) * 100);
+                  const isReached = score.current >= reward.score;
+                  return (
+                    <div key={reward.score} className="relative h-2 rounded-full bg-white/10 overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${
+                          isReached
+                            ? 'bg-gradient-to-r from-[#FF2C00] via-[#ff6a4d] to-[#FF2C00] shadow-[0_0_10px_rgba(255,44,0,0.6)]'
+                            : 'bg-gradient-to-r from-white/40 via-white/60 to-white/40'
+                        }`}
+                        style={{ width: `${fill}%` }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="mt-2 flex items-center justify-between text-[10px] text-white/50">
+                <span>{overallProgress >= 1 ? 'Все награды' : 'Прогресс'}</span>
+                <span>{Math.round(overallProgress * 100)}%</span>
               </div>
             </div>
           ) : (
