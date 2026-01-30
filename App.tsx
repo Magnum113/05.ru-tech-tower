@@ -10,7 +10,7 @@ export default function App() {
   const [gameState, setGameState] = useState<GameState>(GameState.START);
   const [leaderboardReturnState, setLeaderboardReturnState] = useState<GameState>(GameState.START);
   const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
-  const nicknameRef = useRef<string>(getOrCreateNickname());
+  const [nickname, setNickname] = useState<string>('');
   const [score, setScore] = useState<GameScore>({
     current: 0,
     best: parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10),
@@ -44,6 +44,18 @@ export default function App() {
     };
   }, [gameState]);
 
+  useEffect(() => {
+    let mounted = true;
+    if (!nickname) {
+      getOrCreateNickname().then(created => {
+        if (mounted) setNickname(created);
+      });
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [nickname]);
+
   const handleScreenTap = () => {
     if (gameState === GameState.PLAYING) {
       canvasRef.current?.handleTap();
@@ -61,7 +73,16 @@ export default function App() {
       localStorage.setItem(STORAGE_KEY, newBest.toString());
       return { current: finalScore, best: newBest };
     });
-    submitScore(nicknameRef.current, finalScore);
+    if (finalScore > 0) {
+      if (nickname) {
+        submitScore(nickname, finalScore);
+      } else {
+        getOrCreateNickname().then(created => {
+          setNickname(created);
+          submitScore(created, finalScore);
+        });
+      }
+    }
   }, []);
 
   const openLeaderboard = useCallback(() => {
@@ -102,7 +123,7 @@ export default function App() {
         onOpenLeaderboard={openLeaderboard}
         onCloseLeaderboard={closeLeaderboard}
         leaderboardEntries={leaderboardEntries}
-        nickname={nicknameRef.current}
+        nickname={nickname}
       />
       
       {/* Decorative scanline overlay */}

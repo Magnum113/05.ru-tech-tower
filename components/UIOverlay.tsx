@@ -248,7 +248,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
             </div>
 
             <div className="mt-5 rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 px-4 py-3 text-sm text-white/80 flex items-center justify-between">
-              <span>Твой ник: <span className="font-bold text-white">{nickname}</span></span>
+              <span>Твой ник: <span className="font-bold text-white">{nickname || '—'}</span></span>
               <span>Рекорд: <span className="font-bold text-white">{score.best}</span></span>
             </div>
           </div>
