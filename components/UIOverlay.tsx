@@ -193,7 +193,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
     const entries = [...leaderboardEntries].sort((a, b) => b.score - a.score);
 
     return (
-      <div className="absolute inset-0 z-50 flex items-center justify-start bg-black/85 backdrop-blur-md p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto animate-in fade-in duration-300">
+      <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/85 backdrop-blur-md p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto animate-in fade-in duration-300">
         <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-gradient-to-br from-[#15252B] via-[#0f1b20] to-[#111827] p-5 sm:p-6 shadow-2xl relative my-auto">
           <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[#FF2C00]/10 blur-3xl" />
           <div className="absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl" />
@@ -263,7 +263,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
       const donation = score.current;
 
       return (
-        <div className="absolute inset-0 z-40 flex items-center justify-start bg-black/90 backdrop-blur-md p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto animate-in fade-in duration-300">
+        <div className="absolute inset-0 z-40 flex flex-col items-center justify-start bg-black/90 backdrop-blur-md p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto animate-in fade-in duration-300">
           <div className="relative w-full max-w-lg rounded-3xl border border-[#FF2C00]/30 bg-gradient-to-br from-[#15252B] via-[#0f1b20] to-[#111827] p-5 sm:p-6 shadow-2xl my-auto">
             <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[#FF2C00]/20 blur-3xl" />
             <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/10 blur-3xl" />

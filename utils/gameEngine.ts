@@ -37,6 +37,7 @@ export class GameEngine {
   private state: GameState = GameState.START;
   private perfectStreak: number = 0;
   private lastPlacement: { x: number; y: number; time: number } | null = null;
+  private lastFrameTime: number = performance.now();
   
   private onScoreUpdate: (score: number) => void;
   private onGameOver: (score: number) => void;
@@ -264,12 +265,12 @@ export class GameEngine {
     this.onGameOver(this.score);
   }
 
-  private update() {
+  private update(delta: number) {
     // Always update stars
     // But gameplay logic only when playing/gameover debris
     
     if (this.state === GameState.PLAYING && this.currentBlock) {
-      this.currentBlock.x += this.speed * this.direction;
+      this.currentBlock.x += this.speed * this.direction * delta;
       
       if (this.currentBlock.x + this.currentBlock.width > this.canvas.width) {
         this.direction = -1;
@@ -281,9 +282,9 @@ export class GameEngine {
     // Update Debris
     for (let i = this.debris.length - 1; i >= 0; i--) {
       const d = this.debris[i];
-      d.y += (d.vy || 0);
-      d.vy = (d.vy || 0) + 0.5;
-      d.r = (d.r || 0) + 0.1;
+      d.y += (d.vy || 0) * delta;
+      d.vy = (d.vy || 0) + 0.5 * delta;
+      d.r = (d.r || 0) + 0.1 * delta;
       
       if (d.y > this.canvas.height + 100) {
         this.debris.splice(i, 1);
@@ -293,8 +294,8 @@ export class GameEngine {
     // Update Floating Texts
     for (let i = this.floatingTexts.length - 1; i >= 0; i--) {
       const ft = this.floatingTexts[i];
-      ft.y -= 1;
-      ft.life--;
+      ft.y -= 1 * delta;
+      ft.life -= delta;
       ft.opacity = ft.life / 30; // Fade out
       if (ft.life <= 0) {
         this.floatingTexts.splice(i, 1);
@@ -305,7 +306,7 @@ export class GameEngine {
     const targetY = (this.blocks.length * GAME_CONFIG.blockHeight) - (this.canvas.height / 2);
     const safeTargetY = Math.max(0, targetY);
     if (safeTargetY > this.cameraY) {
-       this.cameraY += (safeTargetY - this.cameraY) * 0.1;
+       this.cameraY += (safeTargetY - this.cameraY) * 0.1 * delta;
     }
   }
 
@@ -496,7 +497,11 @@ export class GameEngine {
   }
 
   private loop = () => {
-    this.update();
+    const now = performance.now();
+    const deltaMs = Math.min(50, now - this.lastFrameTime);
+    this.lastFrameTime = now;
+    const delta = deltaMs / 16.6667;
+    this.update(delta);
     this.draw();
     this.animationId = requestAnimationFrame(this.loop);
   };
