@@ -32,6 +32,18 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [gameState]);
 
+  useEffect(() => {
+    const allowScroll = gameState !== GameState.PLAYING;
+    document.body.style.overflow = allowScroll ? 'auto' : 'hidden';
+    document.body.style.touchAction = allowScroll ? 'auto' : 'none';
+    document.documentElement.style.overflow = allowScroll ? 'auto' : 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [gameState]);
+
   const handleScreenTap = () => {
     if (gameState === GameState.PLAYING) {
       canvasRef.current?.handleTap();
