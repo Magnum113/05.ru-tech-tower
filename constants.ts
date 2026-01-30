@@ -15,7 +15,7 @@ export const COLORS = {
 
 export const GAME_CONFIG = {
   baseWidth: 220,
-  blockHeight: 50,
+  blockHeight: 70,
   initialSpeed: 4,
   speedIncrement: 0.2,
   maxSpeed: 14.4,
