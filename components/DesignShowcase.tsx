@@ -154,6 +154,39 @@ export default function DesignShowcase() {
           </div>
         </Section>
 
+        <Section title="Фон игры (звёзды и полумесяцы)">
+          <Card maxWidth="max-w-4xl">
+            <div className="space-y-3 text-sm text-white/70">
+              <p>
+                В игре фон рисуется на Canvas (градиент + мерцающие звёзды + полумесяцы). Это не DOM‑элемент, поэтому ниже — макет‑подсказка и описание для дизайнера.
+              </p>
+              <div className="relative h-48 w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#15252B] to-[#0F1B20]">
+                <div className="absolute inset-0 opacity-70">
+                  <div className="absolute left-[10%] top-[20%] h-1.5 w-1.5 rounded-full bg-white/80" />
+                  <div className="absolute left-[30%] top-[35%] h-1 w-1 rounded-full bg-white/60" />
+                  <div className="absolute left-[55%] top-[18%] h-1.5 w-1.5 rounded-full bg-white/70" />
+                  <div className="absolute left-[70%] top-[40%] h-1 w-1 rounded-full bg-white/50" />
+                  <div className="absolute left-[85%] top-[25%] h-1.5 w-1.5 rounded-full bg-white/75" />
+                </div>
+                <div className="absolute right-[18%] top-[30%] h-8 w-8">
+                  <div className="absolute inset-0 rounded-full bg-white/90" />
+                  <div className="absolute inset-0 translate-x-1 rounded-full bg-[#15252B]" />
+                </div>
+                <div className="absolute left-[20%] bottom-[18%] h-6 w-6">
+                  <div className="absolute inset-0 rounded-full bg-white/70" />
+                  <div className="absolute inset-0 translate-x-1 rounded-full bg-[#15252B]" />
+                </div>
+              </div>
+              <ul className="grid gap-1 text-xs text-white/60">
+                <li>Градиент: сверху #15252B → снизу #0F1B20.</li>
+                <li>Звёзды: мелкие белые точки с мягким мерцанием.</li>
+                <li>Полумесяцы: белые, мягкие, с плавным мерцанием.</li>
+                <li>Количество полумесяцев: ~7.</li>
+              </ul>
+            </div>
+          </Card>
+        </Section>
+
         <Section title="Экран результата (есть очки)">
           <Card maxWidth="max-w-lg">
             <div className="space-y-4">
