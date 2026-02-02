@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/pagefordesign", "destination": "/" },
-    { "source": "/pagefordesign/", "destination": "/" }
+    { "source": "/pagefordesign/", "destination": "/" },
+    { "source": "/towerv2", "destination": "/" },
+    { "source": "/towerv2/", "destination": "/" }
   ]
 }
