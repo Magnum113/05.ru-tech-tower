@@ -1,5 +1,5 @@
 import React from 'react';
-import { PROMO_REWARDS, PERFECT_MESSAGES } from '../constants';
+import { COLORS, PROMO_REWARDS, PERFECT_MESSAGES } from '../constants';
 
 const sampleNickname = 'Сильный Енот';
 
@@ -23,6 +23,98 @@ const Card: React.FC<{ children: React.ReactNode; maxWidth?: string }> = ({ chil
     {children}
   </div>
 );
+
+const BlockPreview: React.FC<{
+  width: number;
+  height: number;
+  color?: string;
+  rotate?: number;
+  className?: string;
+}> = ({ width, height, color = COLORS.boxMain, rotate = 0, className }) => {
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const depth = 12;
+    const padding = 16;
+    const extraX = depth;
+    const extraY = depth;
+    canvas.width = Math.ceil(width + extraX + padding * 2);
+    canvas.height = Math.ceil(height + extraY + padding * 2);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const drawBlockShape = (x: number, y: number, w: number, h: number, fillColor: string) => {
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.25)';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 4;
+      ctx.fillStyle = fillColor;
+      ctx.fillRect(x, y, w, h);
+      ctx.restore();
+
+      ctx.fillStyle = COLORS.boxLight;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + depth, y - depth);
+      ctx.lineTo(x + w + depth, y - depth);
+      ctx.lineTo(x + w, y);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = COLORS.boxDark;
+      ctx.beginPath();
+      ctx.moveTo(x + w, y);
+      ctx.lineTo(x + w + depth, y - depth);
+      ctx.lineTo(x + w + depth, y + h - depth);
+      ctx.lineTo(x + w, y + h);
+      ctx.closePath();
+      ctx.fill();
+
+      const tapeW = Math.max(10, Math.min(26, w * 0.18));
+      ctx.fillStyle = COLORS.boxTape;
+      ctx.fillRect(x + w / 2 - tapeW / 2, y, tapeW, h);
+
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.beginPath();
+      ctx.moveTo(x + w / 2 - tapeW / 2, y);
+      ctx.lineTo(x + w / 2 - tapeW / 2 + depth, y - depth);
+      ctx.lineTo(x + w / 2 + tapeW / 2 + depth, y - depth);
+      ctx.lineTo(x + w / 2 + tapeW / 2, y);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+      ctx.lineWidth = 1;
+      const lineCount = Math.max(3, Math.floor(w / 40));
+      for (let i = 1; i <= lineCount; i += 1) {
+        const lx = x + (w * i) / (lineCount + 1);
+        ctx.beginPath();
+        ctx.moveTo(lx, y);
+        ctx.lineTo(lx, y + h);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x, y, w, h);
+    };
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (rotate !== 0) {
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(rotate);
+      drawBlockShape(-width / 2, -height / 2, width, height, color);
+      ctx.restore();
+    } else {
+      drawBlockShape(padding, padding + depth, width, height, color);
+    }
+  }, [width, height, color, rotate]);
+
+  return <canvas ref={canvasRef} className={className ?? 'mx-auto'} />;
+};
 
 export default function DesignShowcase() {
   React.useEffect(() => {
@@ -54,8 +146,22 @@ export default function DesignShowcase() {
           </p>
         </header>
 
+        <section className="rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/70 space-y-3">
+          <h2 className="text-lg font-black text-white">Короткий гайд для дизайнера</h2>
+          <ul className="grid gap-2">
+            <li>• Работай от двух артбордов: Desktop 1920×1080 и Mobile 375×812 (или 375×800).</li>
+            <li>• Сохраняем композицию и порядок блоков, меняем размеры/отступы: на мобилке всё в одну колонку.</li>
+            <li>• Карточки: Desktop 460–560px по ширине, Mobile ≈343px (375px минус боковые паддинги по 16px).</li>
+            <li>• Внутренние отступы: Desktop 20–24px, Mobile 16–20px; расстояния между блоками 16–24px.</li>
+            <li>• Кнопки: Desktop высота 52px, Mobile 48px; текст 14–16px, кнопки во всю ширину карточки.</li>
+            <li>• Игровой Canvas всегда во весь экран; оверлеи центрируются по горизонтали, с запасом по краям 16–24px.</li>
+          </ul>
+        </section>
+
         <Section title="Онбординг — Шаг 1 (история)">
           <Card maxWidth="max-w-md">
+            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
+            <p className="text-xs text-white/50 mb-3">Кнопки: Desktop высота 52px, Mobile 48px.</p>
             <div className="text-center space-y-4">
               <div>
                 <h3 className="text-2xl font-black">Высокие Технологии</h3>
@@ -76,6 +182,8 @@ export default function DesignShowcase() {
 
         <Section title="Онбординг — Шаг 2 (правила и награды)">
           <Card maxWidth="max-w-md">
+            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
+            <p className="text-xs text-white/50 mb-3">Кнопки: Desktop высота 52px, Mobile 48px.</p>
             <div className="space-y-4">
               <div className="text-center">
                 <p className="text-xs uppercase tracking-widest text-white/50">Шаг 2 из 2</p>
@@ -107,6 +215,7 @@ export default function DesignShowcase() {
         <Section title="HUD и прогресс награды (во время игры)">
           <div className="grid gap-4 md:grid-cols-2">
             <Card maxWidth="max-w-md">
+              <p className="text-xs text-white/50 mb-3">Размеры HUD: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-white/60">Этаж</p>
@@ -146,6 +255,7 @@ export default function DesignShowcase() {
             <div className="space-y-2">
               <p className="text-xs uppercase tracking-widest text-white/50">Состояние (комментарий): все награды</p>
               <Card maxWidth="max-w-md">
+                <p className="text-xs text-white/50 mb-2">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
                 <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/70 backdrop-blur">
                   Все награды получены. Продолжай строить башню!
                 </div>
@@ -156,6 +266,7 @@ export default function DesignShowcase() {
 
         <Section title="Фон игры (звёзды и полумесяцы)">
           <Card maxWidth="max-w-4xl">
+            <p className="text-xs text-white/50 mb-3">Размеры: фон занимает весь экран (Desktop 1920×1080, Mobile 375×812+ по высоте устройства).</p>
             <div className="space-y-3 text-sm text-white/70">
               <p>
                 В игре фон рисуется на Canvas (градиент + мерцающие звёзды + полумесяцы). Это не DOM‑элемент, поэтому ниже — макет‑подсказка и описание для дизайнера.
@@ -194,28 +305,21 @@ export default function DesignShowcase() {
 
         <Section title="Коробки и их состояния (дизайн блоков)">
           <Card maxWidth="max-w-4xl">
+            <p className="text-xs text-white/50 mb-3">Размеры блоков: Desktop 220×70px (1920×1080), Mobile 220×70px (375px), обрезки и осколки — пропорционально.</p>
             <div className="space-y-4 text-sm text-white/70">
               <p>Блоки рисуются на Canvas как «картонные» коробки: светлая верхняя грань, тёмная боковая, «скотч» по центру и лёгкие линии гофры.</p>
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="rounded-2xl border border-white/10 bg-[#0f1b20] p-4 text-center">
                   <p className="text-xs uppercase tracking-widest text-white/50 mb-2">Основной блок</p>
-                  <div className="mx-auto h-20 w-32 rounded bg-[#CB9F7F] relative">
-                    <div className="absolute inset-x-0 -top-2 h-2 bg-[#DCC0A6] skew-x-[-20deg]" />
-                    <div className="absolute -right-3 inset-y-0 w-3 bg-[#B08363] skew-y-[-20deg]" />
-                    <div className="absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 bg-[#E9D4BD]" />
-                  </div>
+                  <BlockPreview width={220} height={70} />
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-[#0f1b20] p-4 text-center">
                   <p className="text-xs uppercase tracking-widest text-white/50 mb-2">Обрезанный блок</p>
-                  <div className="mx-auto h-20 w-24 rounded bg-[#CB9F7F] relative">
-                    <div className="absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 bg-[#E9D4BD]" />
-                  </div>
+                  <BlockPreview width={150} height={70} />
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-[#0f1b20] p-4 text-center">
                   <p className="text-xs uppercase tracking-widest text-white/50 mb-2">Падающий осколок</p>
-                  <div className="mx-auto h-16 w-16 rounded bg-[#B08363] relative rotate-6">
-                    <div className="absolute inset-y-0 left-1/2 w-3 -translate-x-1/2 bg-[#E9D4BD]" />
-                  </div>
+                  <BlockPreview width={70} height={70} color={COLORS.boxDark} rotate={0.25} />
                 </div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/70 space-y-2">
@@ -232,6 +336,8 @@ export default function DesignShowcase() {
 
         <Section title="Экран результата (есть очки)">
           <Card maxWidth="max-w-lg">
+            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 520×auto (1920×1080), Mobile 343×auto (375px).</p>
+            <p className="text-xs text-white/50 mb-3">Кнопки: Desktop высота 52px, Mobile 48px.</p>
             <div className="space-y-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">Благотворительность</p>
@@ -271,10 +377,11 @@ export default function DesignShowcase() {
 
         <Section title="Экран результата (очков 0)">
           <Card maxWidth="max-w-md">
+            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
+            <p className="text-xs text-white/50 mb-3">Кнопки: Desktop высота 52px, Mobile 48px.</p>
             <div className="space-y-3 text-center">
               <h3 className="text-2xl font-black uppercase">Башня упала!</h3>
               <p className="text-white/60">Высота: <span className="text-[#FF2C00] font-black">0</span></p>
-              <div className="rounded-full bg-yellow-400/10 text-yellow-300 px-4 py-2 text-xs font-bold inline-flex items-center justify-center">НОВЫЙ РЕКОРД!</div>
               <div className="grid gap-2">
                 <button className="w-full rounded-full bg-white px-5 py-3 text-sm font-bold text-[#15252B]">Попробовать снова</button>
                 <button className="w-full rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white/80">Таблица лидеров</button>
@@ -283,8 +390,19 @@ export default function DesignShowcase() {
           </Card>
         </Section>
 
+        <Section title="Экран результата (новый рекорд — отдельное состояние)">
+          <Card maxWidth="max-w-md">
+            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
+            <div className="space-y-3 text-center">
+              <div className="rounded-full bg-yellow-400/10 text-yellow-300 px-4 py-2 text-xs font-bold inline-flex items-center justify-center">НОВЫЙ РЕКОРД!</div>
+            </div>
+          </Card>
+        </Section>
+
         <Section title="Таблица лидеров (с результатами)">
           <Card maxWidth="max-w-lg">
+            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 520×auto (1920×1080), Mobile 343×auto (375px).</p>
+            <p className="text-xs text-white/50 mb-3">Кнопка «Назад»: Desktop высота 32–36px, Mobile 32px.</p>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
@@ -318,6 +436,7 @@ export default function DesignShowcase() {
 
         <Section title="Таблица лидеров (пустая)">
           <Card maxWidth="max-w-lg">
+            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 520×auto (1920×1080), Mobile 343×auto (375px).</p>
             <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
               Лидеров пока нет. Сыграй первым и зафиксируй результат.
             </p>
@@ -326,6 +445,7 @@ export default function DesignShowcase() {
 
         <Section title="Всплывающие тексты в игре">
           <Card maxWidth="max-w-lg">
+            <p className="text-xs text-white/50 mb-3">Размеры блока: Desktop 520×auto (1920×1080), Mobile 343×auto (375px). Плашки: Desktop высота 28px, Mobile 24px.</p>
             <div className="space-y-2 text-sm text-white/70">
               <p className="font-semibold text-white">Perfect‑сообщения:</p>
               <div className="flex flex-wrap gap-2">
@@ -341,6 +461,7 @@ export default function DesignShowcase() {
 
         <Section title="Тексты (список для копирайтера с контекстом)">
           <Card maxWidth="max-w-4xl">
+            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 900×auto (1920×1080), Mobile 343×auto (375px).</p>
             <div className="space-y-6 text-sm text-white/70">
               <div>
                 <p className="text-xs uppercase tracking-widest text-white/50">HUD (игра)</p>
