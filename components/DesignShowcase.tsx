@@ -333,6 +333,9 @@ export default function DesignShowcase() {
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">Благотворительность</p>
                 <h3 className="text-2xl font-black">Твоя игра = добро</h3>
               </div>
+              <div className="rounded-full bg-yellow-400/10 text-yellow-300 px-4 py-2 text-xs font-bold inline-flex items-center justify-center">
+                НОВЫЙ РЕКОРД!
+              </div>
               <div className="rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 p-4 space-y-2">
                 <div className="flex justify-between">
                   <span className="text-xs uppercase tracking-widest text-white/60">Очки</span>
@@ -374,14 +377,6 @@ export default function DesignShowcase() {
                 <button className="w-full rounded-full bg-white px-5 py-3 text-sm font-bold text-[#15252B]">Попробовать снова</button>
                 <button className="w-full rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white/80">Таблица лидеров</button>
               </div>
-            </div>
-          </Card>
-        </Section>
-
-        <Section title="Экран результата (новый рекорд — отдельное состояние)">
-          <Card maxWidth="max-w-md">
-            <div className="space-y-3 text-center">
-              <div className="rounded-full bg-yellow-400/10 text-yellow-300 px-4 py-2 text-xs font-bold inline-flex items-center justify-center">НОВЫЙ РЕКОРД!</div>
             </div>
           </Card>
         </Section>
