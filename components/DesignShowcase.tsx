@@ -16,8 +16,10 @@ const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title
   </section>
 );
 
-const Card: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="rounded-2xl border border-white/10 bg-[#15252B] p-5 shadow-2xl">
+const Card: React.FC<{ children: React.ReactNode; maxWidth?: string }> = ({ children, maxWidth }) => (
+  <div
+    className={`w-full ${maxWidth ?? 'max-w-xl'} rounded-2xl border border-white/10 bg-[#15252B] p-5 shadow-2xl`}
+  >
     {children}
   </div>
 );
@@ -53,7 +55,7 @@ export default function DesignShowcase() {
         </header>
 
         <Section title="Онбординг — Шаг 1 (история)">
-          <Card>
+          <Card maxWidth="max-w-md">
             <div className="text-center space-y-4">
               <div>
                 <h3 className="text-2xl font-black">Высокие Технологии</h3>
@@ -73,7 +75,7 @@ export default function DesignShowcase() {
         </Section>
 
         <Section title="Онбординг — Шаг 2 (правила и награды)">
-          <Card>
+          <Card maxWidth="max-w-md">
             <div className="space-y-4">
               <div className="text-center">
                 <p className="text-xs uppercase tracking-widest text-white/50">Шаг 2 из 2</p>
@@ -104,7 +106,7 @@ export default function DesignShowcase() {
 
         <Section title="HUD и прогресс награды (во время игры)">
           <div className="grid gap-4 md:grid-cols-2">
-            <Card>
+            <Card maxWidth="max-w-md">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-white/60">Этаж</p>
@@ -126,7 +128,7 @@ export default function DesignShowcase() {
                 </div>
               </div>
             </Card>
-            <Card>
+            <Card maxWidth="max-w-md">
               <p className="text-xs uppercase tracking-widest text-white/60">Состояние: все награды</p>
               <p className="mt-2 text-sm text-white/70">Все награды получены. Продолжай строить башню!</p>
             </Card>
@@ -134,7 +136,7 @@ export default function DesignShowcase() {
         </Section>
 
         <Section title="Экран результата (есть очки)">
-          <Card>
+          <Card maxWidth="max-w-lg">
             <div className="space-y-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">Благотворительность</p>
@@ -173,7 +175,7 @@ export default function DesignShowcase() {
         </Section>
 
         <Section title="Экран результата (очков 0)">
-          <Card>
+          <Card maxWidth="max-w-md">
             <div className="space-y-3 text-center">
               <h3 className="text-2xl font-black uppercase">Башня упала!</h3>
               <p className="text-white/60">Высота: <span className="text-[#FF2C00] font-black">0</span></p>
@@ -187,7 +189,7 @@ export default function DesignShowcase() {
         </Section>
 
         <Section title="Таблица лидеров (с результатами)">
-          <Card>
+          <Card maxWidth="max-w-lg">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
@@ -220,7 +222,7 @@ export default function DesignShowcase() {
         </Section>
 
         <Section title="Таблица лидеров (пустая)">
-          <Card>
+          <Card maxWidth="max-w-lg">
             <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
               Лидеров пока нет. Сыграй первым и зафиксируй результат.
             </p>
@@ -228,7 +230,7 @@ export default function DesignShowcase() {
         </Section>
 
         <Section title="Всплывающие тексты в игре">
-          <Card>
+          <Card maxWidth="max-w-lg">
             <div className="space-y-2 text-sm text-white/70">
               <p className="font-semibold text-white">Perfect‑сообщения:</p>
               <div className="flex flex-wrap gap-2">
@@ -242,56 +244,57 @@ export default function DesignShowcase() {
           </Card>
         </Section>
 
-        <Section title="Тексты (список для копирайтера)">
-          <Card>
+        <Section title="Тексты (список для копирайтера с контекстом)">
+          <Card maxWidth="max-w-4xl">
             <ul className="grid gap-2 text-sm text-white/70">
-              <li>Этаж</li>
-              <li>Рекорд</li>
-              <li>Высокие Технологии / 05.RU</li>
-              <li>🌙 В Рамадан мы хотим доставить радость в каждый дом!</li>
-              <li>Твоя задача — построить самую высокую башню из подарков и техники. Чем выше башня — тем больше людей получат свои заказы к празднику.</li>
-              <li>Каждый набранный балл мы переводим в рубли и отправляем на благотворительность в конце Рамадана.</li>
-              <li>Начать стройку</li>
-              <li>Таблица лидеров</li>
-              <li>Шаг 2 из 2</li>
-              <li>Правила и награды</li>
-              <li>Как играть:</li>
-              <li>Тапай по экрану, когда ящик окажется над башней.</li>
-              <li>Будь точен! Лишние края обрезаются.</li>
-              <li>Делай идеальные укладки подряд для бонусов.</li>
-              <li>Награды за уровни</li>
-              <li>{'{score}'} очков</li>
-              <li>Скидка {'{discount}'} ₽</li>
-              <li>Начать игру</li>
-              <li>Назад</li>
-              <li>Топ игроков</li>
-              <li>Таблица лидеров</li>
-              <li>Лидеров пока нет. Сыграй первым и зафиксируй результат.</li>
-              <li>это вы</li>
-              <li>Твой ник:</li>
-              <li>Благотворительность</li>
-              <li>Твоя игра = добро</li>
-              <li>Новый рекорд</li>
-              <li>Очки</li>
-              <li>Пожертвование</li>
-              <li>Мы отправим такую же сумму в рублях на благотворительность в конце Рамадана.</li>
-              <li>Каждое очко = 1 ₽ в копилку добра.</li>
-              <li>Сыграй ещё раз, чтобы увеличить сумму пожертвования.</li>
-              <li>Награда за {'{score}'} очков</li>
-              <li>Ваша скидка на {'{discount}'} ₽.</li>
-              <li>Промокод</li>
-              <li>СКОПИРОВАНО!</li>
-              <li>Сыграть ещё раз и увеличить сумму</li>
-              <li>Башня упала!</li>
-              <li>Высота:</li>
-              <li>НОВЫЙ РЕКОРД!</li>
-              <li>Попробовать снова</li>
-              <li>До награды</li>
-              <li>{'{n}'} этажей</li>
-              <li>Прогресс / Все награды</li>
-              <li>Все награды получены. Продолжай строить башню!</li>
-              <li>Идеально! / Красавчик! / Супер! / Чётко! / Мастер!</li>
-              <li>БОНУС ШИРИНЫ!</li>
+              <li><span className="text-white/50">HUD (игра):</span> Этаж</li>
+              <li><span className="text-white/50">HUD (игра):</span> Рекорд</li>
+              <li><span className="text-white/50">Онбординг шаг 1 (заголовок):</span> Высокие Технологии / 05.RU</li>
+              <li><span className="text-white/50">Онбординг шаг 1 (описание):</span> 🌙 В Рамадан мы хотим доставить радость в каждый дом!</li>
+              <li><span className="text-white/50">Онбординг шаг 1 (описание):</span> Твоя задача — построить самую высокую башню из подарков и техники. Чем выше башня — тем больше людей получат свои заказы к празднику.</li>
+              <li><span className="text-white/50">Онбординг шаг 1 (описание):</span> Каждый набранный балл мы переводим в рубли и отправляем на благотворительность в конце Рамадана.</li>
+              <li><span className="text-white/50">Онбординг шаг 1 (кнопка):</span> Начать стройку</li>
+              <li><span className="text-white/50">Онбординг шаг 1 (кнопка):</span> Таблица лидеров</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (лейбл):</span> Шаг 2 из 2</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (заголовок):</span> Правила и награды</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (подзаголовок):</span> Как играть:</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (инструкция):</span> Тапай по экрану, когда ящик окажется над башней.</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (инструкция):</span> Будь точен! Лишние края обрезаются.</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (инструкция):</span> Делай идеальные укладки подряд для бонусов.</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (блок наград):</span> Награды за уровни</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (наградный ряд):</span> {'{score}'} очков</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (наградный ряд):</span> Скидка {'{discount}'} ₽</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (кнопка):</span> Начать игру</li>
+              <li><span className="text-white/50">Онбординг шаг 2 (кнопка):</span> Назад</li>
+              <li><span className="text-white/50">Лидерборд (заголовок):</span> Топ игроков</li>
+              <li><span className="text-white/50">Лидерборд (заголовок):</span> Таблица лидеров</li>
+              <li><span className="text-white/50">Лидерборд (пустое состояние):</span> Лидеров пока нет. Сыграй первым и зафиксируй результат.</li>
+              <li><span className="text-white/50">Лидерборд (метка пользователя):</span> это вы</li>
+              <li><span className="text-white/50">Лидерборд (подвал):</span> Твой ник:</li>
+              <li><span className="text-white/50">Game Over (заголовок):</span> Благотворительность</li>
+              <li><span className="text-white/50">Game Over (заголовок):</span> Твоя игра = добро</li>
+              <li><span className="text-white/50">Game Over (бейдж):</span> Новый рекорд</li>
+              <li><span className="text-white/50">Game Over (поле):</span> Очки</li>
+              <li><span className="text-white/50">Game Over (поле):</span> Пожертвование</li>
+              <li><span className="text-white/50">Game Over (описание):</span> Мы отправим такую же сумму в рублях на благотворительность в конце Рамадана.</li>
+              <li><span className="text-white/50">Game Over (подсказка):</span> Каждое очко = 1 ₽ в копилку добра.</li>
+              <li><span className="text-white/50">Game Over (подсказка):</span> Сыграй ещё раз, чтобы увеличить сумму пожертвования.</li>
+              <li><span className="text-white/50">Game Over (награда):</span> Награда за {'{score}'} очков</li>
+              <li><span className="text-white/50">Game Over (награда):</span> Ваша скидка на {'{discount}'} ₽.</li>
+              <li><span className="text-white/50">Game Over (промокод):</span> Промокод</li>
+              <li><span className="text-white/50">Game Over (промокод):</span> СКОПИРОВАНО!</li>
+              <li><span className="text-white/50">Game Over (кнопка):</span> Сыграть ещё раз и увеличить сумму</li>
+              <li><span className="text-white/50">Game Over (нулевой счёт):</span> Башня упала!</li>
+              <li><span className="text-white/50">Game Over (нулевой счёт):</span> Высота:</li>
+              <li><span className="text-white/50">Game Over (нулевой счёт):</span> НОВЫЙ РЕКОРД!</li>
+              <li><span className="text-white/50">Game Over (нулевой счёт):</span> Попробовать снова</li>
+              <li><span className="text-white/50">Game Over (нулевой счёт):</span> Таблица лидеров</li>
+              <li><span className="text-white/50">HUD (прогресс):</span> До награды</li>
+              <li><span className="text-white/50">HUD (прогресс):</span> {'{n}'} этажей</li>
+              <li><span className="text-white/50">HUD (прогресс):</span> Прогресс / Все награды</li>
+              <li><span className="text-white/50">HUD (прогресс):</span> Все награды получены. Продолжай строить башню!</li>
+              <li><span className="text-white/50">Игра (floating texts):</span> Идеально! / Красавчик! / Супер! / Чётко! / Мастер!</li>
+              <li><span className="text-white/50">Игра (floating texts):</span> БОНУС ШИРИНЫ!</li>
             </ul>
           </Card>
         </Section>
