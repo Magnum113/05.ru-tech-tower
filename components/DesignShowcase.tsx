@@ -128,10 +128,14 @@ export default function DesignShowcase() {
                 </div>
               </div>
             </Card>
-            <Card maxWidth="max-w-md">
-              <p className="text-xs uppercase tracking-widest text-white/60">Состояние: все награды</p>
-              <p className="mt-2 text-sm text-white/70">Все награды получены. Продолжай строить башню!</p>
-            </Card>
+            <div className="space-y-2">
+              <p className="text-xs uppercase tracking-widest text-white/50">Состояние (комментарий): все награды</p>
+              <Card maxWidth="max-w-md">
+                <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/70 backdrop-blur">
+                  Все награды получены. Продолжай строить башню!
+                </div>
+              </Card>
+            </div>
           </div>
         </Section>
 
