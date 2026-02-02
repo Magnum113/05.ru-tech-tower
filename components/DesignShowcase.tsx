@@ -117,14 +117,29 @@ export default function DesignShowcase() {
                   <p className="text-2xl font-bold text-yellow-400">23</p>
                 </div>
               </div>
-              <div className="mt-5 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-sm text-white/80">
-                <div className="flex items-center justify-between text-xs uppercase tracking-widest text-white/60">
+              <div className="mt-5 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-white/90 backdrop-blur shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+                <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-white/60">
                   <span>До награды</span>
                   <span>8 этажей</span>
                 </div>
-                <div className="mt-2 flex items-center justify-between">
-                  <span className="font-semibold">Скидка 1000 ₽</span>
-                  <span className="text-white/60">12/20</span>
+                <div className="mt-2 flex items-center justify-between text-sm">
+                  <span className="font-semibold text-white">Скидка 1000 ₽</span>
+                  <span className="text-white/70">12/20</span>
+                </div>
+                <div className="mt-3 grid grid-cols-3 gap-1">
+                  <div className="relative h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-full rounded-full bg-gradient-to-r from-[#FF2C00] via-[#ff6a4d] to-[#FF2C00] shadow-[0_0_10px_rgba(255,44,0,0.6)]" style={{ width: '100%' }} />
+                  </div>
+                  <div className="relative h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-full rounded-full bg-gradient-to-r from-[#FF2C00] via-[#ff6a4d] to-[#FF2C00] shadow-[0_0_10px_rgba(255,44,0,0.6)]" style={{ width: '20%' }} />
+                  </div>
+                  <div className="relative h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-full rounded-full bg-gradient-to-r from-white/40 via-white/60 to-white/40" style={{ width: '0%' }} />
+                  </div>
+                </div>
+                <div className="mt-2 flex items-center justify-between text-[10px] text-white/50">
+                  <span>Прогресс</span>
+                  <span>40%</span>
                 </div>
               </div>
             </Card>
