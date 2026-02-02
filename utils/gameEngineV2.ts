@@ -45,13 +45,23 @@ export class GameEngineV2 {
   // Swing/drop mechanics
   private swingTime: number = 0;
   private swingPhase: number = 0;
-  private swingAmplitude: number = 140;
-  private swingSpeed: number = 0.06;
+  private swingAmplitude: number = 160;
+  private swingSpeed: number = 1.6; // radians/sec
   private ropeLength: number = 140;
   private pivotX: number = 0;
   private pivotY: number = 0;
   private isDropping: boolean = false;
   private dropVelocity: number = 0;
+  private gravity: number = 2000; // px/sec^2
+
+  private totalMass: number = 0;
+  private centerOfMassX: number = 0;
+  private idealCenterX: number = 0;
+  private towerRotation: number = 0;
+  private towerAngularVelocity: number = 0;
+  private swayFactor: number = 0.0012;
+  private swayDamping: number = 0.92;
+  private maxRotation: number = Math.PI / 6; // 30deg
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -111,6 +121,10 @@ export class GameEngineV2 {
     this.speed = GAME_CONFIG.initialSpeed;
     this.state = GameState.PLAYING;
     this.cameraY = 0;
+    this.totalMass = 0;
+    this.centerOfMassX = 0;
+    this.towerRotation = 0;
+    this.towerAngularVelocity = 0;
     this.onScoreUpdate(0);
 
     const baseBlock: Block = {
@@ -121,6 +135,8 @@ export class GameEngineV2 {
       emoji: '',
     };
     this.blocks.push(baseBlock);
+    this.idealCenterX = baseBlock.x + baseBlock.width / 2;
+    this.updateCenterOfMass();
 
     this.spawnNextBlock();
   }
@@ -139,7 +155,7 @@ export class GameEngineV2 {
     this.swingTime = 0;
     this.swingPhase = Math.random() * Math.PI * 2;
     this.swingAmplitude = Math.min(220, 120 + this.score * 2);
-    this.swingSpeed = 0.05 + this.score * 0.002;
+    this.swingSpeed = 1.6 + this.score * 0.05;
     this.ropeLength = 140;
     this.pivotX = prevBlock.x + prevBlock.width / 2;
     this.pivotY = baseY - this.ropeLength;
@@ -222,6 +238,7 @@ export class GameEngineV2 {
     this.score++;
     this.onScoreUpdate(this.score);
     this.speed = Math.min(GAME_CONFIG.maxSpeed, GAME_CONFIG.initialSpeed + (this.score * GAME_CONFIG.speedIncrement));
+    this.updateCenterOfMass();
     this.spawnNextBlock();
   }
 
@@ -256,16 +273,16 @@ export class GameEngineV2 {
     this.onGameOver(this.score);
   }
 
-  private update(delta: number) {
+  private update(deltaSeconds: number) {
     if (this.state === GameState.PLAYING && this.currentBlock) {
       if (!this.isDropping) {
-        this.swingTime += delta;
+        this.swingTime += deltaSeconds;
         const swingX = this.pivotX + this.swingAmplitude * Math.sin(this.swingTime * this.swingSpeed + this.swingPhase);
         this.currentBlock.x = swingX - this.currentBlock.width / 2;
         this.currentBlock.y = this.pivotY + this.ropeLength;
       } else {
-        this.dropVelocity += 0.8 * delta;
-        this.currentBlock.y += this.dropVelocity * delta * 2.4;
+        this.dropVelocity += this.gravity * deltaSeconds;
+        this.currentBlock.y += this.dropVelocity * deltaSeconds;
         const prevBlock = this.blocks[this.blocks.length - 1];
         const targetY = prevBlock.y - GAME_CONFIG.blockHeight;
         if (this.currentBlock.y >= targetY) {
@@ -278,9 +295,9 @@ export class GameEngineV2 {
 
     for (let i = this.debris.length - 1; i >= 0; i--) {
       const d = this.debris[i];
-      d.y += (d.vy || 0) * delta;
-      d.vy = (d.vy || 0) + 0.5 * delta;
-      d.r = (d.r || 0) + 0.1 * delta;
+      d.y += (d.vy || 0) * deltaSeconds;
+      d.vy = (d.vy || 0) + 0.5 * deltaSeconds * 60;
+      d.r = (d.r || 0) + 0.1 * deltaSeconds * 60;
       if (d.y > this.canvas.height + 100) {
         this.debris.splice(i, 1);
       }
@@ -288,8 +305,8 @@ export class GameEngineV2 {
 
     for (let i = this.floatingTexts.length - 1; i >= 0; i--) {
       const ft = this.floatingTexts[i];
-      ft.y -= 1 * delta;
-      ft.life -= delta;
+      ft.y -= 1 * deltaSeconds * 60;
+      ft.life -= deltaSeconds * 60;
       ft.opacity = ft.life / 30;
       if (ft.life <= 0) {
         this.floatingTexts.splice(i, 1);
@@ -299,7 +316,16 @@ export class GameEngineV2 {
     const targetY = (this.blocks.length * GAME_CONFIG.blockHeight) - (this.canvas.height / 2);
     const safeTargetY = Math.max(0, targetY);
     if (safeTargetY > this.cameraY) {
-      this.cameraY += (safeTargetY - this.cameraY) * 0.1 * delta;
+      this.cameraY += (safeTargetY - this.cameraY) * 0.1 * deltaSeconds * 60;
+    }
+
+    const offset = this.centerOfMassX - this.idealCenterX;
+    this.towerAngularVelocity += offset * this.swayFactor * deltaSeconds * 60;
+    this.towerRotation += this.towerAngularVelocity * deltaSeconds;
+    this.towerAngularVelocity *= Math.pow(this.swayDamping, deltaSeconds * 60);
+
+    if (Math.abs(this.towerRotation) > this.maxRotation) {
+      this.gameOver();
     }
   }
 
@@ -331,7 +357,7 @@ export class GameEngineV2 {
     this.ctx.save();
     this.ctx.translate(0, this.cameraY);
 
-    // Rope
+    // Rope and falling block (not affected by tower sway)
     if (this.currentBlock && !this.isDropping) {
       this.ctx.strokeStyle = 'rgba(255,255,255,0.25)';
       this.ctx.lineWidth = 2;
@@ -340,12 +366,31 @@ export class GameEngineV2 {
       this.ctx.lineTo(this.currentBlock.x + this.currentBlock.width / 2, this.currentBlock.y);
       this.ctx.stroke();
     }
-
-    this.blocks.forEach(b => this.drawBlock(b));
-    this.debris.forEach(d => this.drawBlock(d, true));
     if (this.currentBlock) {
       this.drawBlock(this.currentBlock);
     }
+
+    // Tower sway transform for placed blocks and debris
+    const pivotX = this.idealCenterX;
+    const pivotY = this.blocks[0]?.y + GAME_CONFIG.blockHeight || 0;
+    this.ctx.save();
+    this.ctx.translate(pivotX, pivotY);
+    this.ctx.rotate(this.towerRotation);
+    this.ctx.translate(-pivotX, -pivotY);
+    this.blocks.forEach(b => this.drawBlock(b));
+    this.debris.forEach(d => this.drawBlock(d, true));
+    this.floatingTexts.forEach(ft => {
+      this.ctx.globalAlpha = Math.max(0, Math.min(1, ft.opacity));
+      this.ctx.fillStyle = COLORS.accentGold;
+      this.ctx.font = 'bold 24px sans-serif';
+      this.ctx.textAlign = 'center';
+      this.ctx.shadowColor = 'black';
+      this.ctx.shadowBlur = 4;
+      this.ctx.fillText(ft.text, ft.x + (this.currentBlock?.width || 100) / 2, ft.y);
+      this.ctx.shadowBlur = 0;
+    });
+    this.ctx.globalAlpha = 1.0;
+    this.ctx.restore();
 
     if (this.lastPlacement) {
       const elapsed = Date.now() - this.lastPlacement.time;
@@ -364,18 +409,6 @@ export class GameEngineV2 {
         this.ctx.restore();
       }
     }
-
-    this.floatingTexts.forEach(ft => {
-      this.ctx.globalAlpha = Math.max(0, Math.min(1, ft.opacity));
-      this.ctx.fillStyle = COLORS.accentGold;
-      this.ctx.font = 'bold 24px sans-serif';
-      this.ctx.textAlign = 'center';
-      this.ctx.shadowColor = 'black';
-      this.ctx.shadowBlur = 4;
-      this.ctx.fillText(ft.text, ft.x + (this.currentBlock?.width || 100) / 2, ft.y);
-      this.ctx.shadowBlur = 0;
-    });
-    this.ctx.globalAlpha = 1.0;
 
     this.ctx.restore();
   }
@@ -492,11 +525,28 @@ export class GameEngineV2 {
     const now = performance.now();
     const deltaMs = Math.min(50, now - this.lastFrameTime);
     this.lastFrameTime = now;
-    const delta = deltaMs / 16.6667;
-    this.update(delta);
+    const deltaSeconds = deltaMs / 1000;
+    this.update(deltaSeconds);
     this.draw();
     this.animationId = requestAnimationFrame(this.loop);
   };
+
+  private updateCenterOfMass() {
+    if (this.blocks.length === 0) {
+      this.totalMass = 0;
+      this.centerOfMassX = this.idealCenterX;
+      return;
+    }
+    let massSum = 0;
+    let weightedX = 0;
+    this.blocks.forEach(block => {
+      const mass = block.width;
+      massSum += mass;
+      weightedX += mass * (block.x + block.width / 2);
+    });
+    this.totalMass = massSum;
+    this.centerOfMassX = massSum ? weightedX / massSum : this.idealCenterX;
+  }
 
   public cleanup() {
     cancelAnimationFrame(this.animationId);
