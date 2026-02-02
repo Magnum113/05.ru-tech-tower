@@ -27,6 +27,20 @@ export default function DesignShowcase() {
     document.title = 'Page For Design — 05.ru Tech Tower';
   }, []);
 
+  React.useEffect(() => {
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevBodyTouch = document.body.style.touchAction;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'auto';
+    document.body.style.touchAction = 'auto';
+    document.documentElement.style.overflow = 'auto';
+    return () => {
+      document.body.style.overflow = prevBodyOverflow;
+      document.body.style.touchAction = prevBodyTouch;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#0b0f1a] text-white">
       <div className="mx-auto w-full max-w-6xl px-5 py-10 space-y-12">
