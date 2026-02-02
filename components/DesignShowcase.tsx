@@ -149,19 +149,17 @@ export default function DesignShowcase() {
         <section className="rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/70 space-y-3">
           <h2 className="text-lg font-black text-white">Короткий гайд для дизайнера</h2>
           <ul className="grid gap-2">
-            <li>• Работай от двух артбордов: Desktop 1920×1080 и Mobile 375×812 (или 375×800).</li>
-            <li>• Сохраняем композицию и порядок блоков, меняем размеры/отступы: на мобилке всё в одну колонку.</li>
-            <li>• Карточки: Desktop 460–560px по ширине, Mobile ≈343px (375px минус боковые паддинги по 16px).</li>
-            <li>• Внутренние отступы: Desktop 20–24px, Mobile 16–20px; расстояния между блоками 16–24px.</li>
-            <li>• Кнопки: Desktop высота 52px, Mobile 48px; текст 14–16px, кнопки во всю ширину карточки.</li>
-            <li>• Игровой Canvas всегда во весь экран; оверлеи центрируются по горизонтали, с запасом по краям 16–24px.</li>
+            <li>• Работай от двух артбордов: Desktop и Mobile.</li>
+            <li>• Сохраняем композицию и порядок блоков, на мобилке всё в одну колонку.</li>
+            <li>• Карточки центрируем; на мобилке тянем почти на всю ширину экрана.</li>
+            <li>• На мобилке уплотняем отступы и расстояния между блоками.</li>
+            <li>• Кнопки — во всю ширину карточки, с одной визуальной высотой.</li>
+            <li>• Игровой Canvas всегда во весь экран; оверлеи центрируются по горизонтали, с безопасными боковыми полями.</li>
           </ul>
         </section>
 
         <Section title="Онбординг — Шаг 1 (история)">
           <Card maxWidth="max-w-md">
-            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
-            <p className="text-xs text-white/50 mb-3">Кнопки: Desktop высота 52px, Mobile 48px.</p>
             <div className="text-center space-y-4">
               <div>
                 <h3 className="text-2xl font-black">Высокие Технологии</h3>
@@ -182,8 +180,6 @@ export default function DesignShowcase() {
 
         <Section title="Онбординг — Шаг 2 (правила и награды)">
           <Card maxWidth="max-w-md">
-            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
-            <p className="text-xs text-white/50 mb-3">Кнопки: Desktop высота 52px, Mobile 48px.</p>
             <div className="space-y-4">
               <div className="text-center">
                 <p className="text-xs uppercase tracking-widest text-white/50">Шаг 2 из 2</p>
@@ -215,7 +211,6 @@ export default function DesignShowcase() {
         <Section title="HUD и прогресс награды (во время игры)">
           <div className="grid gap-4 md:grid-cols-2">
             <Card maxWidth="max-w-md">
-              <p className="text-xs text-white/50 mb-3">Размеры HUD: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-white/60">Этаж</p>
@@ -255,7 +250,6 @@ export default function DesignShowcase() {
             <div className="space-y-2">
               <p className="text-xs uppercase tracking-widest text-white/50">Состояние (комментарий): все награды</p>
               <Card maxWidth="max-w-md">
-                <p className="text-xs text-white/50 mb-2">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
                 <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/70 backdrop-blur">
                   Все награды получены. Продолжай строить башню!
                 </div>
@@ -266,7 +260,6 @@ export default function DesignShowcase() {
 
         <Section title="Фон игры (звёзды и полумесяцы)">
           <Card maxWidth="max-w-4xl">
-            <p className="text-xs text-white/50 mb-3">Размеры: фон занимает весь экран (Desktop 1920×1080, Mobile 375×812+ по высоте устройства).</p>
             <div className="space-y-3 text-sm text-white/70">
               <p>
                 В игре фон рисуется на Canvas (градиент + мерцающие звёзды + полумесяцы). Это не DOM‑элемент, поэтому ниже — макет‑подсказка и описание для дизайнера.
@@ -305,7 +298,6 @@ export default function DesignShowcase() {
 
         <Section title="Коробки и их состояния (дизайн блоков)">
           <Card maxWidth="max-w-4xl">
-            <p className="text-xs text-white/50 mb-3">Размеры блоков: Desktop 220×70px (1920×1080), Mobile 220×70px (375px), обрезки и осколки — пропорционально.</p>
             <div className="space-y-4 text-sm text-white/70">
               <p>Блоки рисуются на Canvas как «картонные» коробки: светлая верхняя грань, тёмная боковая, «скотч» по центру и лёгкие линии гофры.</p>
               <div className="grid gap-4 md:grid-cols-3">
@@ -336,8 +328,6 @@ export default function DesignShowcase() {
 
         <Section title="Экран результата (есть очки)">
           <Card maxWidth="max-w-lg">
-            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 520×auto (1920×1080), Mobile 343×auto (375px).</p>
-            <p className="text-xs text-white/50 mb-3">Кнопки: Desktop высота 52px, Mobile 48px.</p>
             <div className="space-y-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">Благотворительность</p>
@@ -377,8 +367,6 @@ export default function DesignShowcase() {
 
         <Section title="Экран результата (очков 0)">
           <Card maxWidth="max-w-md">
-            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
-            <p className="text-xs text-white/50 mb-3">Кнопки: Desktop высота 52px, Mobile 48px.</p>
             <div className="space-y-3 text-center">
               <h3 className="text-2xl font-black uppercase">Башня упала!</h3>
               <p className="text-white/60">Высота: <span className="text-[#FF2C00] font-black">0</span></p>
@@ -392,7 +380,6 @@ export default function DesignShowcase() {
 
         <Section title="Экран результата (новый рекорд — отдельное состояние)">
           <Card maxWidth="max-w-md">
-            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 480×auto (1920×1080), Mobile 343×auto (375px).</p>
             <div className="space-y-3 text-center">
               <div className="rounded-full bg-yellow-400/10 text-yellow-300 px-4 py-2 text-xs font-bold inline-flex items-center justify-center">НОВЫЙ РЕКОРД!</div>
             </div>
@@ -401,8 +388,6 @@ export default function DesignShowcase() {
 
         <Section title="Таблица лидеров (с результатами)">
           <Card maxWidth="max-w-lg">
-            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 520×auto (1920×1080), Mobile 343×auto (375px).</p>
-            <p className="text-xs text-white/50 mb-3">Кнопка «Назад»: Desktop высота 32–36px, Mobile 32px.</p>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
@@ -436,7 +421,6 @@ export default function DesignShowcase() {
 
         <Section title="Таблица лидеров (пустая)">
           <Card maxWidth="max-w-lg">
-            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 520×auto (1920×1080), Mobile 343×auto (375px).</p>
             <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
               Лидеров пока нет. Сыграй первым и зафиксируй результат.
             </p>
@@ -445,7 +429,6 @@ export default function DesignShowcase() {
 
         <Section title="Всплывающие тексты в игре">
           <Card maxWidth="max-w-lg">
-            <p className="text-xs text-white/50 mb-3">Размеры блока: Desktop 520×auto (1920×1080), Mobile 343×auto (375px). Плашки: Desktop высота 28px, Mobile 24px.</p>
             <div className="space-y-2 text-sm text-white/70">
               <p className="font-semibold text-white">Perfect‑сообщения:</p>
               <div className="flex flex-wrap gap-2">
@@ -461,7 +444,6 @@ export default function DesignShowcase() {
 
         <Section title="Тексты (список для копирайтера с контекстом)">
           <Card maxWidth="max-w-4xl">
-            <p className="text-xs text-white/50 mb-3">Размеры: Desktop 900×auto (1920×1080), Mobile 343×auto (375px).</p>
             <div className="space-y-6 text-sm text-white/70">
               <div>
                 <p className="text-xs uppercase tracking-widest text-white/50">HUD (игра)</p>
