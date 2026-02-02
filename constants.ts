@@ -41,7 +41,7 @@ export const getEmojiForLevel = (level: number): string => {
 };
 
 export const PROMO_REWARDS = [
-  { score: 10, code: 'RMLD', discount: 1000 },
-  { score: 20, code: 'HJKL', discount: 1500 },
-  { score: 30, code: 'KLSD', discount: 2000 },
+  { score: 10, code: 'RMLD', discount: 500 },
+  { score: 20, code: 'HJKL', discount: 1000 },
+  { score: 30, code: 'KLSD', discount: 1500 },
 ];

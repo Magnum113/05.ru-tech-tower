@@ -228,18 +228,27 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                   <div
                     key={`${entry.nickname}-${entry.score}-${entry.id ?? index}`}
                     className={`flex items-center justify-between rounded-2xl border px-4 py-3 ${
-                      index === 0
-                        ? 'border-yellow-400/30 bg-yellow-400/10 text-yellow-200'
-                        : 'border-white/10 bg-white/5 text-white'
+                      entry.nickname === nickname
+                        ? 'border-[#FF2C00]/40 bg-[#FF2C00]/15 text-white shadow-[0_0_0_1px_rgba(255,44,0,0.25)]'
+                        : index === 0
+                          ? 'border-yellow-400/30 bg-yellow-400/10 text-yellow-200'
+                          : 'border-white/10 bg-white/5 text-white'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-black ${
-                        index === 0 ? 'bg-yellow-400/20 text-yellow-200' : 'bg-white/10 text-white/70'
+                        entry.nickname === nickname
+                          ? 'bg-[#FF2C00]/20 text-white'
+                          : index === 0
+                            ? 'bg-yellow-400/20 text-yellow-200'
+                            : 'bg-white/10 text-white/70'
                       }`}>
                         {index + 1}
                       </div>
-                      <span className="font-semibold">{entry.nickname}</span>
+                      <span className="font-semibold">
+                        {entry.nickname}
+                        {entry.nickname === nickname && <span className="ml-2 text-[10px] uppercase tracking-widest text-white/60">это вы</span>}
+                      </span>
                     </div>
                     <div className="text-sm font-bold text-white/80">{entry.score}</div>
                   </div>
