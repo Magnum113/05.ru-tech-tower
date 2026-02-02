@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/pagefordesign", "destination": "/" },
+    { "source": "/pagefordesign/", "destination": "/" }
+  ]
+}
