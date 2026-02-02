@@ -178,11 +178,54 @@ export default function DesignShowcase() {
                 </div>
               </div>
               <ul className="grid gap-1 text-xs text-white/60">
-                <li>Градиент: сверху #15252B → снизу #0F1B20.</li>
-                <li>Звёзды: мелкие белые точки с мягким мерцанием.</li>
-                <li>Полумесяцы: белые, мягкие, с плавным мерцанием.</li>
-                <li>Количество полумесяцев: ~7.</li>
+                <li>Текущее: градиент #15252B → #0F1B20, звёзды и полумесяцы.</li>
               </ul>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/70 space-y-2">
+                <p className="text-white/80 font-semibold">Что можно сделать:</p>
+                <ul className="grid gap-1">
+                  <li>• Заменить градиент на любой другой или сделать однотонный фон.</li>
+                  <li>• Звёзды и луна — отдельные элементы, их можно заменить на любые декоративные.</li>
+                  <li>• Можно упростить фон до плоской заливки или сделать сложный атмосферный градиент.</li>
+                </ul>
+              </div>
+            </div>
+          </Card>
+        </Section>
+
+        <Section title="Коробки и их состояния (дизайн блоков)">
+          <Card maxWidth="max-w-4xl">
+            <div className="space-y-4 text-sm text-white/70">
+              <p>Блоки рисуются на Canvas как «картонные» коробки: светлая верхняя грань, тёмная боковая, «скотч» по центру и лёгкие линии гофры.</p>
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-[#0f1b20] p-4 text-center">
+                  <p className="text-xs uppercase tracking-widest text-white/50 mb-2">Основной блок</p>
+                  <div className="mx-auto h-20 w-32 rounded bg-[#CB9F7F] relative">
+                    <div className="absolute inset-x-0 -top-2 h-2 bg-[#DCC0A6] skew-x-[-20deg]" />
+                    <div className="absolute -right-3 inset-y-0 w-3 bg-[#B08363] skew-y-[-20deg]" />
+                    <div className="absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 bg-[#E9D4BD]" />
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-[#0f1b20] p-4 text-center">
+                  <p className="text-xs uppercase tracking-widest text-white/50 mb-2">Обрезанный блок</p>
+                  <div className="mx-auto h-20 w-24 rounded bg-[#CB9F7F] relative">
+                    <div className="absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 bg-[#E9D4BD]" />
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-[#0f1b20] p-4 text-center">
+                  <p className="text-xs uppercase tracking-widest text-white/50 mb-2">Падающий осколок</p>
+                  <div className="mx-auto h-16 w-16 rounded bg-[#B08363] relative rotate-6">
+                    <div className="absolute inset-y-0 left-1/2 w-3 -translate-x-1/2 bg-[#E9D4BD]" />
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/70 space-y-2">
+                <p className="text-white/80 font-semibold">Состояния:</p>
+                <ul className="grid gap-1">
+                  <li>• Perfect: блок точно совпал по ширине.</li>
+                  <li>• Cut: лишняя часть отрезается и падает как осколок.</li>
+                  <li>• Debris: осколки падают с вращением.</li>
+                </ul>
+              </div>
             </div>
           </Card>
         </Section>
