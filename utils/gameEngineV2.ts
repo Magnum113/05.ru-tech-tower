@@ -30,11 +30,11 @@ export class GameEngineV2 {
   private floatingTexts: FloatingText[] = [];
 
   private currentBlock: Block | null = null;
-  private speed: number = GAME_CONFIG.initialSpeed;
+  private horizontalSpeed: number = GAME_CONFIG.initialSpeed * 60;
+  private direction: number = 1;
   private score: number = 0;
   private cameraY: number = 0;
   private state: GameState = GameState.START;
-  private perfectStreak: number = 0;
   private lastPlacement: { x: number; y: number; time: number } | null = null;
 
   private onScoreUpdate: (score: number) => void;
@@ -42,11 +42,7 @@ export class GameEngineV2 {
   private animationId: number = 0;
   private lastFrameTime: number = performance.now();
 
-  // Swing/drop mechanics
-  private swingTime: number = 0;
-  private swingPhase: number = 0;
-  private swingAmplitude: number = 160;
-  private swingSpeed: number = 1.6; // radians/sec
+  // Drop mechanics
   private ropeLength: number = 140;
   private pivotX: number = 0;
   private pivotY: number = 0;
@@ -58,10 +54,9 @@ export class GameEngineV2 {
   private centerOfMassX: number = 0;
   private idealCenterX: number = 0;
   private towerRotation: number = 0;
-  private towerAngularVelocity: number = 0;
-  private swayFactor: number = 0.0012;
-  private swayDamping: number = 0.92;
-  private maxRotation: number = Math.PI / 6; // 30deg
+  private visualSwayFactor: number = 0.0006;
+  private visualMaxRotation: number = 0.06;
+  private visualSmoothing: number = 0.08;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -117,14 +112,12 @@ export class GameEngineV2 {
     this.debris = [];
     this.floatingTexts = [];
     this.score = 0;
-    this.perfectStreak = 0;
-    this.speed = GAME_CONFIG.initialSpeed;
+    this.horizontalSpeed = GAME_CONFIG.initialSpeed * 60;
     this.state = GameState.PLAYING;
     this.cameraY = 0;
     this.totalMass = 0;
     this.centerOfMassX = 0;
     this.towerRotation = 0;
-    this.towerAngularVelocity = 0;
     this.onScoreUpdate(0);
 
     const baseBlock: Block = {
@@ -144,18 +137,17 @@ export class GameEngineV2 {
   private spawnNextBlock() {
     const prevBlock = this.blocks[this.blocks.length - 1];
     const baseY = prevBlock.y - GAME_CONFIG.blockHeight - 40;
+    const startOnLeft = Math.random() > 0.5;
+    const startX = startOnLeft ? 0 : this.canvas.width - prevBlock.width;
+    this.direction = startOnLeft ? 1 : -1;
     this.currentBlock = {
-      x: prevBlock.x,
+      x: startX,
       y: baseY,
       width: prevBlock.width,
       color: COLORS.boxMain,
       emoji: '',
     };
 
-    this.swingTime = 0;
-    this.swingPhase = Math.random() * Math.PI * 2;
-    this.swingAmplitude = Math.min(220, 120 + this.score * 2);
-    this.swingSpeed = 1.6 + this.score * 0.05;
     this.ropeLength = 140;
     this.pivotX = prevBlock.x + prevBlock.width / 2;
     this.pivotY = baseY - this.ropeLength;
@@ -190,14 +182,7 @@ export class GameEngineV2 {
       newX = prevBlock.x;
       newWidth = prevBlock.width;
       this.handlePerfectMatch(newX, current.y);
-
-      if (this.perfectStreak > 0 && this.perfectStreak % GAME_CONFIG.comboThreshold === 0) {
-        newWidth = Math.min(newWidth + GAME_CONFIG.widthBonus, GAME_CONFIG.baseWidth * 1.5);
-        newX = prevBlock.x - (GAME_CONFIG.widthBonus / 2);
-        this.addFloatingText('БОНУС ШИРИНЫ!', this.canvas.width / 2, this.canvas.height / 2 - 100);
-      }
     } else {
-      this.perfectStreak = 0;
       newWidth = current.width - absDist;
 
       let debrisX, debrisWidth;
@@ -237,13 +222,13 @@ export class GameEngineV2 {
 
     this.score++;
     this.onScoreUpdate(this.score);
-    this.speed = Math.min(GAME_CONFIG.maxSpeed, GAME_CONFIG.initialSpeed + (this.score * GAME_CONFIG.speedIncrement));
+    const nextSpeed = (GAME_CONFIG.initialSpeed * 60) + (this.score * GAME_CONFIG.speedIncrement * 60);
+    this.horizontalSpeed = Math.min(GAME_CONFIG.maxSpeed * 60, nextSpeed);
     this.updateCenterOfMass();
     this.spawnNextBlock();
   }
 
   private handlePerfectMatch(x: number, y: number) {
-    this.perfectStreak++;
     const msg = PERFECT_MESSAGES[Math.floor(Math.random() * PERFECT_MESSAGES.length)];
     this.addFloatingText(msg, x + Math.random() * 50, y);
   }
@@ -276,9 +261,14 @@ export class GameEngineV2 {
   private update(deltaSeconds: number) {
     if (this.state === GameState.PLAYING && this.currentBlock) {
       if (!this.isDropping) {
-        this.swingTime += deltaSeconds;
-        const swingX = this.pivotX + this.swingAmplitude * Math.sin(this.swingTime * this.swingSpeed + this.swingPhase);
-        this.currentBlock.x = swingX - this.currentBlock.width / 2;
+        this.currentBlock.x += this.horizontalSpeed * this.direction * deltaSeconds;
+        if (this.currentBlock.x <= 0) {
+          this.currentBlock.x = 0;
+          this.direction = 1;
+        } else if (this.currentBlock.x + this.currentBlock.width >= this.canvas.width) {
+          this.currentBlock.x = this.canvas.width - this.currentBlock.width;
+          this.direction = -1;
+        }
         this.currentBlock.y = this.pivotY + this.ropeLength;
       } else {
         this.dropVelocity += this.gravity * deltaSeconds;
@@ -320,13 +310,8 @@ export class GameEngineV2 {
     }
 
     const offset = this.centerOfMassX - this.idealCenterX;
-    this.towerAngularVelocity += offset * this.swayFactor * deltaSeconds * 60;
-    this.towerRotation += this.towerAngularVelocity * deltaSeconds;
-    this.towerAngularVelocity *= Math.pow(this.swayDamping, deltaSeconds * 60);
-
-    if (Math.abs(this.towerRotation) > this.maxRotation) {
-      this.gameOver();
-    }
+    const targetRotation = Math.max(-this.visualMaxRotation, Math.min(this.visualMaxRotation, offset * this.visualSwayFactor));
+    this.towerRotation = this.towerRotation + (targetRotation - this.towerRotation) * this.visualSmoothing;
   }
 
   private draw() {
@@ -362,7 +347,7 @@ export class GameEngineV2 {
       this.ctx.strokeStyle = 'rgba(255,255,255,0.25)';
       this.ctx.lineWidth = 2;
       this.ctx.beginPath();
-      this.ctx.moveTo(this.pivotX, this.pivotY);
+      this.ctx.moveTo(this.currentBlock.x + this.currentBlock.width / 2, this.pivotY);
       this.ctx.lineTo(this.currentBlock.x + this.currentBlock.width / 2, this.currentBlock.y);
       this.ctx.stroke();
     }
