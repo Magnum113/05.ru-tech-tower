@@ -25,11 +25,12 @@ export const GAME_CONFIG = {
 };
 
 export const PERFECT_MESSAGES = [
+  "ВАУ",
+  "Молодец",
   "Идеально!",
-  "Красавчик!",
-  "Супер!",
-  "Чётко!",
-  "Мастер!",
+  "Ровненько!",
+  "Больше баллов!",
+  "Удачно!",
 ];
 
 export const getEmojiForLevel = (level: number): string => {

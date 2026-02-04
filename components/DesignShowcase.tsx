@@ -162,17 +162,17 @@ export default function DesignShowcase() {
           <Card maxWidth="max-w-md">
             <div className="text-center space-y-4">
               <div>
-                <h3 className="text-2xl font-black">Высокие Технологии</h3>
-                <p className="text-3xl font-black text-[#FF2C00]">05.RU</p>
+                <p className="text-sm font-black text-white/90 mb-2">Рамадан — время заботы и добрых дел</p>
+                <h3 className="text-2xl font-black">Башня доброты</h3>
               </div>
               <div className="space-y-2 text-sm text-white/70">
-                <p>🌙 В Рамадан мы хотим доставить радость в каждый дом!</p>
-                <p>Твоя задача — построить самую высокую башню из подарков и техники. Чем выше башня — тем больше людей получат свои заказы к празднику.</p>
-                <p>Каждый набранный балл мы переводим в рубли и отправляем на благотворительность в конце Рамадана.</p>
+                <p>Эта игра — ваш небольшой, но значимый вклад. Постройте ровную и высокую башню из коробок и зарабатывайте баллы.</p>
+                <p>В конце месяца Рамадан все набранные баллы будут направлены на благотворительные цели.</p>
+                <p>Будьте терпеливы, и всё обязательно <em>сложится</em>.</p>
               </div>
               <div className="grid gap-2">
-                <button className="w-full rounded-xl bg-[#FF2C00] px-5 py-3 text-sm font-bold">Начать стройку</button>
-                <button className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80">Таблица лидеров</button>
+                <button className="w-full rounded-xl bg-[#FF2C00] px-5 py-3 text-sm font-bold">Построить башню!</button>
+                <button className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80">Посмотреть рейтинг игроков</button>
               </div>
             </div>
           </Card>
@@ -186,10 +186,10 @@ export default function DesignShowcase() {
                 <h3 className="text-2xl font-black">Правила и награды</h3>
               </div>
               <div className="rounded-xl border border-white/5 bg-[#1a2f36] p-4 space-y-3 text-sm text-white/70">
-                <p className="text-xs uppercase tracking-widest text-white/60">Как играть:</p>
-                <p>1. Тапай по экрану, когда ящик окажется над башней.</p>
-                <p>2. Будь точен! Лишние края обрезаются.</p>
-                <p>3. Делай идеальные укладки подряд для бонусов.</p>
+                <p className="text-xs uppercase tracking-widest text-white/60">Какие же правила?</p>
+                <p>1. «Отпускайте» ящик, когда он окажется над башней, одним нажатием на экран</p>
+                <p>2. Старайтесь собирать башню ровно. Если края выйдут за границы, они будут обрезаны</p>
+                <p>3. Чем выше башня, тем больше баллов будет направлено на благотворительность</p>
               </div>
               <div className="rounded-xl border border-white/5 bg-[#101e23] p-4 space-y-2">
                 <p className="text-xs uppercase tracking-widest text-white/60">Награды за уровни</p>
@@ -251,7 +251,7 @@ export default function DesignShowcase() {
               <p className="text-xs uppercase tracking-widest text-white/50">Состояние (комментарий): все награды</p>
               <Card maxWidth="max-w-md">
                 <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/70 backdrop-blur">
-                  Все награды получены. Продолжай строить башню!
+                  Все награды получены. Продолжайте играть!
                 </div>
               </Card>
             </div>
@@ -331,7 +331,7 @@ export default function DesignShowcase() {
             <div className="space-y-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-white/50">Благотворительность</p>
-                <h3 className="text-2xl font-black">Твоя игра = добро</h3>
+                <h3 className="text-2xl font-black">Каждая игра — шаг к добру</h3>
               </div>
               <div className="rounded-full bg-yellow-400/10 text-yellow-300 px-4 py-2 text-xs font-bold inline-flex items-center justify-center">
                 НОВЫЙ РЕКОРД!
@@ -345,15 +345,15 @@ export default function DesignShowcase() {
                   <span className="text-xs uppercase tracking-widest text-white/60">Пожертвование</span>
                   <span className="font-black text-[#FF2C00]">23 ₽</span>
                 </div>
-                <p className="text-xs text-white/60">Мы отправим такую же сумму в рублях на благотворительность в конце Рамадана.</p>
+                <p className="text-xs text-white/60">В конце Рамадана эта сумма будет направлена на благотворительность</p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
-                <p className="font-semibold text-white">Каждое очко = 1 ₽ в копилку добра.</p>
-                <p>Сыграй ещё раз, чтобы увеличить сумму пожертвования.</p>
+                <p className="font-semibold text-white">Каждый балл — вклад в копилку добра.</p>
+                <p>Можно сыграть ещё раз и увеличить сумму пожертвования</p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
-                <p className="font-semibold text-white">Награда за 20 очков</p>
-                <p>Ваша скидка на 1000 ₽.</p>
+                <p className="font-semibold text-white">Ваша награда:</p>
+                <p>Скидка на 1000 ₽ при покупке от 25 000 ₽</p>
                 <div className="mt-3 rounded-xl border border-dashed border-white/20 bg-black/40 p-3 text-center">
                   <p className="text-[10px] uppercase tracking-widest text-white/40">Промокод</p>
                   <p className="font-mono text-lg text-[#FF2C00]">HJKL</p>
@@ -361,8 +361,8 @@ export default function DesignShowcase() {
                 </div>
               </div>
               <div className="grid gap-2">
-                <button className="w-full rounded-xl bg-[#FF2C00] px-5 py-3 text-sm font-bold">Сыграть ещё раз и увеличить сумму</button>
-                <button className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80">Таблица лидеров</button>
+                <button className="w-full rounded-xl bg-[#FF2C00] px-5 py-3 text-sm font-bold">Сыграть ещё раз</button>
+                <button className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80">Посмотреть рейтинг игроков</button>
               </div>
             </div>
           </Card>
@@ -371,23 +371,24 @@ export default function DesignShowcase() {
         <Section title="Экран результата (очков 0)">
           <Card maxWidth="max-w-md">
             <div className="space-y-3 text-center">
-              <h3 className="text-2xl font-black uppercase">Башня упала!</h3>
+              <h3 className="text-2xl font-black uppercase">Ваша башня упала</h3>
+              <p className="text-white/60">Но можно попробовать ещё раз</p>
               <p className="text-white/60">Высота: <span className="text-[#FF2C00] font-black">0</span></p>
               <div className="grid gap-2">
                 <button className="w-full rounded-full bg-white px-5 py-3 text-sm font-bold text-[#15252B]">Попробовать снова</button>
-                <button className="w-full rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white/80">Таблица лидеров</button>
+                <button className="w-full rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white/80">Посмотреть рейтинг игроков</button>
               </div>
             </div>
           </Card>
         </Section>
 
-        <Section title="Таблица лидеров (с результатами)">
+        <Section title="Рейтинг игроков (с результатами)">
           <Card maxWidth="max-w-lg">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-white/50">Топ игроков</p>
-                  <h3 className="text-2xl font-black">Таблица лидеров</h3>
+                  <h3 className="text-2xl font-black">Рейтинг игроков</h3>
                 </div>
                 <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/70">Назад</button>
               </div>
@@ -414,10 +415,10 @@ export default function DesignShowcase() {
           </Card>
         </Section>
 
-        <Section title="Таблица лидеров (пустая)">
+        <Section title="Рейтинг игроков (пустой)">
           <Card maxWidth="max-w-lg">
             <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
-              Лидеров пока нет. Сыграй первым и зафиксируй результат.
+              Игроков в списке пока нет, но вы можете стать первым :)
             </p>
           </Card>
         </Section>
@@ -431,8 +432,6 @@ export default function DesignShowcase() {
                   <span key={msg} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">{msg}</span>
                 ))}
               </div>
-              <p className="font-semibold text-white mt-3">Бонусы:</p>
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">БОНУС ШИРИНЫ!</span>
             </div>
           </Card>
         </Section>
@@ -450,12 +449,13 @@ export default function DesignShowcase() {
               <div>
                 <p className="text-xs uppercase tracking-widest text-white/50">Онбординг шаг 1 (история)</p>
                 <ul className="mt-2 grid gap-2">
-                  <li>Высокие Технологии / 05.RU</li>
-                  <li>🌙 В Рамадан мы хотим доставить радость в каждый дом!</li>
-                  <li>Твоя задача — построить самую высокую башню из подарков и техники. Чем выше башня — тем больше людей получат свои заказы к празднику.</li>
-                  <li>Каждый набранный балл мы переводим в рубли и отправляем на благотворительность в конце Рамадана.</li>
-                  <li>Начать стройку</li>
-                  <li>Таблица лидеров</li>
+                  <li>Рамадан — время заботы и добрых дел</li>
+                  <li>Башня доброты</li>
+                  <li>Эта игра — ваш небольшой, но значимый вклад. Постройте ровную и высокую башню из коробок и зарабатывайте баллы.</li>
+                  <li>В конце месяца Рамадан все набранные баллы будут направлены на благотворительные цели.</li>
+                  <li>Будьте терпеливы, и всё обязательно <em>сложится</em>.</li>
+                  <li>Построить башню!</li>
+                  <li>Посмотреть рейтинг игроков</li>
                 </ul>
               </div>
               <div>
@@ -463,10 +463,10 @@ export default function DesignShowcase() {
                 <ul className="mt-2 grid gap-2">
                   <li>Шаг 2 из 2</li>
                   <li>Правила и награды</li>
-                  <li>Как играть:</li>
-                  <li>Тапай по экрану, когда ящик окажется над башней.</li>
-                  <li>Будь точен! Лишние края обрезаются.</li>
-                  <li>Делай идеальные укладки подряд для бонусов.</li>
+                  <li>Какие же правила?</li>
+                  <li>«Отпускайте» ящик, когда он окажется над башней, одним нажатием на экран</li>
+                  <li>Старайтесь собирать башню ровно. Если края выйдут за границы, они будут обрезаны</li>
+                  <li>Чем выше башня, тем больше баллов будет направлено на благотворительность</li>
                   <li>Награды за уровни</li>
                   <li>{'{score}'} очков</li>
                   <li>Скидка {'{discount}'} ₽</li>
@@ -478,8 +478,8 @@ export default function DesignShowcase() {
                 <p className="text-xs uppercase tracking-widest text-white/50">Лидерборд</p>
                 <ul className="mt-2 grid gap-2">
                   <li>Топ игроков</li>
-                  <li>Таблица лидеров</li>
-                  <li>Лидеров пока нет. Сыграй первым и зафиксируй результат.</li>
+                  <li>Рейтинг игроков</li>
+                  <li>Игроков в списке пока нет, но вы можете стать первым :)</li>
                   <li>это вы</li>
                   <li>Твой ник:</li>
                 </ul>
@@ -488,28 +488,29 @@ export default function DesignShowcase() {
                 <p className="text-xs uppercase tracking-widest text-white/50">Game Over (результат)</p>
                 <ul className="mt-2 grid gap-2">
                   <li>Благотворительность</li>
-                  <li>Твоя игра = добро</li>
+                  <li>Каждая игра — шаг к добру</li>
                   <li>Новый рекорд</li>
                   <li>Очки</li>
                   <li>Пожертвование</li>
-                  <li>Мы отправим такую же сумму в рублях на благотворительность в конце Рамадана.</li>
-                  <li>Каждое очко = 1 ₽ в копилку добра.</li>
-                  <li>Сыграй ещё раз, чтобы увеличить сумму пожертвования.</li>
-                  <li>Награда за {'{score}'} очков</li>
-                  <li>Ваша скидка на {'{discount}'} ₽.</li>
+                  <li>В конце Рамадана эта сумма будет направлена на благотворительность</li>
+                  <li>Каждый балл — вклад в копилку добра.</li>
+                  <li>Можно сыграть ещё раз и увеличить сумму пожертвования</li>
+                  <li>Ваша награда:</li>
+                  <li>Скидка на {'{discount}'} ₽ при покупке от 25 000 ₽</li>
                   <li>Промокод</li>
                   <li>СКОПИРОВАНО!</li>
-                  <li>Сыграть ещё раз и увеличить сумму</li>
+                  <li>Сыграть ещё раз</li>
+                  <li>Посмотреть рейтинг игроков</li>
                 </ul>
               </div>
               <div>
                 <p className="text-xs uppercase tracking-widest text-white/50">Game Over (нулевой счёт)</p>
                 <ul className="mt-2 grid gap-2">
-                  <li>Башня упала!</li>
+                  <li>Ваша башня упала</li>
+                  <li>Но можно попробовать ещё раз</li>
                   <li>Высота:</li>
-                  <li>НОВЫЙ РЕКОРД!</li>
                   <li>Попробовать снова</li>
-                  <li>Таблица лидеров</li>
+                  <li>Посмотреть рейтинг игроков</li>
                 </ul>
               </div>
               <div>
@@ -518,15 +519,49 @@ export default function DesignShowcase() {
                   <li>До награды</li>
                   <li>{'{n}'} этажей</li>
                   <li>Прогресс / Все награды</li>
-                  <li>Все награды получены. Продолжай строить башню!</li>
+                  <li>Все награды получены. Продолжайте играть!</li>
                 </ul>
               </div>
               <div>
                 <p className="text-xs uppercase tracking-widest text-white/50">Всплывающие тексты</p>
                 <ul className="mt-2 grid gap-2">
-                  <li>Идеально! / Красавчик! / Супер! / Чётко! / Мастер!</li>
-                  <li>БОНУС ШИРИНЫ!</li>
+                  <li>ВАУ / Молодец / Идеально! / Ровненько! / Больше баллов! / Удачно!</li>
                 </ul>
+              </div>
+            </div>
+          </Card>
+        </Section>
+
+        <Section title="Состояние игры (30 очков, игра продолжается)">
+          <Card maxWidth="max-w-4xl">
+            <div className="space-y-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-white/60">Этаж</p>
+                  <p className="text-4xl font-black">30</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs uppercase tracking-widest text-white/60">Рекорд</p>
+                  <p className="text-2xl font-bold text-yellow-400">30</p>
+                </div>
+              </div>
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#15252B] to-[#0F1B20] p-4">
+                <div className="absolute inset-0 opacity-30">
+                  <div className="absolute left-[12%] top-[18%] h-1.5 w-1.5 rounded-full bg-white/80" />
+                  <div className="absolute left-[30%] top-[32%] h-1 w-1 rounded-full bg-white/60" />
+                  <div className="absolute left-[55%] top-[22%] h-1.5 w-1.5 rounded-full bg-white/70" />
+                  <div className="absolute left-[72%] top-[38%] h-1 w-1 rounded-full bg-white/50" />
+                  <div className="absolute left-[85%] top-[26%] h-1.5 w-1.5 rounded-full bg-white/75" />
+                </div>
+                <div className="relative h-52 w-full">
+                  <div className="absolute bottom-0 left-1/2 h-44 w-24 -translate-x-1/2 rounded-2xl bg-[#CB9F7F] shadow-[0_10px_30px_rgba(0,0,0,0.35)]" />
+                  <div className="absolute bottom-2 left-1/2 h-36 w-20 -translate-x-1/2 rounded-2xl bg-[#CB9F7F]/90" />
+                  <div className="absolute bottom-4 left-1/2 h-28 w-16 -translate-x-1/2 rounded-2xl bg-[#CB9F7F]/80" />
+                  <div className="absolute bottom-6 left-1/2 h-20 w-12 -translate-x-1/2 rounded-2xl bg-[#CB9F7F]/70" />
+                </div>
+                <div className="mt-3 rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/80 backdrop-blur">
+                  Все награды получены. Продолжайте играть!
+                </div>
               </div>
             </div>
           </Card>

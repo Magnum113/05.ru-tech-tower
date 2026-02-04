@@ -81,22 +81,24 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
             {/* Header */}
             <div className="mb-6 relative">
               <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full"></div>
-              <h1 className="relative text-3xl font-black text-white italic tracking-tighter uppercase transform -skew-x-3">
-                Высокие Технологии
-                <span className="block text-[#FF2C00] text-4xl mt-1">05.RU</span>
+              <p className="relative text-sm font-black text-white/90 mb-3">
+                Рамадан — время заботы и добрых дел
+              </p>
+              <h1 className="relative text-3xl font-black text-white tracking-tight">
+                Башня доброты
               </h1>
             </div>
 
             {/* The Story */}
             <div className="mb-8 space-y-3 text-gray-300 text-sm leading-relaxed">
               <p>
-                🌙 <span className="text-yellow-400 font-bold">В Рамадан</span> мы хотим доставить радость в каждый дом!
+                Эта игра — ваш небольшой, но значимый вклад. Постройте ровную и высокую башню из коробок и зарабатывайте баллы.
               </p>
               <p>
-                Твоя задача — построить самую высокую башню из подарков и техники. Чем выше башня — тем больше людей получат свои заказы к празднику.
+                В конце месяца Рамадан все набранные баллы будут направлены на благотворительные цели.
               </p>
               <p>
-                Каждый набранный балл мы переводим в рубли и отправляем на благотворительность в конце Рамадана.
+                Будьте терпеливы, и всё обязательно <em>сложится</em>.
               </p>
             </div>
             
@@ -107,7 +109,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
             >
               <span className="flex items-center justify-center gap-2">
                 <Play size={20} fill="currentColor" />
-                Начать стройку
+                Построить башню!
               </span>
               <div className="absolute inset-0 rounded-xl border border-white/10"></div>
             </button>
@@ -117,7 +119,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
               className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
             >
               <Crown size={18} />
-              Таблица лидеров
+              Посмотреть рейтинг игроков
             </button>
           </div>
         </div>
@@ -135,18 +137,18 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
 
           {/* Instructions */}
           <div className="bg-[#1a2f36] rounded-xl p-4 mb-6 text-left space-y-3 border border-white/5">
-            <h3 className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2">Как играть:</h3>
+            <h3 className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2">Какие же правила?</h3>
             <div className="flex items-start gap-3">
               <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FF2C00] text-white flex items-center justify-center text-xs font-bold">1</span>
-              <p className="text-xs text-gray-400">Тапай по экрану, когда ящик окажется над башней.</p>
+              <p className="text-xs text-gray-400">«Отпускайте» ящик, когда он окажется над башней, одним нажатием на экран</p>
             </div>
             <div className="flex items-start gap-3">
               <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FF2C00] text-white flex items-center justify-center text-xs font-bold">2</span>
-              <p className="text-xs text-gray-400">Будь точен! Лишние края обрезаются.</p>
+              <p className="text-xs text-gray-400">Старайтесь собирать башню ровно. Если края выйдут за границы, они будут обрезаны</p>
             </div>
             <div className="flex items-start gap-3">
               <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FF2C00] text-white flex items-center justify-center text-xs font-bold">3</span>
-              <p className="text-xs text-gray-400">Делай идеальные укладки подряд для бонусов.</p>
+              <p className="text-xs text-gray-400">Чем выше башня, тем больше баллов будет направлено на благотворительность</p>
             </div>
           </div>
 
@@ -206,7 +208,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Топ игроков</p>
-                  <h2 className="text-2xl font-black text-white">Таблица лидеров</h2>
+                  <h2 className="text-2xl font-black text-white">Рейтинг игроков</h2>
                 </div>
               </div>
               <button
@@ -221,7 +223,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
             <div className="space-y-2">
               {entries.length === 0 ? (
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
-                  Лидеров пока нет. Сыграй первым и зафиксируй результат.
+                  Игроков в списке пока нет, но вы можете стать первым :)
                 </div>
               ) : (
                 entries.map((entry, index) => (
@@ -285,7 +287,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                   </div>
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Благотворительность</p>
-                    <h2 className="text-2xl font-black text-white">Твоя игра = добро</h2>
+                    <h2 className="text-2xl font-black text-white">Каждая игра — шаг к добру</h2>
                   </div>
                 </div>
                 {score.current >= score.best && (
@@ -305,15 +307,15 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                   <p className="text-[11px] uppercase tracking-widest text-white/50">Пожертвование</p>
                   <p className="text-4xl font-black text-[#FF2C00]">{donation} ₽</p>
                 </div>
-                <p className="mt-2 text-xs text-white/60">Мы отправим такую же сумму в рублях на благотворительность в конце Рамадана.</p>
+                <p className="mt-2 text-xs text-white/60">В конце Рамадана эта сумма будет направлена на благотворительность</p>
               </div>
 
               <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
                 <div className="flex items-start gap-3">
                   <Sparkles size={18} className="text-yellow-300 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-white">Каждое очко = 1 ₽ в копилку добра.</p>
-                    <p className="text-white/60">Сыграй ещё раз, чтобы увеличить сумму пожертвования.</p>
+                    <p className="font-semibold text-white">Каждый балл — вклад в копилку добра.</p>
+                    <p className="text-white/60">Можно сыграть ещё раз и увеличить сумму пожертвования</p>
                   </div>
                 </div>
               </div>
@@ -323,8 +325,8 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                   <div className="flex items-start gap-3">
                     <Crown size={18} className="text-yellow-300 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-white">Награда за {earnedReward.score} очков</p>
-                      <p className="text-white/60">Ваша скидка на {earnedReward.discount} ₽.</p>
+                      <p className="font-semibold text-white">Ваша награда:</p>
+                      <p className="text-white/60">Скидка на {earnedReward.discount} ₽ при покупке от 25 000 ₽</p>
                     </div>
                   </div>
                   <div className="mt-3 bg-black/40 rounded-xl p-3 border border-dashed border-white/20 relative group cursor-pointer transition-colors hover:bg-black/60" onClick={copyCode}>
@@ -348,7 +350,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                   disabled={gameOverCooldown}
                   className="w-full rounded-xl px-6 py-3 text-base font-bold transition-all bg-[#FF2C00] text-white hover:bg-[#ff3b12] hover:scale-[1.01] active:scale-95"
                 >
-                  Сыграть ещё раз и увеличить сумму
+                  Сыграть ещё раз
                 </button>
                 <button
                   onClick={onOpenLeaderboard}
@@ -356,7 +358,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                   className="w-full rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/70 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
                 >
                   <Crown size={16} />
-                  Таблица лидеров
+                  Посмотреть рейтинг игроков
                 </button>
               </div>
             </div>
@@ -367,7 +369,8 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
 
     return (
       <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md animate-in zoom-in-95 duration-300">
-        <h2 className="text-4xl font-bold text-white mb-2 uppercase tracking-tight">Башня упала!</h2>
+        <h2 className="text-4xl font-bold text-white mb-2 uppercase tracking-tight">Ваша башня упала</h2>
+        <p className="text-white/60 mb-4">Но можно попробовать ещё раз</p>
         
         <div className="flex items-baseline gap-2 mb-8">
           <span className="text-white/60 text-lg">Высота:</span>
@@ -396,7 +399,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
             className="px-6 py-2 rounded-full border border-white/15 bg-white/5 text-sm font-semibold text-white/70 hover:bg-white/10 transition-colors flex items-center gap-2"
           >
             <Crown size={16} />
-            Таблица лидеров
+            Посмотреть рейтинг игроков
           </button>
         </div>
       </div>
@@ -444,7 +447,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
             </div>
           ) : (
             <div className="rounded-full border border-white/10 bg-black/35 px-4 py-2 text-center text-xs text-white/80 backdrop-blur">
-              Все награды получены. Продолжай строить башню!
+              Все награды получены. Продолжайте играть!
             </div>
           )}
         </div>

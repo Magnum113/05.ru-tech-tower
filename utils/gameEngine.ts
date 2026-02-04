@@ -171,7 +171,7 @@ export class GameEngine {
         newWidth = Math.min(newWidth + GAME_CONFIG.widthBonus, GAME_CONFIG.baseWidth * 1.5);
         // Center the growth
         newX = prevBlock.x - (GAME_CONFIG.widthBonus / 2);
-        this.addFloatingText(`БОНУС ШИРИНЫ!`, this.canvas.width / 2, this.canvas.height / 2 - 100, '#4ADE80');
+        this.addFloatingText(`Больше баллов!`, this.canvas.width / 2, this.canvas.height / 2 - 100, '#4ADE80');
       }
 
     } else {
