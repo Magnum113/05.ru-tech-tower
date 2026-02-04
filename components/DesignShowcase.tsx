@@ -174,6 +174,21 @@ export default function DesignShowcase() {
                 <button className="w-full rounded-xl bg-[#FF2C00] px-5 py-3 text-sm font-bold">Построить башню!</button>
                 <button className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80">Посмотреть рейтинг игроков</button>
               </div>
+              <button className="text-xs text-white/60">Правила участия</button>
+            </div>
+          </Card>
+        </Section>
+
+        <Section title="Правила участия (попап)">
+          <Card maxWidth="max-w-md">
+            <div className="flex items-start justify-between gap-4">
+              <h3 className="text-lg font-black text-white">Правила участия</h3>
+              <button className="text-xs text-white/60">Закрыть</button>
+            </div>
+            <div className="mt-3 space-y-3 text-sm text-white/70">
+              <p>Моковый текст. Здесь будут юридические правила участия в акции.</p>
+              <p>Добавьте условия, сроки, ограничения и прочую обязательную информацию.</p>
+              <p>Текст будет заменён позднее.</p>
             </div>
           </Card>
         </Section>
@@ -456,6 +471,8 @@ export default function DesignShowcase() {
                   <li>Будьте терпеливы, и всё обязательно <em>сложится</em>.</li>
                   <li>Построить башню!</li>
                   <li>Посмотреть рейтинг игроков</li>
+                  <li>Правила участия</li>
+                  <li>Моковый текст правил участия (будет заменён позднее).</li>
                 </ul>
               </div>
               <div>
@@ -532,40 +549,6 @@ export default function DesignShowcase() {
           </Card>
         </Section>
 
-        <Section title="Состояние игры (30 очков, игра продолжается)">
-          <Card maxWidth="max-w-4xl">
-            <div className="space-y-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-white/60">Этаж</p>
-                  <p className="text-4xl font-black">30</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs uppercase tracking-widest text-white/60">Рекорд</p>
-                  <p className="text-2xl font-bold text-yellow-400">30</p>
-                </div>
-              </div>
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#15252B] to-[#0F1B20] p-4">
-                <div className="absolute inset-0 opacity-30">
-                  <div className="absolute left-[12%] top-[18%] h-1.5 w-1.5 rounded-full bg-white/80" />
-                  <div className="absolute left-[30%] top-[32%] h-1 w-1 rounded-full bg-white/60" />
-                  <div className="absolute left-[55%] top-[22%] h-1.5 w-1.5 rounded-full bg-white/70" />
-                  <div className="absolute left-[72%] top-[38%] h-1 w-1 rounded-full bg-white/50" />
-                  <div className="absolute left-[85%] top-[26%] h-1.5 w-1.5 rounded-full bg-white/75" />
-                </div>
-                <div className="relative h-52 w-full">
-                  <div className="absolute bottom-0 left-1/2 h-44 w-24 -translate-x-1/2 rounded-2xl bg-[#CB9F7F] shadow-[0_10px_30px_rgba(0,0,0,0.35)]" />
-                  <div className="absolute bottom-2 left-1/2 h-36 w-20 -translate-x-1/2 rounded-2xl bg-[#CB9F7F]/90" />
-                  <div className="absolute bottom-4 left-1/2 h-28 w-16 -translate-x-1/2 rounded-2xl bg-[#CB9F7F]/80" />
-                  <div className="absolute bottom-6 left-1/2 h-20 w-12 -translate-x-1/2 rounded-2xl bg-[#CB9F7F]/70" />
-                </div>
-                <div className="mt-3 rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/80 backdrop-blur">
-                  Все награды получены. Продолжайте играть!
-                </div>
-              </div>
-            </div>
-          </Card>
-        </Section>
       </div>
     </div>
   );

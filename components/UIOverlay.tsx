@@ -18,6 +18,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
   const [copied, setCopied] = React.useState(false);
   const [onboardingStep, setOnboardingStep] = React.useState(1);
   const [gameOverCooldown, setGameOverCooldown] = React.useState(false);
+  const [showParticipationRules, setShowParticipationRules] = React.useState(false);
   const nextReward = PROMO_REWARDS.find(reward => reward.score > score.current) ?? null;
   const remainingToReward = nextReward ? Math.max(0, nextReward.score - score.current) : 0;
   const earnedReward = [...PROMO_REWARDS].reverse().find(reward => reward.score <= score.current) ?? null;
@@ -45,6 +46,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
   React.useEffect(() => {
     if (gameState !== GameState.START) {
       setOnboardingStep(1);
+      setShowParticipationRules(false);
     }
   }, [gameState]);
 
@@ -121,7 +123,35 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
               <Crown size={18} />
               Посмотреть рейтинг игроков
             </button>
+
+            <button
+              onClick={() => setShowParticipationRules(true)}
+              className="mt-3 text-xs text-white/60 hover:text-white/80 transition-colors"
+            >
+              Правила участия
+            </button>
           </div>
+
+          {showParticipationRules && (
+            <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+              <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#15252B] p-5 text-left shadow-2xl">
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="text-lg font-black text-white">Правила участия</h3>
+                  <button
+                    onClick={() => setShowParticipationRules(false)}
+                    className="text-xs text-white/60 hover:text-white/80"
+                  >
+                    Закрыть
+                  </button>
+                </div>
+                <div className="mt-3 space-y-3 text-sm text-white/70">
+                  <p>Моковый текст. Здесь будут юридические правила участия в акции.</p>
+                  <p>Добавьте условия, сроки, ограничения и прочую обязательную информацию.</p>
+                  <p>Текст будет заменён позднее.</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       );
     }
