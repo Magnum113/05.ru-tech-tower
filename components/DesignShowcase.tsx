@@ -424,7 +424,7 @@ export default function DesignShowcase() {
                 ))}
               </div>
               <div className="rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 px-4 py-3 text-sm">
-                Твой ник: <span className="font-bold">{sampleNickname}</span> · Рекорд: <span className="font-bold">23</span>
+                Ваш ник: <span className="font-bold">{sampleNickname}</span> · Рекорд: <span className="font-bold">23</span>
               </div>
             </div>
           </Card>
@@ -434,6 +434,14 @@ export default function DesignShowcase() {
           <Card maxWidth="max-w-lg">
             <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
               Игроков в списке пока нет, но вы можете стать первым :)
+            </p>
+          </Card>
+        </Section>
+
+        <Section title="Рейтинг игроков (недоступен)">
+          <Card maxWidth="max-w-lg">
+            <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
+              Рейтинг игроков пока недоступен
             </p>
           </Card>
         </Section>
@@ -497,8 +505,9 @@ export default function DesignShowcase() {
                   <li>Топ игроков</li>
                   <li>Рейтинг игроков</li>
                   <li>Игроков в списке пока нет, но вы можете стать первым :)</li>
+                  <li>Рейтинг игроков пока недоступен</li>
                   <li>это вы</li>
-                  <li>Твой ник:</li>
+                  <li>Ваш ник:</li>
                 </ul>
               </div>
               <div>

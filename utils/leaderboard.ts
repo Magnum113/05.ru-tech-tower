@@ -1,5 +1,5 @@
 import { supabase } from './supabaseClient';
-import { LeaderboardEntry } from '../types';
+import { LeaderboardEntry, LeaderboardStatus } from '../types';
 
 const NICKNAME_KEY = '05ru_tower_nickname';
 const MAX_NICKNAME_ATTEMPTS = 25;
@@ -94,8 +94,8 @@ export const getOrCreateNickname = async () => {
   return fallback;
 };
 
-export const fetchLeaderboard = async (): Promise<LeaderboardEntry[]> => {
-  if (!supabase) return [];
+export const fetchLeaderboard = async (): Promise<{ entries: LeaderboardEntry[]; status: LeaderboardStatus }> => {
+  if (!supabase) return { entries: [], status: 'error' };
   const { data, error } = await supabase
     .from('leaderboard_entries')
     .select('id,nickname,score,created_at')
@@ -105,9 +105,14 @@ export const fetchLeaderboard = async (): Promise<LeaderboardEntry[]> => {
 
   if (error || !data) {
     console.error('Supabase leaderboard fetch failed', error);
-    return [];
+    return { entries: [], status: 'error' };
   }
-  return data as LeaderboardEntry[];
+
+  if (data.length === 0) {
+    return { entries: [], status: 'empty' };
+  }
+
+  return { entries: data as LeaderboardEntry[], status: 'ok' };
 };
 
 export const submitScore = async (nickname: string, score: number) => {

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import GameCanvasV2, { GameCanvasV2Handle } from './components/GameCanvasV2';
 import UIOverlay from './components/UIOverlay';
-import { GameState, GameScore, LeaderboardEntry } from './types';
+import { GameState, GameScore, LeaderboardEntry, LeaderboardStatus } from './types';
 import { fetchLeaderboard, getOrCreateNickname, submitScore } from './utils/leaderboard';
 
 const STORAGE_KEY = '05ru_tech_tower_best';
@@ -10,6 +10,7 @@ export default function AppV2() {
   const [gameState, setGameState] = useState<GameState>(GameState.START);
   const [leaderboardReturnState, setLeaderboardReturnState] = useState<GameState>(GameState.START);
   const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardStatus, setLeaderboardStatus] = useState<LeaderboardStatus>('ok');
   const [nickname, setNickname] = useState<string>('');
   const [score, setScore] = useState<GameScore>({
     current: 0,
@@ -87,7 +88,10 @@ export default function AppV2() {
   const openLeaderboard = useCallback(() => {
     setLeaderboardReturnState(gameState);
     setGameState(GameState.LEADERBOARD);
-    fetchLeaderboard().then(setLeaderboardEntries);
+    fetchLeaderboard().then(({ entries, status }) => {
+      setLeaderboardEntries(entries);
+      setLeaderboardStatus(status);
+    });
   }, [gameState]);
 
   const closeLeaderboard = useCallback(() => {
@@ -122,6 +126,7 @@ export default function AppV2() {
         onOpenLeaderboard={openLeaderboard}
         onCloseLeaderboard={closeLeaderboard}
         leaderboardEntries={leaderboardEntries}
+        leaderboardStatus={leaderboardStatus}
         nickname={nickname}
       />
       

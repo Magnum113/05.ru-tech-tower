@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameState, GameScore, LeaderboardEntry } from '../types';
+import { GameState, GameScore, LeaderboardEntry, LeaderboardStatus } from '../types';
 import { PROMO_REWARDS } from '../constants';
 import { Play, RotateCw, Trophy, Copy, Heart, Sparkles, Crown, ArrowLeft } from 'lucide-react';
 
@@ -11,10 +11,11 @@ interface UIOverlayProps {
   onOpenLeaderboard: () => void;
   onCloseLeaderboard: () => void;
   leaderboardEntries: LeaderboardEntry[];
+  leaderboardStatus: LeaderboardStatus;
   nickname: string;
 }
 
-const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, nickname }) => {
+const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRestart, onOpenLeaderboard, onCloseLeaderboard, leaderboardEntries, leaderboardStatus, nickname }) => {
   const [copied, setCopied] = React.useState(false);
   const [onboardingStep, setOnboardingStep] = React.useState(1);
   const [gameOverCooldown, setGameOverCooldown] = React.useState(false);
@@ -251,7 +252,11 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
             </div>
 
             <div className="space-y-2">
-              {entries.length === 0 ? (
+              {leaderboardStatus === 'error' ? (
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
+                  Рейтинг игроков пока недоступен
+                </div>
+              ) : entries.length === 0 ? (
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
                   Игроков в списке пока нет, но вы можете стать первым :)
                 </div>
@@ -289,7 +294,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
             </div>
 
             <div className="mt-5 rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 px-4 py-3 text-sm text-white/80 flex items-center justify-between">
-              <span>Твой ник: <span className="font-bold text-white">{nickname || '—'}</span></span>
+              <span>Ваш ник: <span className="font-bold text-white">{nickname || '—'}</span></span>
               <span>Рекорд: <span className="font-bold text-white">{score.best}</span></span>
             </div>
           </div>

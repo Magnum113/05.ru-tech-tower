@@ -26,6 +26,8 @@ export interface LeaderboardEntry {
   created_at?: string;
 }
 
+export type LeaderboardStatus = 'ok' | 'empty' | 'error';
+
 export interface PromoReward {
   score: number;
   code: string;
