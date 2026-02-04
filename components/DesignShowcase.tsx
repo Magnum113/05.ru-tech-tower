@@ -1,4 +1,5 @@
 import React from 'react';
+import { Play, Crown, ArrowLeft, Heart, Sparkles, Trophy, RotateCw, Copy } from 'lucide-react';
 import { COLORS, PROMO_REWARDS, PERFECT_MESSAGES } from '../constants';
 
 const sampleNickname = 'Сильный Енот';
@@ -8,6 +9,23 @@ const sampleLeaderboard = [
   { nickname: 'Лунный Филин', score: 18 },
   { nickname: 'Северный Барс', score: 12 },
 ];
+
+const sampleScore = 12;
+const sampleBest = 23;
+const sampleNextReward = PROMO_REWARDS.find((reward) => reward.score > sampleScore) ?? null;
+const sampleRemainingToReward = sampleNextReward ? Math.max(0, sampleNextReward.score - sampleScore) : 0;
+const sampleTotalGoal = PROMO_REWARDS[PROMO_REWARDS.length - 1]?.score ?? 0;
+const sampleOverallProgress = sampleTotalGoal > 0 ? Math.min(1, sampleScore / sampleTotalGoal) : 0;
+const sampleSegmentCount = PROMO_REWARDS.length;
+const sampleSegmentProgress = (index: number) => {
+  if (!sampleTotalGoal || sampleSegmentCount === 0) return 0;
+  const segmentSize = sampleTotalGoal / sampleSegmentCount;
+  const segmentStart = index * segmentSize;
+  const segmentEnd = segmentStart + segmentSize;
+  if (sampleScore <= segmentStart) return 0;
+  if (sampleScore >= segmentEnd) return 1;
+  return (sampleScore - segmentStart) / segmentSize;
+};
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <section className="space-y-4">
@@ -159,116 +177,170 @@ export default function DesignShowcase() {
         </section>
 
         <Section title="Онбординг — Шаг 1 (история)">
-          <Card maxWidth="max-w-md">
-            <div className="text-center space-y-4">
-              <div>
-                <p className="text-sm font-black text-white/90 mb-2">Рамадан — время заботы и добрых дел</p>
-                <h3 className="text-2xl font-black">Башня доброты</h3>
-              </div>
-              <div className="space-y-2 text-sm text-white/70">
-                <p>Эта игра — ваш небольшой, но значимый вклад. Постройте ровную и высокую башню из коробок и зарабатывайте баллы.</p>
-                <p>В конце месяца Рамадан все набранные баллы будут направлены на благотворительные цели.</p>
-                <p>Будьте терпеливы, и всё обязательно <em>сложится</em>.</p>
-              </div>
-              <div className="grid gap-2">
-                <button className="w-full rounded-xl bg-[#FF2C00] px-5 py-3 text-sm font-bold">Построить башню!</button>
-                <button className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80">Посмотреть рейтинг игроков</button>
-              </div>
-              <button className="text-xs text-white/60">Правила участия</button>
+          <div className="w-full max-w-md bg-[#15252B] border border-blue-500/20 rounded-2xl shadow-2xl p-6 relative overflow-hidden text-center -translate-y-5 sm:translate-y-0 mx-auto">
+            <div className="mb-6 relative">
+              <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full"></div>
+              <p className="relative text-sm font-black text-white/90 mb-3">
+                Рамадан — время заботы и добрых дел
+              </p>
+              <h1 className="relative text-3xl font-black text-white tracking-tight">
+                Башня доброты
+              </h1>
             </div>
-          </Card>
+
+            <div className="mb-8 space-y-3 text-gray-300 text-sm leading-relaxed">
+              <p>
+                Эта игра — ваш небольшой, но значимый вклад. Постройте ровную и высокую башню из коробок и зарабатывайте баллы.
+              </p>
+              <p>
+                В конце месяца Рамадан все набранные баллы будут направлены на благотворительные цели.
+              </p>
+              <p>
+                Будьте терпеливы, и всё обязательно <em>сложится</em>.
+              </p>
+            </div>
+
+            <button className="w-full group relative px-6 py-4 bg-[#FF2C00] text-white font-bold text-lg rounded-xl shadow-[0_4px_20px_rgba(255,44,0,0.4)] hover:bg-[#ff3b12] hover:scale-[1.02] transition-all duration-200 active:scale-95">
+              <span className="flex items-center justify-center gap-2">
+                <Play size={20} fill="currentColor" />
+                Построить башню!
+              </span>
+              <div className="absolute inset-0 rounded-xl border border-white/10"></div>
+            </button>
+
+            <button className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+              <Crown size={18} />
+              Посмотреть рейтинг игроков
+            </button>
+
+            <button className="mt-3 text-xs text-white/60 hover:text-white/80 transition-colors">
+              Правила участия
+            </button>
+          </div>
         </Section>
 
         <Section title="Правила участия (попап)">
-          <Card maxWidth="max-w-md">
+          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#15252B] p-5 text-left shadow-2xl mx-auto">
             <div className="flex items-start justify-between gap-4">
               <h3 className="text-lg font-black text-white">Правила участия</h3>
-              <button className="text-xs text-white/60">Закрыть</button>
+              <button className="text-xs text-white/60 hover:text-white/80">Закрыть</button>
             </div>
             <div className="mt-3 space-y-3 text-sm text-white/70">
               <p>Моковый текст. Здесь будут юридические правила участия в акции.</p>
               <p>Добавьте условия, сроки, ограничения и прочую обязательную информацию.</p>
               <p>Текст будет заменён позднее.</p>
             </div>
-          </Card>
+          </div>
         </Section>
 
         <Section title="Онбординг — Шаг 2 (правила и награды)">
-          <Card maxWidth="max-w-md">
-            <div className="space-y-4">
-              <div className="text-center">
-                <p className="text-xs uppercase tracking-widest text-white/50">Шаг 2 из 2</p>
-                <h3 className="text-2xl font-black">Правила и награды</h3>
+          <div className="w-full max-w-md bg-[#15252B] border border-blue-500/20 rounded-2xl shadow-2xl p-6 relative overflow-hidden text-center mx-auto">
+            <div className="mb-4 text-center">
+              <p className="text-[10px] uppercase tracking-widest text-white/50">Шаг 2 из 2</p>
+              <h2 className="text-2xl font-black text-white mt-2">Правила и награды</h2>
+            </div>
+
+            <div className="bg-[#1a2f36] rounded-xl p-4 mb-6 text-left space-y-3 border border-white/5">
+              <h3 className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2">Какие же правила?</h3>
+              <div className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FF2C00] text-white flex items-center justify-center text-xs font-bold">1</span>
+                <p className="text-xs text-gray-400">«Отпускайте» ящик, когда он окажется над башней, одним нажатием на экран</p>
               </div>
-              <div className="rounded-xl border border-white/5 bg-[#1a2f36] p-4 space-y-3 text-sm text-white/70">
-                <p className="text-xs uppercase tracking-widest text-white/60">Какие же правила?</p>
-                <p>1. «Отпускайте» ящик, когда он окажется над башней, одним нажатием на экран</p>
-                <p>2. Старайтесь собирать башню ровно. Если края выйдут за границы, они будут обрезаны</p>
-                <p>3. Чем выше башня, тем больше баллов будет направлено на благотворительность</p>
+              <div className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FF2C00] text-white flex items-center justify-center text-xs font-bold">2</span>
+                <p className="text-xs text-gray-400">Старайтесь собирать башню ровно. Если края выйдут за границы, они будут обрезаны</p>
               </div>
-              <div className="rounded-xl border border-white/5 bg-[#101e23] p-4 space-y-2">
-                <p className="text-xs uppercase tracking-widest text-white/60">Награды за уровни</p>
+              <div className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FF2C00] text-white flex items-center justify-center text-xs font-bold">3</span>
+                <p className="text-xs text-gray-400">Чем выше башня, тем больше баллов будет направлено на благотворительность</p>
+              </div>
+            </div>
+
+            <div className="bg-[#101e23] rounded-xl p-4 mb-6 text-left border border-white/5">
+              <h3 className="text-white/80 text-xs font-bold uppercase tracking-widest mb-3">Награды за уровни</h3>
+              <div className="space-y-2 text-sm">
                 {PROMO_REWARDS.map((reward) => (
-                  <div key={reward.score} className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2 text-sm">
-                    <span className="text-white/60">{reward.score} очков</span>
-                    <span className="font-semibold">Скидка {reward.discount} ₽</span>
+                  <div
+                    key={reward.score}
+                    className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2 text-white/80"
+                  >
+                    <span className="text-xs uppercase tracking-widest text-white/50">{reward.score} очков</span>
+                    <span className="font-semibold text-white">Скидка {reward.discount} ₽</span>
                   </div>
                 ))}
               </div>
-              <div className="grid gap-2">
-                <button className="w-full rounded-xl bg-[#FF2C00] px-5 py-3 text-sm font-bold">Начать игру</button>
-                <button className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80">Назад</button>
-              </div>
             </div>
-          </Card>
+
+            <button className="w-full group relative px-6 py-4 bg-[#FF2C00] text-white font-bold text-lg rounded-xl shadow-[0_4px_20px_rgba(255,44,0,0.4)] hover:bg-[#ff3b12] hover:scale-[1.02] transition-all duration-200 active:scale-95">
+              <span className="flex items-center justify-center gap-2">
+                <Play size={20} fill="currentColor" />
+                Начать игру
+              </span>
+              <div className="absolute inset-0 rounded-xl border border-white/10"></div>
+            </button>
+
+            <button className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 hover:bg-white/10 transition-colors">
+              Назад
+            </button>
+          </div>
         </Section>
 
         <Section title="HUD и прогресс награды (во время игры)">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card maxWidth="max-w-md">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-white/60">Этаж</p>
-                  <p className="text-4xl font-black">12</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs uppercase tracking-widest text-white/60">Рекорд</p>
-                  <p className="text-2xl font-bold text-yellow-400">23</p>
-                </div>
+          <div className="space-y-4">
+            <div className="flex justify-between items-start">
+              <div className="flex flex-col">
+                <span className="text-white/60 text-xs font-bold uppercase tracking-widest drop-shadow-sm">Этаж</span>
+                <span className="text-white text-4xl font-black drop-shadow-md tracking-tighter">{sampleScore}</span>
               </div>
-              <div className="mt-5 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-white/90 backdrop-blur shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
-                <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-white/60">
-                  <span>До награды</span>
-                  <span>8 этажей</span>
-                </div>
-                <div className="mt-2 flex items-center justify-between text-sm">
-                  <span className="font-semibold text-white">Скидка 1000 ₽</span>
-                  <span className="text-white/70">12/20</span>
-                </div>
-                <div className="mt-3 grid grid-cols-3 gap-1">
-                  <div className="relative h-2 rounded-full bg-white/10 overflow-hidden">
-                    <div className="h-full rounded-full bg-gradient-to-r from-[#FF2C00] via-[#ff6a4d] to-[#FF2C00] shadow-[0_0_10px_rgba(255,44,0,0.6)]" style={{ width: '100%' }} />
-                  </div>
-                  <div className="relative h-2 rounded-full bg-white/10 overflow-hidden">
-                    <div className="h-full rounded-full bg-gradient-to-r from-[#FF2C00] via-[#ff6a4d] to-[#FF2C00] shadow-[0_0_10px_rgba(255,44,0,0.6)]" style={{ width: '20%' }} />
-                  </div>
-                  <div className="relative h-2 rounded-full bg-white/10 overflow-hidden">
-                    <div className="h-full rounded-full bg-gradient-to-r from-white/40 via-white/60 to-white/40" style={{ width: '0%' }} />
-                  </div>
-                </div>
-                <div className="mt-2 flex items-center justify-between text-[10px] text-white/50">
-                  <span>Прогресс</span>
-                  <span>40%</span>
-                </div>
+              <div className="flex flex-col items-end">
+                <span className="text-white/60 text-xs font-bold uppercase tracking-widest drop-shadow-sm">Рекорд</span>
+                <span className="text-yellow-400 text-2xl font-bold drop-shadow-md">{sampleBest}</span>
               </div>
-            </Card>
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-widest text-white/50">Состояние (комментарий): все награды</p>
-              <Card maxWidth="max-w-md">
-                <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-center text-xs text-white/70 backdrop-blur">
+            </div>
+
+            <div className="w-[min(92vw,560px)] mx-auto">
+              {sampleNextReward ? (
+                <div className="rounded-2xl border border-white/10 bg-gradient-to-r from-black/45 via-black/35 to-black/45 px-4 py-3 text-white/90 backdrop-blur shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+                  <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-white/60">
+                    <span>До награды</span>
+                    <span>{sampleRemainingToReward} этажей</span>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between text-sm">
+                    <span className="font-semibold text-white">Скидка {sampleNextReward.discount} ₽</span>
+                    <span className="text-white/70">{sampleScore}/{sampleNextReward.score}</span>
+                  </div>
+                  <div className="mt-3 grid grid-cols-3 gap-1">
+                    {PROMO_REWARDS.map((reward, index) => {
+                      const fill = Math.round(sampleSegmentProgress(index) * 100);
+                      const isReached = sampleScore >= reward.score;
+                      return (
+                        <div key={reward.score} className="relative h-2 rounded-full bg-white/10 overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${
+                              isReached
+                                ? 'bg-gradient-to-r from-[#FF2C00] via-[#ff6a4d] to-[#FF2C00] shadow-[0_0_10px_rgba(255,44,0,0.6)]'
+                                : 'bg-gradient-to-r from-white/40 via-white/60 to-white/40'
+                            }`}
+                            style={{ width: `${fill}%` }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-2 flex items-center justify-between text-[10px] text-white/50">
+                    <span>{sampleOverallProgress >= 1 ? 'Все награды' : 'Прогресс'}</span>
+                    <span>{Math.round(sampleOverallProgress * 100)}%</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="rounded-full border border-white/10 bg-black/35 px-4 py-2 text-center text-xs text-white/80 backdrop-blur">
                   Все награды получены. Продолжайте играть!
                 </div>
-              </Card>
+              )}
+            </div>
+
+            <div className="rounded-full border border-white/10 bg-black/35 px-4 py-2 text-center text-xs text-white/80 backdrop-blur w-[min(92vw,560px)] mx-auto">
+              Все награды получены. Продолжайте играть!
             </div>
           </div>
         </Section>
@@ -342,117 +414,231 @@ export default function DesignShowcase() {
         </Section>
 
         <Section title="Экран результата (есть очки)">
-          <Card maxWidth="max-w-lg">
-            <div className="space-y-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-white/50">Благотворительность</p>
-                <h3 className="text-2xl font-black">Каждая игра — шаг к добру</h3>
-              </div>
-              <div className="rounded-full bg-yellow-400/10 text-yellow-300 px-4 py-2 text-xs font-bold inline-flex items-center justify-center">
-                НОВЫЙ РЕКОРД!
-              </div>
-              <div className="rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 p-4 space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-xs uppercase tracking-widest text-white/60">Очки</span>
-                  <span className="font-bold">23</span>
+          <div className="relative w-full max-w-lg rounded-3xl border border-[#FF2C00]/30 bg-gradient-to-br from-[#15252B] via-[#0f1b20] to-[#111827] p-5 sm:p-6 shadow-2xl mx-auto">
+            <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[#FF2C00]/20 blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/10 blur-3xl" />
+
+            <div className="relative">
+              <div className="mb-5 flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF2C00]/20 text-[#FF2C00]">
+                    <Heart size={26} fill="currentColor" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Благотворительность</p>
+                    <h2 className="text-2xl font-black text-white">Каждая игра — шаг к добру</h2>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-xs uppercase tracking-widest text-white/60">Пожертвование</span>
-                  <span className="font-black text-[#FF2C00]">23 ₽</span>
-                </div>
-                <p className="text-xs text-white/60">В конце Рамадана эта сумма будет направлена на благотворительность</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
-                <p className="font-semibold text-white">Каждый балл — вклад в копилку добра.</p>
-                <p>Можно сыграть ещё раз и увеличить сумму пожертвования</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
-                <p className="font-semibold text-white">Ваша награда:</p>
-                <p>Скидка на 1000 ₽ при покупке от 25 000 ₽</p>
-                <div className="mt-3 rounded-xl border border-dashed border-white/20 bg-black/40 p-3 text-center">
-                  <p className="text-[10px] uppercase tracking-widest text-white/40">Промокод</p>
-                  <p className="font-mono text-lg text-[#FF2C00]">HJKL</p>
-                  <p className="mt-1 text-xs text-green-400">СКОПИРОВАНО!</p>
+                <div className="flex items-center gap-2 rounded-full border border-yellow-400/30 bg-yellow-400/10 px-3 py-1 text-xs font-bold text-yellow-300">
+                  <Trophy size={14} />
+                  Новый рекорд
                 </div>
               </div>
-              <div className="grid gap-2">
-                <button className="w-full rounded-xl bg-[#FF2C00] px-5 py-3 text-sm font-bold">Сыграть ещё раз</button>
-                <button className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80">Посмотреть рейтинг игроков</button>
+
+              <div className="mb-4 rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 p-5">
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] uppercase tracking-widest text-white/50">Очки</p>
+                  <p className="text-3xl font-black text-white">23</p>
+                </div>
+                <div className="mt-3 flex items-center justify-between">
+                  <p className="text-[11px] uppercase tracking-widest text-white/50">Пожертвование</p>
+                  <p className="text-4xl font-black text-[#FF2C00]">23 ₽</p>
+                </div>
+                <p className="mt-2 text-xs text-white/60">В конце Рамадана эта сумма будет направлена на благотворительность</p>
+              </div>
+
+              <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
+                <div className="flex items-start gap-3">
+                  <Sparkles size={18} className="text-yellow-300 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-white">Каждый балл — вклад в копилку добра.</p>
+                    <p className="text-white/60">Можно сыграть ещё раз и увеличить сумму пожертвования</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
+                <div className="flex items-start gap-3">
+                  <Crown size={18} className="text-yellow-300 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-white">Ваша награда:</p>
+                    <p className="text-white/60">Скидка на 1000 ₽ при покупке от 25 000 ₽</p>
+                  </div>
+                </div>
+                <div className="mt-3 bg-black/40 rounded-xl p-3 border border-dashed border-white/20 relative group cursor-pointer transition-colors hover:bg-black/60">
+                  <p className="text-[10px] text-white/40 uppercase mb-1 tracking-widest">Промокод</p>
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="text-[#FF2C00] font-mono text-xl font-black tracking-widest">HJKL</span>
+                    <Copy size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <button className="w-full rounded-xl px-6 py-3 text-base font-bold transition-all bg-[#FF2C00] text-white hover:bg-[#ff3b12] hover:scale-[1.01] active:scale-95">
+                  Сыграть ещё раз
+                </button>
+                <button className="w-full rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/70 hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+                  <Crown size={16} />
+                  Посмотреть рейтинг игроков
+                </button>
               </div>
             </div>
-          </Card>
+          </div>
         </Section>
 
         <Section title="Экран результата (очков 0)">
-          <Card maxWidth="max-w-md">
-            <div className="space-y-3 text-center">
-              <h3 className="text-2xl font-black uppercase">Ваша башня упала</h3>
-              <p className="text-white/60">Но можно попробовать ещё раз</p>
-              <p className="text-white/60">Высота: <span className="text-[#FF2C00] font-black">0</span></p>
-              <div className="grid gap-2">
-                <button className="w-full rounded-full bg-white px-5 py-3 text-sm font-bold text-[#15252B]">Попробовать снова</button>
-                <button className="w-full rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white/80">Посмотреть рейтинг игроков</button>
-              </div>
+          <div className="w-full max-w-md mx-auto text-center">
+            <h2 className="text-4xl font-bold text-white mb-2 uppercase tracking-tight">Ваша башня упала</h2>
+            <p className="text-white/60 mb-4">Но можно попробовать ещё раз</p>
+
+            <div className="flex items-baseline gap-2 mb-8 justify-center">
+              <span className="text-white/60 text-lg">Высота:</span>
+              <span className="text-[#FF2C00] text-5xl font-black">0</span>
             </div>
-          </Card>
+
+            <div className="flex flex-col items-center gap-3">
+              <button className="px-8 py-3 bg-white text-[#15252B] font-bold text-lg rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2 shadow-lg">
+                <RotateCw size={20} />
+                Попробовать снова
+              </button>
+              <button className="px-6 py-2 rounded-full border border-white/15 bg-white/5 text-sm font-semibold text-white/70 hover:bg-white/10 transition-colors flex items-center gap-2">
+                <Crown size={16} />
+                Посмотреть рейтинг игроков
+              </button>
+            </div>
+          </div>
         </Section>
 
         <Section title="Рейтинг игроков (с результатами)">
-          <Card maxWidth="max-w-lg">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-white/50">Топ игроков</p>
-                  <h3 className="text-2xl font-black">Рейтинг игроков</h3>
+          <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-gradient-to-br from-[#15252B] via-[#0f1b20] to-[#111827] p-5 sm:p-6 shadow-2xl relative mx-auto">
+            <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[#FF2C00]/10 blur-3xl" />
+            <div className="absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl" />
+
+            <div className="relative">
+              <div className="mb-5 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FF2C00]/20 text-[#FF2C00]">
+                    <Crown size={22} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Топ игроков</p>
+                    <h2 className="text-2xl font-black text-white">Рейтинг игроков</h2>
+                  </div>
                 </div>
-                <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/70">Назад</button>
+                <button className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/70 hover:bg-white/10 transition-colors">
+                  <ArrowLeft size={14} />
+                  Назад
+                </button>
               </div>
+
               <div className="space-y-2">
-                {sampleLeaderboard.map((entry, idx) => (
+                {sampleLeaderboard.map((entry, index) => (
                   <div
                     key={entry.nickname}
                     className={`flex items-center justify-between rounded-2xl border px-4 py-3 ${
-                      entry.isMe ? 'border-[#FF2C00]/40 bg-[#FF2C00]/15' : idx === 0 ? 'border-yellow-400/30 bg-yellow-400/10' : 'border-white/10 bg-white/5'
+                      entry.isMe
+                        ? 'border-[#FF2C00]/40 bg-[#FF2C00]/15 text-white shadow-[0_0_0_1px_rgba(255,44,0,0.25)]'
+                        : index === 0
+                          ? 'border-yellow-400/30 bg-yellow-400/10 text-yellow-200'
+                          : 'border-white/10 bg-white/5 text-white'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-black">{idx + 1}</div>
-                      <span className="font-semibold">{entry.nickname}{entry.isMe && <span className="ml-2 text-[10px] uppercase tracking-widest text-white/60">это вы</span>}</span>
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-black ${
+                        entry.isMe
+                          ? 'bg-[#FF2C00]/20 text-white'
+                          : index === 0
+                            ? 'bg-yellow-400/20 text-yellow-200'
+                            : 'bg-white/10 text-white/70'
+                      }`}>
+                        {index + 1}
+                      </div>
+                      <span className="font-semibold">
+                        {entry.nickname}
+                        {entry.isMe && <span className="ml-2 text-[10px] uppercase tracking-widest text-white/60">это вы</span>}
+                      </span>
                     </div>
                     <div className="text-sm font-bold text-white/80">{entry.score}</div>
                   </div>
                 ))}
               </div>
-              <div className="rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 px-4 py-3 text-sm">
-                Ваш ник: <span className="font-bold">{sampleNickname}</span> · Рекорд: <span className="font-bold">23</span>
+
+              <div className="mt-5 rounded-2xl border border-[#FF2C00]/20 bg-[#FF2C00]/10 px-4 py-3 text-sm text-white/80 flex items-center justify-between">
+                <span>Ваш ник: <span className="font-bold text-white">{sampleNickname}</span></span>
+                <span>Рекорд: <span className="font-bold text-white">23</span></span>
               </div>
             </div>
-          </Card>
+          </div>
         </Section>
 
         <Section title="Рейтинг игроков (пустой)">
-          <Card maxWidth="max-w-lg">
-            <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
-              Игроков в списке пока нет, но вы можете стать первым :)
-            </p>
-          </Card>
+          <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-gradient-to-br from-[#15252B] via-[#0f1b20] to-[#111827] p-5 sm:p-6 shadow-2xl relative mx-auto">
+            <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[#FF2C00]/10 blur-3xl" />
+            <div className="absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl" />
+            <div className="relative">
+              <div className="mb-5 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FF2C00]/20 text-[#FF2C00]">
+                    <Crown size={22} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Топ игроков</p>
+                    <h2 className="text-2xl font-black text-white">Рейтинг игроков</h2>
+                  </div>
+                </div>
+                <button className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/70 hover:bg-white/10 transition-colors">
+                  <ArrowLeft size={14} />
+                  Назад
+                </button>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
+                Игроков в списке пока нет, но вы можете стать первым :)
+              </div>
+            </div>
+          </div>
         </Section>
 
         <Section title="Рейтинг игроков (недоступен)">
-          <Card maxWidth="max-w-lg">
-            <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
-              Рейтинг игроков пока недоступен
-            </p>
-          </Card>
+          <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-gradient-to-br from-[#15252B] via-[#0f1b20] to-[#111827] p-5 sm:p-6 shadow-2xl relative mx-auto">
+            <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[#FF2C00]/10 blur-3xl" />
+            <div className="absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl" />
+            <div className="relative">
+              <div className="mb-5 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FF2C00]/20 text-[#FF2C00]">
+                    <Crown size={22} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Топ игроков</p>
+                    <h2 className="text-2xl font-black text-white">Рейтинг игроков</h2>
+                  </div>
+                </div>
+                <button className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/70 hover:bg-white/10 transition-colors">
+                  <ArrowLeft size={14} />
+                  Назад
+                </button>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
+                Рейтинг игроков пока недоступен
+              </div>
+            </div>
+          </div>
         </Section>
 
         <Section title="Всплывающие тексты в игре">
           <Card maxWidth="max-w-lg">
-            <div className="space-y-2 text-sm text-white/70">
-              <p className="font-semibold text-white">Perfect‑сообщения:</p>
-              <div className="flex flex-wrap gap-2">
-                {PERFECT_MESSAGES.map(msg => (
-                  <span key={msg} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">{msg}</span>
+            <div className="rounded-2xl border border-white/10 bg-black/30 px-4 py-6 text-center">
+              <div className="flex flex-col items-center gap-2">
+                {PERFECT_MESSAGES.map((msg) => (
+                  <span
+                    key={msg}
+                    className="text-2xl font-bold text-yellow-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
+                  >
+                    {msg}
+                  </span>
                 ))}
               </div>
             </div>
