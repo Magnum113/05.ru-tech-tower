@@ -510,21 +510,30 @@ export class GameEngine {
         : this.boxImages.full;
 
     const meta = variant === 'debris'
-      ? { viewBoxWidth: 89.5, frontWidth: 49, offsetX: 10 }
+      ? { sourceWidth: 65.5, frontWidth: 49 }
       : variant === 'cut'
-        ? { viewBoxWidth: 189.5, frontWidth: 149, offsetX: 10 }
-        : { viewBoxWidth: 239.5, frontWidth: 199, offsetX: 10 };
+        ? { sourceWidth: 165.5, frontWidth: 149 }
+        : { sourceWidth: 215.5, frontWidth: 199 };
 
-    const viewBoxHeight = 113.5;
+    const sourceX = 10;
+    const sourceY = 10;
+    const sourceHeight = 89.5;
     const frontHeight = 64;
-    const offsetY = 29.5;
+    const frontTopOffset = 19.5; // front top (29.5) - content top (10)
 
-    const drawWidth = w * (meta.viewBoxWidth / meta.frontWidth);
-    const drawHeight = h * (viewBoxHeight / frontHeight);
-    const drawX = x - (meta.offsetX / meta.viewBoxWidth) * drawWidth;
-    const drawY = y - (offsetY / viewBoxHeight) * drawHeight;
+    const drawWidth = w * (meta.sourceWidth / meta.frontWidth);
+    const drawHeight = h * (sourceHeight / frontHeight);
+    const drawX = x;
+    const drawY = y - (frontTopOffset / sourceHeight) * drawHeight;
 
-    this.ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+    this.ctx.save();
+    this.ctx.imageSmoothingEnabled = true;
+    this.ctx.shadowColor = 'rgba(0,0,0,0.05)';
+    this.ctx.shadowBlur = 6;
+    this.ctx.shadowOffsetX = 2;
+    this.ctx.shadowOffsetY = 2;
+    this.ctx.drawImage(image, sourceX, sourceY, meta.sourceWidth, sourceHeight, drawX, drawY, drawWidth, drawHeight);
+    this.ctx.restore();
   }
 
   private loadBoxImages() {
