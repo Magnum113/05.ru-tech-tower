@@ -614,10 +614,10 @@ export class GameEngine {
         contentWidth: 65.5,
         contentHeight: 89.5,
         topFace: [
-          { x: 0, y: 0 },
+          { x: 21.6251, y: 0 },
           { x: 65.5, y: 0 },
           { x: 49, y: 13.5 },
-          { x: 0, y: 13.5 },
+          { x: 0.046, y: 13.5987 },
         ],
         sideFace: [
           { x: 49, y: 13.5 },
@@ -644,7 +644,7 @@ export class GameEngine {
         contentWidth: 165.5,
         contentHeight: 89.5,
         topFace: [
-          { x: 0, y: 0 },
+          { x: 16.1, y: 0 },
           { x: 165.5, y: 0 },
           { x: 149, y: 13.5 },
           { x: 0, y: 13.5 },
@@ -673,7 +673,7 @@ export class GameEngine {
       contentWidth: 215.5,
       contentHeight: 89.5,
       topFace: [
-        { x: 0, y: 0 },
+        { x: 21.5, y: 0 },
         { x: 215.5, y: 0 },
         { x: 199, y: 13.5 },
         { x: 0, y: 13.5 },
