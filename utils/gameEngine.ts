@@ -644,7 +644,8 @@ export class GameEngine {
         contentWidth: 165.5,
         contentHeight: 89.5,
         topFace: [
-          { x: 27.25, y: 0 },
+          // Keep the same perspective as the full block to avoid a forward visual jump on cut.
+          { x: 16.1, y: 0 },
           { x: 165.5, y: 0 },
           { x: 149, y: 13.5 },
           { x: 0, y: 13.5 },
