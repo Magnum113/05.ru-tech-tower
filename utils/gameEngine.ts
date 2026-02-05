@@ -508,6 +508,12 @@ export class GameEngine {
         ? this.boxImages.cut
         : this.boxImages.full;
 
+    if (!image.complete || image.naturalWidth === 0) {
+      this.ctx.fillStyle = '#EDD098';
+      this.ctx.fillRect(x, y, w, h);
+      return;
+    }
+
     const meta = variant === 'debris'
       ? { sourceWidth: 65.5, frontWidth: 49 }
       : variant === 'cut'
