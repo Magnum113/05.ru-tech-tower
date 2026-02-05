@@ -4,6 +4,7 @@ import { GameEngine } from '../utils/gameEngine';
 interface GameCanvasProps {
   onScoreUpdate: (score: number) => void;
   onGameOver: (score: number) => void;
+  boxStyle?: 'legacy' | 'v2';
 }
 
 export interface GameCanvasHandle {
@@ -27,10 +28,16 @@ const GameCanvas = forwardRef<GameCanvasHandle, GameCanvasProps>((props, ref) =>
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    const engine = new GameEngine(canvasRef.current, {
-      onScoreUpdate: props.onScoreUpdate,
-      onGameOver: props.onGameOver,
-    });
+    const engine = new GameEngine(
+      canvasRef.current,
+      {
+        onScoreUpdate: props.onScoreUpdate,
+        onGameOver: props.onGameOver,
+      },
+      {
+        boxStyle: props.boxStyle ?? 'legacy',
+      }
+    );
     engineRef.current = engine;
 
     return () => {

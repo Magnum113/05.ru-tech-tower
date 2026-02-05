@@ -119,6 +119,7 @@ export default function AppDesignV2() {
         ref={canvasRef}
         onScoreUpdate={updateScore}
         onGameOver={handleGameOver}
+        boxStyle="v2"
       />
       <UIOverlayDesignV2
         gameState={gameState}
