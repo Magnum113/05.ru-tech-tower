@@ -3,11 +3,15 @@ import '../styles/designv2-fonts.css';
 import DivMxAuto from '../newdesign/src/imports/DivMxAuto';
 
 const gradientStyles = `
-.designv2 [data-name="button.w-full"],
+.designv2 [data-name="button.w-full"]:not([class*="bg-[#b4d3ff]"]),
 .designv2 [data-name="button.px-8"] {
   background-color: #FF5C00 !important;
   background-image: radial-gradient(408.24% 368.51% at 67.25% 87.2%, #FF0000 0%, rgba(255, 92, 0, 0) 100%) !important;
   background: radial-gradient(408.24% 368.51% at 67.25% 87.2%, #FF0000 0%, rgba(255, 92, 0, 0) 100%), #FF5C00 !important;
+}
+
+.designv2 [data-name="button.w-full"][class*="bg-[#b4d3ff]"] {
+  background: #B4D3FF !important;
 }
 
 .designv2 [data-name="div.h-full"] {
@@ -18,6 +22,10 @@ const gradientStyles = `
     rgba(255, 46, 0, 0.5) 50%,
     rgba(255, 92, 0, 0) 100%
   ), linear-gradient(90deg, rgb(255, 92, 0) 0%, rgb(255, 92, 0) 100%) !important;
+}
+
+.designv2 [data-name="div.h-full"][class*="bg-[#f2f5f6]"] {
+  background: #F2F5F6 !important;
 }
 
 .designv2 [data-name="button.mt-3"] p {
