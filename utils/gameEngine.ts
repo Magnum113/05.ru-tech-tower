@@ -495,7 +495,6 @@ export class GameEngine {
     this.ctx.strokeRect(x, y, w, h);
   }
 
-  private drawBlockShapeV2(x: number, y: number, w: number, h: number) {
   private drawBlockShapeV2(x: number, y: number, w: number, h: number, variant: 'full' | 'cut' | 'debris') {
     if (!this.boxImages || !this.boxImagesReady) {
       this.ctx.fillStyle = '#EDD098';
