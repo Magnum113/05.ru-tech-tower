@@ -490,15 +490,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                     <div className="content-stretch flex flex-col gap-[12px] items-start relative w-full" data-name="div.space-y-3">
                       {entries.map((entry, index) => {
                         const isUser = entry.nickname === nickname;
-                        const isTop = index === 0;
-                        const isSecond = index === 1;
-                        const rowClass = isUser
-                          ? 'bg-[#b4d3ff]'
-                          : isTop
-                            ? 'bg-[#ffd466]'
-                            : isSecond
-                              ? 'bg-[rgba(255,212,102,0.4)]'
-                              : 'bg-[#f2f5f6]';
+                        const rowClass = isUser ? 'bg-[#ffd466]' : 'bg-[#f6e4b7]';
                         return (
                           <div
                             key={`${entry.nickname}-${entry.score}-${entry.id ?? index}`}
@@ -519,8 +511,8 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                                         <p className="leading-[24px]">{entry.nickname}</p>
                                       </div>
                                       {isUser && (
-                                        <div className="-translate-y-1/2 absolute flex flex-col h-[15px] justify-center left-[115px] text-[10px] text-[rgba(21,37,43,0.5)] top-[14px] tracking-[1px] uppercase">
-                                          <p className="leading-[15px] whitespace-pre-wrap">это вы</p>
+                                        <div className="-translate-y-1/2 absolute flex flex-col h-[15px] justify-center left-[115px] text-[10px] text-[rgba(21,37,43,0.5)] top-[14px] tracking-[1px] uppercase whitespace-nowrap">
+                                          <p className="leading-[15px]">это вы</p>
                                         </div>
                                       )}
                                     </div>
@@ -548,7 +540,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                           <div className="content-stretch flex flex-col items-start relative">
                             <div className="flex flex-col font-['SF_Pro_Text:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[0px] whitespace-nowrap">
                               <p className="text-[14px]">
-                                <span className="font-['PP_Right_Grotesk:Regular',sans-serif] leading-[20px]">Ваш ник:</span>
+                                <span className="font-['PP_Right_Grotesk:Medium',sans-serif] leading-[20px]">Ваш ник:</span>
                                 <span className="font-['SF_Pro_Text:Regular',sans-serif] leading-[20px]"> </span>
                                 <span className="font-['PP_Right_Grotesk:Medium',sans-serif] leading-[20px]">{nickname || '—'}</span>
                               </p>
