@@ -107,94 +107,96 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
       return (
         <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
           <div className="relative my-auto w-full max-w-[448px]">
-            <div className="bg-[#f2f5f6] h-[486.5px] overflow-clip relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full" data-name="div.w-full">
-              <div className="absolute content-stretch flex flex-col gap-[12px] items-start left-[25px] right-[25px] top-[25px]" data-name="div.mb-6">
+            <div className="bg-[#f2f5f6] overflow-clip relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full p-4 sm:p-[25px]" data-name="div.w-full">
+              <div className="content-stretch flex flex-col gap-[12px] items-start w-full" data-name="div.mb-6">
                 <div className="content-stretch flex flex-col items-center relative w-full" data-name="p.relative">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
+                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[13px] sm:text-[14px] text-center whitespace-normal">
                     <p className="leading-[20px]">Рамадан — время заботы и добрых дел</p>
                   </div>
                 </div>
                 <div className="content-stretch flex flex-col items-center relative w-full" data-name="h1.relative">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#ff2c00] text-[40px] text-center tracking-[-0.75px] whitespace-nowrap">
+                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#ff2c00] text-[34px] sm:text-[40px] text-center tracking-[-0.75px] whitespace-normal">
                     <p className="leading-[36px]">Башня доброты</p>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute content-stretch flex flex-col gap-[10px] h-[141.175px] items-start left-[25px] pb-[10px] right-[25px] top-[130.87px]" data-name="div.mb-8">
+              <div className="content-stretch flex flex-col gap-[10px] items-start pb-[10px] w-full mt-4 mb-6" data-name="div.mb-8">
                 <div className="content-stretch flex flex-col items-center relative w-full" data-name="p">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[18px] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
+                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[18px] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-normal">
                     <p className="mb-0">Эта игра — ваш небольшой, но значимый вклад.</p>
                     <p className="mb-0">Постройте ровную и высокую башню из коробок</p>
                     <p>и зарабатывайте баллы.</p>
                   </div>
                 </div>
                 <div className="content-stretch flex flex-col items-center pb-[0.625px] relative w-full" data-name="p">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[18px] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
+                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[18px] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-normal">
                     <p className="mb-0">В конце месяца Рамадан все набранные баллы будут</p>
                     <p>направлены на благотворительные цели.</p>
                   </div>
                 </div>
                 <div className="content-stretch flex flex-col items-center pb-[0.75px] relative w-full" data-name="p">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
+                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-normal">
                     <p className="leading-[18px]">Будьте терпеливы, и всё обязательно <em>сложится</em>.</p>
                   </div>
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setOnboardingStep(2)}
-                className="absolute content-stretch flex items-start justify-center left-[25px] px-[24px] py-[16px] right-[25px] rounded-[12px] shadow-[0px_4px_20px_0px_rgba(255,44,0,0.4)] top-[309.87px]"
-                data-name="button.w-full"
-              >
-                <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center justify-center min-h-px min-w-px relative" data-name="span.flex">
-                  <div className="relative shrink-0 size-[20px]" data-name="Frame">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
+              <div className="content-stretch flex flex-col items-start gap-3 w-full">
+                <button
+                  type="button"
+                  onClick={() => setOnboardingStep(2)}
+                  className="relative content-stretch flex items-start justify-center w-full px-[24px] py-[16px] rounded-[12px] shadow-[0px_4px_20px_0px_rgba(255,44,0,0.4)]"
+                  data-name="button.w-full"
+                >
+                  <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center justify-center min-h-px min-w-px relative" data-name="span.flex">
+                    <div className="relative shrink-0 size-[20px]" data-name="Frame">
+                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
+                        <g id="Frame">
+                          <path d={svgPaths.p1d055380} fill="var(--fill-0, white)" id="Vector" stroke="var(--stroke-2, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
+                        </g>
+                      </svg>
+                    </div>
+                    <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[18px] text-center text-white whitespace-nowrap">
+                      <p className="leading-[28px]">Построить башню!</p>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 rounded-[12px]" data-name="div.absolute">
+                    <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px]" />
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={onOpenLeaderboard}
+                  className="relative bg-[#b4d3ff] content-stretch flex gap-[8px] items-center justify-center w-full px-[17px] py-[13px] rounded-[12px]"
+                  data-name="button.mt-4"
+                >
+                  <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
+                  <div className="relative shrink-0 size-[18px]" data-name="Frame">
+                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 18 18">
                       <g id="Frame">
-                        <path d={svgPaths.p1d055380} fill="var(--fill-0, white)" id="Vector" stroke="var(--stroke-2, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
+                        <path d={svgPaths.p34d63080} id="Vector" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                        <path d="M3.75 15.75H14.25" id="Vector_2" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
                       </g>
                     </svg>
                   </div>
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[18px] text-center text-white whitespace-nowrap">
-                    <p className="leading-[28px]">Построить башню!</p>
+                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-normal">
+                    <p className="leading-[20px]">Посмотреть рейтинг игроков</p>
                   </div>
-                </div>
-                <div className="absolute inset-0 rounded-[12px]" data-name="div.absolute">
-                  <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px]" />
-                </div>
-              </button>
+                </button>
 
-              <button
-                type="button"
-                onClick={onOpenLeaderboard}
-                className="absolute bg-[#b4d3ff] content-stretch flex gap-[8px] items-center justify-center left-[25px] px-[17px] py-[13px] right-[25px] rounded-[12px] top-[385.5px]"
-                data-name="button.mt-4"
-              >
-                <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
-                <div className="relative shrink-0 size-[18px]" data-name="Frame">
-                  <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 18 18">
-                    <g id="Frame">
-                      <path d={svgPaths.p34d63080} id="Vector" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                      <path d="M3.75 15.75H14.25" id="Vector_2" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                    </g>
-                  </svg>
-                </div>
-                <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
-                  <p className="leading-[20px]">Посмотреть рейтинг игроков</p>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setShowParticipationRules(true)}
-                className="-translate-x-1/2 absolute content-stretch flex items-center justify-center left-1/2 top-[443px]"
-                data-name="button.mt-3"
-              >
-                <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic opacity-60 relative shrink-0 text-[12px] text-[rgba(255,255,255,0.6)] text-center whitespace-nowrap">
-                  <p className="leading-[16px]">Правила участия</p>
-                </div>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setShowParticipationRules(true)}
+                  className="content-stretch flex items-center justify-center w-full"
+                  data-name="button.mt-3"
+                >
+                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic opacity-60 relative shrink-0 text-[12px] text-[rgba(255,255,255,0.6)] text-center whitespace-nowrap">
+                    <p className="leading-[16px]">Правила участия</p>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -246,8 +248,8 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
     return (
       <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
         <div className="relative my-auto w-full max-w-[448px]">
-          <div className="bg-[#f2f5f6] content-stretch flex flex-col gap-[16px] items-start max-w-[448px] overflow-clip p-[24px] relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full" data-name="div.w-full">
-            <div className="relative w-[398px]" data-name="div.mb-4">
+          <div className="bg-[#f2f5f6] content-stretch flex flex-col gap-[16px] items-start max-w-[448px] overflow-clip p-4 sm:p-[24px] relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full" data-name="div.w-full">
+            <div className="relative w-full" data-name="div.mb-4">
               <div className="content-stretch flex flex-col gap-[8px] items-start relative w-full">
                 <div className="content-stretch flex flex-col items-center relative w-full" data-name="p.uppercase">
                   <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[10px] text-center tracking-[1px] uppercase whitespace-nowrap">
@@ -262,17 +264,17 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
               </div>
             </div>
 
-            <div className="bg-[#b4d3ff] relative rounded-[12px] shrink-0 w-[398px]" data-name="div.rounded-xl">
+            <div className="bg-[#b4d3ff] relative rounded-[12px] shrink-0 w-full" data-name="div.rounded-xl">
               <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.05)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
               <div className="content-stretch flex flex-col gap-[12px] items-start p-[17px] relative w-full">
-                <div className="relative shrink-0 w-[364px]" data-name="h3.text-xs">
+                <div className="relative shrink-0 w-full" data-name="h3.text-xs">
                   <div className="content-stretch flex flex-col items-start relative w-full">
                     <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
                       <p className="leading-[16px]">Какие же правила?</p>
                     </div>
                   </div>
                 </div>
-                <div className="relative shrink-0 w-[364px]" data-name="div.flex">
+                <div className="relative shrink-0 w-full" data-name="div.flex">
                   <div className="content-stretch flex gap-[12px] items-start relative w-full">
                     <div className="relative shrink-0 size-[20px]" data-name="span.flex-shrink-0">
                       <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
@@ -282,15 +284,15 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                         </g>
                       </svg>
                     </div>
-                    <div className="content-stretch flex flex-col items-start pr-[20.98px] relative shrink-0" data-name="p.text-xs">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-nowrap">
+                    <div className="content-stretch flex flex-col items-start relative min-w-0 flex-1" data-name="p.text-xs">
+                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-normal">
                         <p className="mb-0">«Отпускайте» ящик, когда он окажется над башней,</p>
                         <p>одним нажатием на экран;</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="relative shrink-0 w-[364px]" data-name="div.flex">
+                <div className="relative shrink-0 w-full" data-name="div.flex">
                   <div className="content-stretch flex gap-[12px] items-start relative w-full">
                     <div className="relative shrink-0 size-[20px]" data-name="span.flex-shrink-0">
                       <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
@@ -300,15 +302,15 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                         </g>
                       </svg>
                     </div>
-                    <div className="content-stretch flex flex-col items-start pr-[11.16px] relative shrink-0" data-name="p.text-xs">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-nowrap">
+                    <div className="content-stretch flex flex-col items-start relative min-w-0 flex-1" data-name="p.text-xs">
+                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-normal">
                         <p className="mb-0">Старайтесь собирать башню ровно. Если края выйдут</p>
                         <p>за границы, они будут обрезаны;</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="relative shrink-0 w-[364px]" data-name="div.flex">
+                <div className="relative shrink-0 w-full" data-name="div.flex">
                   <div className="content-stretch flex gap-[12px] items-start relative w-full">
                     <div className="relative shrink-0 size-[20px]" data-name="span.flex-shrink-0">
                       <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
@@ -318,8 +320,8 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                         </g>
                       </svg>
                     </div>
-                    <div className="content-stretch flex flex-col items-start pr-[73.25px] relative shrink-0" data-name="p.text-xs">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-nowrap">
+                    <div className="content-stretch flex flex-col items-start relative min-w-0 flex-1" data-name="p.text-xs">
+                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-normal">
                         <p className="mb-0">Чем выше башня, тем больше баллов будет</p>
                         <p>направлено на благотворительность.</p>
                       </div>
@@ -329,17 +331,17 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
               </div>
             </div>
 
-            <div className="bg-white relative rounded-[12px] shrink-0 w-[398px]" data-name="div.rounded-xl">
+            <div className="bg-white relative rounded-[12px] shrink-0 w-full" data-name="div.rounded-xl">
               <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.05)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
               <div className="content-stretch flex flex-col gap-[12px] items-start px-[17px] py-[25px] relative w-full">
-                <div className="relative shrink-0 w-[364px]" data-name="h3.text-xs">
+                <div className="relative shrink-0 w-full" data-name="h3.text-xs">
                   <div className="content-stretch flex flex-col items-start relative w-full">
                     <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
                       <p className="leading-[16px]">Награды за уровни</p>
                     </div>
                   </div>
                 </div>
-                <div className="relative shrink-0 w-[364px]" data-name="div.space-y-2">
+                <div className="relative shrink-0 w-full" data-name="div.space-y-2">
                   <div className="content-stretch flex flex-col gap-[8px] items-start relative w-full">
                     {PROMO_REWARDS.map((reward) => (
                       <div key={reward.score} className="bg-[rgba(180,211,255,0.2)] relative rounded-[8px] shrink-0 w-full" data-name="div.flex">
@@ -367,7 +369,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
             <button
               type="button"
               onClick={onStart}
-              className="relative rounded-[12px] shadow-[0px_4px_20px_0px_rgba(255,44,0,0.4)] shrink-0 w-[398px]"
+              className="relative rounded-[12px] shadow-[0px_4px_20px_0px_rgba(255,44,0,0.4)] shrink-0 w-full"
               data-name="button.w-full"
             >
               <div className="content-stretch flex items-start justify-center px-[24px] py-[16px] relative w-full">
@@ -392,7 +394,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
             <button
               type="button"
               onClick={() => setOnboardingStep(1)}
-              className="bg-[#b4d3ff] relative rounded-[12px] shrink-0 w-[398px]"
+              className="bg-[#b4d3ff] relative rounded-[12px] shrink-0 w-full"
               data-name="button.mt-4"
             >
               <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
