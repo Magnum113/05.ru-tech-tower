@@ -509,10 +509,22 @@ export class GameEngine {
         ? this.boxImages.cut
         : this.boxImages.full;
 
-    const depth = Math.round(h * 0.35);
-    const drawHeight = h + depth;
-    const drawY = y - depth;
-    this.ctx.drawImage(image, x, drawY, w, drawHeight);
+    const meta = variant === 'debris'
+      ? { viewBoxWidth: 89.5, frontWidth: 49, offsetX: 10 }
+      : variant === 'cut'
+        ? { viewBoxWidth: 189.5, frontWidth: 149, offsetX: 10 }
+        : { viewBoxWidth: 239.5, frontWidth: 199, offsetX: 10 };
+
+    const viewBoxHeight = 113.5;
+    const frontHeight = 64;
+    const offsetY = 29.5;
+
+    const drawWidth = w * (meta.viewBoxWidth / meta.frontWidth);
+    const drawHeight = h * (viewBoxHeight / frontHeight);
+    const drawX = x - (meta.offsetX / meta.viewBoxWidth) * drawWidth;
+    const drawY = y - (offsetY / viewBoxHeight) * drawHeight;
+
+    this.ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
   }
 
   private loadBoxImages() {
