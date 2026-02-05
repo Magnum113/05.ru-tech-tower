@@ -145,12 +145,13 @@ export class GameEngine {
 
   private spawnNextBlock() {
     const prevBlock = this.blocks[this.blocks.length - 1];
+    const stackStep = this.getStackStep();
     // Next emoji depends on the *next* level (current score + 1)
     const nextEmoji = getEmojiForLevel(this.score + 1);
     
     this.currentBlock = {
       x: -prevBlock.width,
-      y: prevBlock.y - GAME_CONFIG.blockHeight,
+      y: prevBlock.y - stackStep,
       width: prevBlock.width,
       color: COLORS.boxMain,
       emoji: nextEmoji,
@@ -333,7 +334,7 @@ export class GameEngine {
     }
 
     // Camera Logic
-    const targetY = (this.blocks.length * GAME_CONFIG.blockHeight) - (this.canvas.height / 2);
+    const targetY = (this.blocks.length * this.getStackStep()) - (this.canvas.height / 2);
     const safeTargetY = Math.max(0, targetY);
     if (safeTargetY > this.cameraY) {
        this.cameraY += (safeTargetY - this.cameraY) * 0.1 * delta;
@@ -603,6 +604,15 @@ export class GameEngine {
     }
     this.ctx.closePath();
     this.ctx.fill();
+  }
+
+  private getStackStep() {
+    if (this.boxStyle !== 'v2') {
+      return GAME_CONFIG.blockHeight;
+    }
+    // V2 template has extra top/bottom elements outside the front face.
+    // Match vertical stacking to the full visual block height to avoid overlap.
+    return GAME_CONFIG.blockHeight * (70 / 64);
   }
 
   private getBoxTemplate(variant: 'full' | 'cut' | 'debris'): BoxTemplate {
