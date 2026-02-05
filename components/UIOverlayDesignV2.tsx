@@ -137,7 +137,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                 </div>
                 <div className="content-stretch flex flex-col items-center pb-[0.75px] relative w-full" data-name="p">
                   <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
-                    <p className="leading-[18px]">Будьте терпеливы, и всё обязательно сложится.</p>
+                    <p className="leading-[18px]">Будьте терпеливы, и всё обязательно <em>сложится</em>.</p>
                   </div>
                 </div>
               </div>
