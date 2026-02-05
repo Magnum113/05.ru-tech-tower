@@ -24,6 +24,24 @@ interface Star {
 
 type BoxStyle = 'legacy' | 'v2';
 
+interface BoxTemplate {
+  frontHeight: number;
+  frontY: number;
+  frontWidth: number;
+  contentWidth: number;
+  contentHeight: number;
+  topFace: Array<{ x: number; y: number }>;
+  sideFace: Array<{ x: number; y: number }>;
+  outerTopStrip: { x: number; y: number; w: number; h: number };
+  outerBottomStrip: { x: number; y: number; w: number; h: number };
+  innerTopStrip: { x: number; y: number; w: number; h: number };
+  innerBottomStrip: { x: number; y: number; w: number; h: number };
+  panelXs: number[];
+  panelYs: number[];
+  panelW: number;
+  panelH: number;
+}
+
 export class GameEngine {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
@@ -46,9 +64,6 @@ export class GameEngine {
   private onGameOver: (score: number) => void;
   private animationId: number = 0;
   private boxStyle: BoxStyle = 'legacy';
-  private boxImages: { full: HTMLImageElement; cut: HTMLImageElement; debris: HTMLImageElement } | null = null;
-  private boxImagesReady: boolean = false;
-  private boxImagesPending: number = 0;
 
   constructor(
     canvas: HTMLCanvasElement, 
@@ -64,9 +79,6 @@ export class GameEngine {
     this.onGameOver = callbacks.onGameOver;
     this.boxStyle = options?.boxStyle ?? 'legacy';
 
-    if (this.boxStyle === 'v2') {
-      this.loadBoxImages();
-    }
     this.initStars();
     this.resize();
     window.addEventListener('resize', this.resize.bind(this));
@@ -496,75 +508,190 @@ export class GameEngine {
   }
 
   private drawBlockShapeV2(x: number, y: number, w: number, h: number, variant: 'full' | 'cut' | 'debris') {
-    if (!this.boxImages || !this.boxImagesReady) {
-      this.ctx.fillStyle = '#EDD098';
-      this.ctx.fillRect(x, y, w, h);
-      return;
+    const template = this.getBoxTemplate(variant);
+    const sx = w / template.frontWidth;
+    const sy = h / template.frontHeight;
+    const mapX = (vx: number) => x + vx * sx;
+    const mapY = (vy: number) => y + (vy - template.frontY) * sy;
+
+    // Base face
+    this.ctx.fillStyle = '#EDD098';
+    this.ctx.fillRect(x, y, w, h);
+
+    // Panel lines exactly as in the design component
+    for (const py of template.panelYs) {
+      for (const px of template.panelXs) {
+        const rx = mapX(px);
+        const ry = mapY(py);
+        const rw = template.panelW * sx;
+        const rh = template.panelH * sy;
+        const grad = this.ctx.createLinearGradient(0, ry, 0, ry + Math.max(3 * sy, 1));
+        grad.addColorStop(0, '#FFFAF1');
+        grad.addColorStop(1, '#FFE5B8');
+        this.ctx.fillStyle = grad;
+        this.ctx.fillRect(rx, ry, rw, rh);
+      }
     }
 
-    const image = variant === 'debris'
-      ? this.boxImages.debris
-      : variant === 'cut'
-        ? this.boxImages.cut
-        : this.boxImages.full;
+    // Bottom strip
+    this.ctx.fillStyle = '#E9E9E9';
+    this.ctx.fillRect(
+      mapX(template.outerBottomStrip.x),
+      mapY(template.outerBottomStrip.y),
+      template.outerBottomStrip.w * sx,
+      template.outerBottomStrip.h * sy,
+    );
 
-    if (!image.complete || image.naturalWidth === 0) {
-      this.ctx.fillStyle = '#EDD098';
-      this.ctx.fillRect(x, y, w, h);
-      return;
-    }
+    // Right side face
+    this.ctx.fillStyle = '#CACACA';
+    this.drawBoxPolygon(template.sideFace, mapX, mapY);
 
-    const meta = variant === 'debris'
-      ? { sourceWidth: 65.5, frontWidth: 49 }
-      : variant === 'cut'
-        ? { sourceWidth: 165.5, frontWidth: 149 }
-        : { sourceWidth: 215.5, frontWidth: 199 };
+    // Top strip + top face
+    this.ctx.fillStyle = '#E9E9E9';
+    this.ctx.fillRect(
+      mapX(template.outerTopStrip.x),
+      mapY(template.outerTopStrip.y),
+      template.outerTopStrip.w * sx,
+      template.outerTopStrip.h * sy,
+    );
 
-    const sourceX = 10;
-    const sourceY = 10;
-    const sourceHeight = 89.5;
-    const frontHeight = 64;
-    const frontTopOffset = 19.5; // front top (29.5) - content top (10)
+    this.ctx.fillStyle = '#F5F5F5';
+    this.drawBoxPolygon(template.topFace, mapX, mapY);
 
-    const drawWidth = w * (meta.sourceWidth / meta.frontWidth);
-    const drawHeight = h * (sourceHeight / frontHeight);
-    const drawX = x;
-    const drawY = y - (frontTopOffset / sourceHeight) * drawHeight;
+    // Thin strips with stroke
+    this.ctx.fillStyle = '#E9E9E9';
+    this.ctx.strokeStyle = '#D2D2D2';
+    this.ctx.lineWidth = Math.max(1, Math.min(sx, sy));
 
-    this.ctx.save();
-    this.ctx.imageSmoothingEnabled = true;
-    this.ctx.shadowColor = 'rgba(0,0,0,0.05)';
-    this.ctx.shadowBlur = 6;
-    this.ctx.shadowOffsetX = 2;
-    this.ctx.shadowOffsetY = 2;
-    this.ctx.drawImage(image, sourceX, sourceY, meta.sourceWidth, sourceHeight, drawX, drawY, drawWidth, drawHeight);
-    this.ctx.restore();
+    this.ctx.fillRect(
+      mapX(template.innerBottomStrip.x),
+      mapY(template.innerBottomStrip.y),
+      template.innerBottomStrip.w * sx,
+      template.innerBottomStrip.h * sy,
+    );
+    this.ctx.strokeRect(
+      mapX(template.innerBottomStrip.x),
+      mapY(template.innerBottomStrip.y),
+      template.innerBottomStrip.w * sx,
+      template.innerBottomStrip.h * sy,
+    );
+
+    this.ctx.fillRect(
+      mapX(template.innerTopStrip.x),
+      mapY(template.innerTopStrip.y),
+      template.innerTopStrip.w * sx,
+      template.innerTopStrip.h * sy,
+    );
+    this.ctx.strokeRect(
+      mapX(template.innerTopStrip.x),
+      mapY(template.innerTopStrip.y),
+      template.innerTopStrip.w * sx,
+      template.innerTopStrip.h * sy,
+    );
   }
 
-  private loadBoxImages() {
-    const fullUrl = '/boxes/box-full.svg';
-    const cutUrl = '/boxes/box-cut.svg';
-    const debrisUrl = '/boxes/box-debris.svg';
+  private drawBoxPolygon(
+    points: Array<{ x: number; y: number }>,
+    mapX: (x: number) => number,
+    mapY: (y: number) => number,
+  ) {
+    if (points.length === 0) return;
+    this.ctx.beginPath();
+    this.ctx.moveTo(mapX(points[0].x), mapY(points[0].y));
+    for (let i = 1; i < points.length; i++) {
+      this.ctx.lineTo(mapX(points[i].x), mapY(points[i].y));
+    }
+    this.ctx.closePath();
+    this.ctx.fill();
+  }
 
-    const load = (src: string) => {
-      const img = new Image();
-      this.boxImagesPending += 1;
-      img.onload = () => {
-        this.boxImagesPending -= 1;
-        if (this.boxImagesPending <= 0) this.boxImagesReady = true;
+  private getBoxTemplate(variant: 'full' | 'cut' | 'debris'): BoxTemplate {
+    if (variant === 'debris') {
+      return {
+        frontHeight: 64,
+        frontY: 19.5,
+        frontWidth: 49,
+        contentWidth: 65.5,
+        contentHeight: 89.5,
+        topFace: [
+          { x: 21.6251, y: 0 },
+          { x: 65.5, y: 0 },
+          { x: 49, y: 13.5 },
+          { x: 0.046, y: 13.5987 },
+        ],
+        sideFace: [
+          { x: 49, y: 13.5 },
+          { x: 65.5, y: 0 },
+          { x: 65.5, y: 76 },
+          { x: 49, y: 89.5 },
+        ],
+        outerTopStrip: { x: 0, y: 13.5, w: 49, h: 6 },
+        outerBottomStrip: { x: 0, y: 83.5, w: 49, h: 6 },
+        innerTopStrip: { x: 0.5, y: 15, w: 48, h: 3 },
+        innerBottomStrip: { x: 0.5, y: 85, w: 48, h: 3 },
+        panelXs: [0],
+        panelYs: [20.5, 41.5, 62.5],
+        panelW: 49,
+        panelH: 20,
       };
-      img.onerror = () => {
-        this.boxImagesPending -= 1;
-        if (this.boxImagesPending <= 0) this.boxImagesReady = true;
-      };
-      img.src = src;
-      return img;
-    };
+    }
 
-    this.boxImages = {
-      full: load(fullUrl),
-      cut: load(cutUrl),
-      debris: load(debrisUrl),
+    if (variant === 'cut') {
+      return {
+        frontHeight: 64,
+        frontY: 19.5,
+        frontWidth: 149,
+        contentWidth: 165.5,
+        contentHeight: 89.5,
+        topFace: [
+          { x: 27.25, y: 0 },
+          { x: 165.5, y: 0 },
+          { x: 149, y: 13.5 },
+          { x: 0, y: 13.5 },
+        ],
+        sideFace: [
+          { x: 149, y: 13.5 },
+          { x: 165.5, y: 0 },
+          { x: 165.5, y: 76 },
+          { x: 149, y: 89.5 },
+        ],
+        outerTopStrip: { x: 0, y: 13.5, w: 149, h: 6 },
+        outerBottomStrip: { x: 0, y: 83.5, w: 149, h: 6 },
+        innerTopStrip: { x: 1.5, y: 15, w: 146, h: 3 },
+        innerBottomStrip: { x: 1.5, y: 85, w: 146, h: 3 },
+        panelXs: [0, 50, 100],
+        panelYs: [20.5, 41.5, 62.5],
+        panelW: 49,
+        panelH: 20,
+      };
+    }
+
+    return {
+      frontHeight: 64,
+      frontY: 19.5,
+      frontWidth: 199,
+      contentWidth: 215.5,
+      contentHeight: 89.5,
+      topFace: [
+        { x: 21.5, y: 0 },
+        { x: 215.5, y: 0 },
+        { x: 199, y: 13.5 },
+        { x: 0, y: 13.5 },
+      ],
+      sideFace: [
+        { x: 199, y: 13.5 },
+        { x: 215.5, y: 0 },
+        { x: 215.5, y: 76 },
+        { x: 199, y: 89.5 },
+      ],
+      outerTopStrip: { x: 0, y: 13.5, w: 199, h: 6 },
+      outerBottomStrip: { x: 0, y: 83.5, w: 199, h: 6 },
+      innerTopStrip: { x: 2.5, y: 15, w: 194, h: 3 },
+      innerBottomStrip: { x: 2.5, y: 85, w: 194, h: 3 },
+      panelXs: [0, 50, 100, 150],
+      panelYs: [20.5, 41.5, 62.5],
+      panelW: 49,
+      panelH: 20,
     };
   }
 
