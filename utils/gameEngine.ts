@@ -10,6 +10,7 @@ interface Block {
   isDebris?: boolean;
   vy?: number;
   r?: number;
+  variant?: 'full' | 'cut';
 }
 
 interface Star {
@@ -45,6 +46,9 @@ export class GameEngine {
   private onGameOver: (score: number) => void;
   private animationId: number = 0;
   private boxStyle: BoxStyle = 'legacy';
+  private boxImages: { full: HTMLImageElement; cut: HTMLImageElement; debris: HTMLImageElement } | null = null;
+  private boxImagesReady: boolean = false;
+  private boxImagesPending: number = 0;
 
   constructor(
     canvas: HTMLCanvasElement, 
@@ -60,6 +64,9 @@ export class GameEngine {
     this.onGameOver = callbacks.onGameOver;
     this.boxStyle = options?.boxStyle ?? 'legacy';
 
+    if (this.boxStyle === 'v2') {
+      this.loadBoxImages();
+    }
     this.initStars();
     this.resize();
     window.addEventListener('resize', this.resize.bind(this));
@@ -117,6 +124,7 @@ export class GameEngine {
       width: GAME_CONFIG.baseWidth,
       color: COLORS.boxMain,
       emoji: '',
+      variant: 'full',
     };
     this.blocks.push(baseBlock);
 
@@ -134,6 +142,7 @@ export class GameEngine {
       width: prevBlock.width,
       color: COLORS.boxMain,
       emoji: nextEmoji,
+      variant: 'full',
     };
     
     // Randomize start side
@@ -163,11 +172,13 @@ export class GameEngine {
     // 2. Check Perfect or Cut
     let newWidth = current.width;
     let newX = current.x;
+    let newVariant: Block['variant'] = 'full';
 
     if (absDist <= GAME_CONFIG.perfectTolerance) {
       // Perfect Snap
       newX = prevBlock.x;
       newWidth = prevBlock.width; 
+      newVariant = 'full';
       
       this.handlePerfectMatch(newX, current.y);
       
@@ -183,6 +194,7 @@ export class GameEngine {
       // Cut
       this.perfectStreak = 0; // Reset streak
       newWidth = current.width - absDist;
+      newVariant = 'cut';
       
       let debrisX, debrisWidth;
       if (dist > 0) {
@@ -214,6 +226,7 @@ export class GameEngine {
       ...current,
       x: newX,
       width: newWidth,
+      variant: newVariant,
     });
 
     this.lastPlacement = {
@@ -397,16 +410,25 @@ export class GameEngine {
         this.ctx.translate(b.x + b.width/2, b.y + GAME_CONFIG.blockHeight/2);
         this.ctx.rotate(b.r || 0);
         this.ctx.translate(-b.width/2, -GAME_CONFIG.blockHeight/2);
-        this.drawBlockShape(0, 0, b.width, GAME_CONFIG.blockHeight, b.color, b.emoji);
+        this.drawBlockShape(0, 0, b.width, GAME_CONFIG.blockHeight, b.color, b.emoji, 'debris');
         this.ctx.restore();
     } else {
-        this.drawBlockShape(b.x, b.y, b.width, GAME_CONFIG.blockHeight, b.color, b.emoji);
+        const variant = b.variant === 'cut' ? 'cut' : 'full';
+        this.drawBlockShape(b.x, b.y, b.width, GAME_CONFIG.blockHeight, b.color, b.emoji, variant);
     }
   }
 
-  private drawBlockShape(x: number, y: number, w: number, h: number, color: string, emoji: string) {
+  private drawBlockShape(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    color: string,
+    emoji: string,
+    variant: 'full' | 'cut' | 'debris'
+  ) {
     if (this.boxStyle === 'v2') {
-      this.drawBlockShapeV2(x, y, w, h);
+      this.drawBlockShapeV2(x, y, w, h, variant);
       return;
     }
     const depth = 12; // Deeper 3D effect
@@ -474,81 +496,50 @@ export class GameEngine {
   }
 
   private drawBlockShapeV2(x: number, y: number, w: number, h: number) {
-    const depth = Math.min(16, Math.max(8, Math.round(h * 0.2)));
-    const baseColor = '#EDD098';
-    const panelTop = '#FFFAF1';
-    const panelBottom = '#FFE5B8';
-    const tapeColor = '#E9E9E9';
-    const tapeStroke = '#D2D2D2';
-    const topFace = '#F5F5F5';
-    const sideFace = '#CACACA';
-
-    const tapeHeight = Math.max(4, Math.round(h * 0.09));
-    const innerTapeHeight = Math.max(2, Math.round(tapeHeight * 0.5));
-    const inset = Math.max(2, Math.round(w * 0.012));
-
-    // Main face with soft shadow
-    this.ctx.save();
-    this.ctx.shadowColor = 'rgba(0,0,0,0.05)';
-    this.ctx.shadowBlur = 6;
-    this.ctx.shadowOffsetX = 2;
-    this.ctx.shadowOffsetY = 2;
-    this.ctx.fillStyle = baseColor;
-    this.ctx.fillRect(x, y, w, h);
-    this.ctx.restore();
-
-    // Panel pattern
-    const panelAreaY = y + tapeHeight;
-    const panelAreaH = Math.max(0, h - tapeHeight * 2);
-    const rows = 3;
-    const cols = Math.max(1, Math.round(w / 50));
-    const panelW = w / cols;
-    const panelH = panelAreaH / rows;
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const px = x + col * panelW;
-        const py = panelAreaY + row * panelH;
-        const grad = this.ctx.createLinearGradient(0, py, 0, py + panelH);
-        grad.addColorStop(0, panelTop);
-        grad.addColorStop(1, panelBottom);
-        this.ctx.fillStyle = grad;
-        this.ctx.fillRect(px, py, panelW, panelH);
-      }
+  private drawBlockShapeV2(x: number, y: number, w: number, h: number, variant: 'full' | 'cut' | 'debris') {
+    if (!this.boxImages || !this.boxImagesReady) {
+      this.ctx.fillStyle = '#EDD098';
+      this.ctx.fillRect(x, y, w, h);
+      return;
     }
 
-    // Tape strips
-    this.ctx.fillStyle = tapeColor;
-    this.ctx.fillRect(x, y, w, tapeHeight);
-    this.ctx.fillRect(x, y + h - tapeHeight, w, tapeHeight);
+    const image = variant === 'debris'
+      ? this.boxImages.debris
+      : variant === 'cut'
+        ? this.boxImages.cut
+        : this.boxImages.full;
 
-    // Tape inner lines
-    this.ctx.fillStyle = tapeColor;
-    this.ctx.fillRect(x + inset, y + tapeHeight - innerTapeHeight, w - inset * 2, innerTapeHeight);
-    this.ctx.fillRect(x + inset, y + h - tapeHeight, w - inset * 2, innerTapeHeight);
-    this.ctx.strokeStyle = tapeStroke;
-    this.ctx.lineWidth = 1;
-    this.ctx.strokeRect(x + inset + 0.5, y + tapeHeight - innerTapeHeight + 0.5, w - inset * 2 - 1, innerTapeHeight - 1);
-    this.ctx.strokeRect(x + inset + 0.5, y + h - tapeHeight + 0.5, w - inset * 2 - 1, innerTapeHeight - 1);
+    const depth = Math.round(h * 0.35);
+    const drawHeight = h + depth;
+    const drawY = y - depth;
+    this.ctx.drawImage(image, x, drawY, w, drawHeight);
+  }
 
-    // Top face
-    this.ctx.fillStyle = topFace;
-    this.ctx.beginPath();
-    this.ctx.moveTo(x, y);
-    this.ctx.lineTo(x + depth, y - depth);
-    this.ctx.lineTo(x + w + depth, y - depth);
-    this.ctx.lineTo(x + w, y);
-    this.ctx.closePath();
-    this.ctx.fill();
+  private loadBoxImages() {
+    const fullUrl = new URL('../newdesign/boxes/цельный.svg', import.meta.url).href;
+    const cutUrl = new URL('../newdesign/boxes/обрезанный.svg', import.meta.url).href;
+    const debrisUrl = new URL('../newdesign/boxes/падающий.svg', import.meta.url).href;
 
-    // Side face
-    this.ctx.fillStyle = sideFace;
-    this.ctx.beginPath();
-    this.ctx.moveTo(x + w, y);
-    this.ctx.lineTo(x + w + depth, y - depth);
-    this.ctx.lineTo(x + w + depth, y + h - depth);
-    this.ctx.lineTo(x + w, y + h);
-    this.ctx.closePath();
-    this.ctx.fill();
+    const load = (src: string) => {
+      const img = new Image();
+      this.boxImagesPending += 1;
+      img.onload = () => {
+        this.boxImagesPending -= 1;
+        if (this.boxImagesPending <= 0) this.boxImagesReady = true;
+      };
+      img.onerror = () => {
+        this.boxImagesPending -= 1;
+        if (this.boxImagesPending <= 0) this.boxImagesReady = true;
+      };
+      img.src = src;
+      return img;
+    };
+
+    this.boxImages = {
+      full: load(fullUrl),
+      cut: load(cutUrl),
+      debris: load(debrisUrl),
+    };
   }
 
   private drawCrescent(x: number, y: number, r: number) {
