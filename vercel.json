@@ -5,6 +5,8 @@
     { "source": "/pagefordesign2", "destination": "/" },
     { "source": "/pagefordesign2/", "destination": "/" },
     { "source": "/towerv2", "destination": "/" },
-    { "source": "/towerv2/", "destination": "/" }
+    { "source": "/towerv2/", "destination": "/" },
+    { "source": "/gamenewdesign2", "destination": "/" },
+    { "source": "/gamenewdesign2/", "destination": "/" }
   ]
 }
