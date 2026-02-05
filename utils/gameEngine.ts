@@ -542,9 +542,9 @@ export class GameEngine {
   }
 
   private loadBoxImages() {
-    const fullUrl = new URL('../newdesign/boxes/цельный.svg', import.meta.url).href;
-    const cutUrl = new URL('../newdesign/boxes/обрезанный.svg', import.meta.url).href;
-    const debrisUrl = new URL('../newdesign/boxes/падающий.svg', import.meta.url).href;
+    const fullUrl = '/boxes/box-full.svg';
+    const cutUrl = '/boxes/box-cut.svg';
+    const debrisUrl = '/boxes/box-debris.svg';
 
     const load = (src: string) => {
       const img = new Image();
