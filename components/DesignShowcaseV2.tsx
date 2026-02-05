@@ -4,23 +4,11 @@ import DivMxAuto from '../newdesign/src/imports/DivMxAuto';
 
 const gradientStyles = `
 .designv2 [data-name="button.w-full"] {
-  background: radial-gradient(ellipse 800px 300px at 67% 87%,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(255, 11, 0, 0.875) 12.5%,
-    rgba(255, 23, 0, 0.75) 25%,
-    rgba(255, 46, 0, 0.5) 50%,
-    rgba(255, 92, 0, 0) 100%
-  ), linear-gradient(90deg, rgb(255, 92, 0) 0%, rgb(255, 92, 0) 100%) !important;
+  background: radial-gradient(408.24% 368.51% at 67.25% 87.2%, #FF0000 0%, rgba(255, 92, 0, 0) 100%), #FF5C00 !important;
 }
 
 .designv2 [data-name="button.px-8"] {
-  background: radial-gradient(ellipse 400px 200px at 67% 87%,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(255, 11, 0, 0.875) 12.5%,
-    rgba(255, 23, 0, 0.75) 25%,
-    rgba(255, 46, 0, 0.5) 50%,
-    rgba(255, 92, 0, 0) 100%
-  ), linear-gradient(90deg, rgb(255, 92, 0) 0%, rgb(255, 92, 0) 100%) !important;
+  background: radial-gradient(408.24% 368.51% at 67.25% 87.2%, #FF0000 0%, rgba(255, 92, 0, 0) 100%), #FF5C00 !important;
 }
 
 .designv2 [data-name="div.h-full"] {
@@ -31,6 +19,18 @@ const gradientStyles = `
     rgba(255, 46, 0, 0.5) 50%,
     rgba(255, 92, 0, 0) 100%
   ), linear-gradient(90deg, rgb(255, 92, 0) 0%, rgb(255, 92, 0) 100%) !important;
+}
+
+.designv2 [data-name="button.mt-3"] p {
+  color: #15252B !important;
+}
+
+.designv2 [data-name="button.mt-3"] div {
+  opacity: 1 !important;
+}
+
+.designv2 [data-name="h1.relative"] p {
+  letter-spacing: -0.75px;
 }
 `;
 
