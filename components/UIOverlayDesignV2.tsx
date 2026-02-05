@@ -822,8 +822,8 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
     return (
       <div className="absolute inset-0 z-40 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
         <div className="relative my-auto w-full max-w-[512px]">
-          <div className="bg-[#f2f5f6] max-w-[512px] relative rounded-[24px] shrink-0 w-full" data-name="div.w-full">
-            <div className="content-stretch flex flex-col items-start max-w-[inherit] overflow-clip p-[25px] relative rounded-[inherit] w-full">
+          <div className="max-w-[512px] relative shrink-0 w-full" data-name="div.w-full">
+            <div className="content-stretch flex flex-col items-start max-w-[inherit] overflow-clip p-[25px] relative w-full">
               <div className="relative shrink-0 w-[448px]" data-name="div.w-full">
                 <div className="content-stretch flex flex-col gap-[8px] items-start relative w-full">
                   <div className="content-stretch flex flex-col items-center relative w-full" data-name="h2.text-4xl">
@@ -892,7 +892,6 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                 </div>
               </div>
             </div>
-            <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[24px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]" />
           </div>
         </div>
       </div>
