@@ -1,0 +1,51 @@
+@font-face {
+  font-family: 'PP Right Grotesk';
+  src: url('/fonts/PPRightGrotesk-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Right Grotesk';
+  src: url('/fonts/PPRightGrotesk-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Right Grotesk';
+  src: url('/fonts/PPRightGrotesk-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Right Grotesk';
+  src: url('/fonts/PPRightGrotesk-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Right Grotesk';
+  src: url('/fonts/PPRightGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Right Grotesk';
+  src: url('/fonts/PPRightGrotesk-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+.designv2 {
+  font-family: 'PP Right Grotesk', system-ui, -apple-system, sans-serif;
+}

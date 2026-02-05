@@ -1,0 +1,31 @@
+/* Gradient backgrounds for buttons - Orange gradient with red glow */
+[data-name="button.w-full"] {
+  background: radial-gradient(ellipse 800px 300px at 67% 87%, 
+    rgba(255, 0, 0, 1) 0%, 
+    rgba(255, 11, 0, 0.875) 12.5%, 
+    rgba(255, 23, 0, 0.75) 25%, 
+    rgba(255, 46, 0, 0.5) 50%, 
+    rgba(255, 92, 0, 0) 100%
+  ), linear-gradient(90deg, rgb(255, 92, 0) 0%, rgb(255, 92, 0) 100%) !important;
+}
+
+[data-name="button.px-8"] {
+  background: radial-gradient(ellipse 400px 200px at 67% 87%, 
+    rgba(255, 0, 0, 1) 0%, 
+    rgba(255, 11, 0, 0.875) 12.5%, 
+    rgba(255, 23, 0, 0.75) 25%, 
+    rgba(255, 46, 0, 0.5) 50%, 
+    rgba(255, 92, 0, 0) 100%
+  ), linear-gradient(90deg, rgb(255, 92, 0) 0%, rgb(255, 92, 0) 100%) !important;
+}
+
+/* Progress bar gradient */
+[data-name="div.h-full"] {
+  background: radial-gradient(ellipse 350px 150px at 67% 87%, 
+    rgba(255, 0, 0, 1) 0%, 
+    rgba(255, 11, 0, 0.875) 12.5%, 
+    rgba(255, 23, 0, 0.75) 25%, 
+    rgba(255, 46, 0, 0.5) 50%, 
+    rgba(255, 92, 0, 0) 100%
+  ), linear-gradient(90deg, rgb(255, 92, 0) 0%, rgb(255, 92, 0) 100%) !important;
+}

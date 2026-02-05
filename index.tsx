@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import AppV2 from './AppV2';
 import DesignShowcase from './components/DesignShowcase';
+import DesignShowcaseV2 from './components/DesignShowcaseV2';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -11,11 +12,12 @@ if (!rootElement) {
 
 const pathname = window.location.pathname.replace(/\/+$/, '');
 const isDesignPage = pathname === '/pagefordesign';
+const isDesignPageV2 = pathname === '/pagefordesign2';
 const isTowerV2 = pathname === '/towerv2';
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    {isDesignPage ? <DesignShowcase /> : isTowerV2 ? <AppV2 /> : <App />}
+    {isDesignPage ? <DesignShowcase /> : isDesignPageV2 ? <DesignShowcaseV2 /> : isTowerV2 ? <AppV2 /> : <App />}
   </React.StrictMode>
 );
