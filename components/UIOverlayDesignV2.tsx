@@ -72,7 +72,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
   }, [gameState]);
 
   const renderHUD = () => (
-    <div className="absolute top-0 left-0 z-20 flex w-full items-start justify-between p-4 pointer-events-none">
+    <div data-overlay="hud" className="absolute top-0 left-0 z-20 flex w-full items-start justify-between p-4 pointer-events-none">
       <div className="flex flex-col">
         <span className="text-[12px] font-['PP_Right_Grotesk:Bold',sans-serif] uppercase text-[rgba(255,255,255,0.6)] leading-[16px]">
           Этаж
@@ -95,7 +95,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
   if (gameState === GameState.START) {
     if (onboardingStep === 1) {
       return (
-        <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
+        <div data-overlay="start-step1" className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
           <div className="relative my-auto w-full max-w-[448px]">
             <div className="bg-[#f2f5f6] overflow-clip relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full p-4 sm:p-[25px]" data-name="div.w-full">
               <div className="content-stretch flex flex-col gap-[12px] items-start w-full" data-name="div.mb-6">
@@ -236,7 +236,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
     }
 
     return (
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
+      <div data-overlay="start-step2" className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
         <div className="relative my-auto w-full max-w-[448px]">
           <div className="bg-[#f2f5f6] content-stretch flex flex-col gap-[16px] items-start max-w-[448px] overflow-clip p-4 sm:p-[24px] relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full" data-name="div.w-full">
             <div className="relative w-full" data-name="div.mb-4">
@@ -894,7 +894,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
     return (
       <>
         {renderHUD()}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,560px)] pointer-events-none bg-[#15252B]">
+        <div data-overlay="progress" className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,560px)] pointer-events-none bg-[#15252B]">
           {nextReward ? (
             <div className="backdrop-blur-[4px] bg-[#15252B] relative rounded-[16px] shrink-0 w-full" data-name="div.rounded-2xl">
               <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.35)]" />
