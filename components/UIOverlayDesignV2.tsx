@@ -280,158 +280,83 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
 
     return (
       <div className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
-        <div className="relative my-auto w-full max-w-[512px]">
-          <div className="bg-[#f2f5f6] max-w-[512px] relative rounded-[24px] shrink-0 w-full" data-name="div.w-full">
-            <div className="content-stretch flex flex-col items-start max-w-[inherit] overflow-clip p-[25px] relative rounded-[inherit] w-full">
-              <div className="relative w-[462px]" data-name="div.relative">
-                <div className="content-stretch flex flex-col gap-[20px] items-start relative w-full">
-                  <div className="content-stretch flex items-center justify-between relative w-full" data-name="div.mb-5">
-                    <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-name="div.flex">
-                      <div className="bg-[rgba(255,212,102,0.3)] content-stretch flex items-center justify-center relative rounded-[16px] shrink-0 size-[44px]" data-name="div.flex">
-                        <div className="relative shrink-0 size-[22px]" data-name="Frame">
-                          <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 22 22">
-                            <g id="Frame">
-                              <path d={svgPaths.p2f60c500} id="Vector" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.83333" />
-                              <path d="M4.58333 19.25H17.4167" id="Vector_2" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.83333" />
-                            </g>
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="div">
-                        <div className="content-stretch flex flex-col items-start relative w-full" data-name="p.font-bold">
-                          <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[10px] tracking-[1px] uppercase whitespace-nowrap">
-                            <p className="leading-[15px]">Топ игроков</p>
-                          </div>
-                        </div>
-                        <div className="content-stretch flex flex-col items-start relative w-full" data-name="h2.text-2xl">
-                          <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[24px] whitespace-nowrap">
-                            <p className="leading-[32px]">Рейтинг игроков</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={onCloseLeaderboard}
-                      className="bg-[rgba(255,255,255,0.05)] content-stretch flex gap-[8px] items-center px-[13px] py-[9px] relative rounded-[9999px] shrink-0"
-                      data-name="button.flex"
-                    >
-                      <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[9999px]" />
-                      <div className="relative shrink-0 size-[14px]" data-name="Frame">
-                        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 14">
-                          <g id="Frame">
-                            <path d={svgPaths.p2c0cbc0} id="Vector" opacity="0.5" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                            <path d="M11.0833 7H2.91667" id="Vector_2" opacity="0.5" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
-                          </g>
-                        </svg>
-                      </div>
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic opacity-50 relative shrink-0 text-[#15252b] text-[12px] text-center whitespace-nowrap">
-                        <p className="leading-[16px]">Назад</p>
-                      </div>
-                    </button>
-                  </div>
-
-                  {leaderboardStatus === 'error' ? (
-                    <div className="bg-[#ffd466] relative rounded-[16px] shrink-0 w-full" data-name="div.rounded-2xl">
-                      <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[16px]" />
-                      <div className="flex flex-col items-center size-full">
-                        <div className="content-stretch flex flex-col items-center px-[17px] py-[25px] relative w-full">
-                          <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
-                            <p className="leading-[20px]">Рейтинг игроков пока недоступен</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : entries.length === 0 ? (
-                    <div className="bg-[#ffd466] relative rounded-[16px] shrink-0 w-full" data-name="div.rounded-2xl">
-                      <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[16px]" />
-                      <div className="flex flex-col items-center size-full">
-                        <div className="content-stretch flex flex-col items-center px-[17px] py-[25px] relative w-full">
-                          <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
-                            <p className="leading-[20px]">Игроков в списке пока нет, но вы можете стать первым :)</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="content-stretch flex flex-col gap-[12px] items-start relative w-full" data-name="div.space-y-3">
-                      {entries.map((entry, index) => {
-                        const isUser = entry.nickname === nickname;
-                        const rowClass = isUser ? 'bg-[#ffd466]' : 'bg-[#f6e4b7]';
-                        return (
-                          <div
-                            key={`${entry.nickname}-${entry.score}-${entry.id ?? index}`}
-                            className={`${rowClass} relative rounded-[16px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)] shrink-0 w-full`}
-                            data-name="div.flex"
-                          >
-                            <div className="flex flex-row items-center overflow-clip rounded-[inherit] size-full">
-                              <div className="content-stretch flex items-center justify-between px-[16px] py-[12px] relative w-full">
-                                <div className="relative shrink-0" data-name="div.flex">
-                                  <div className="content-stretch flex gap-[12px] items-center relative">
-                                    <div className="bg-[#f2f5f6] content-stretch flex items-center justify-center pb-[8.5px] pt-[7.5px] relative rounded-[9999px] shrink-0 size-[32px]" data-name="div.flex">
-                                      <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[12px] text-center whitespace-nowrap">
-                                        <p className="leading-[16px]">{index + 1}</p>
-                                      </div>
-                                    </div>
-                                    <div className="font-['PP_Right_Grotesk:Medium',sans-serif] h-[24px] leading-[0] not-italic relative shrink-0">
-                                      <div className="-translate-y-1/2 absolute flex flex-col justify-center left-0 text-[#15252b] text-[16px] top-[12px] whitespace-nowrap">
-                                        <p className="leading-[24px]">{entry.nickname}</p>
-                                      </div>
-                                      {isUser && (
-                                        <div className="-translate-y-1/2 absolute flex flex-col h-[15px] justify-center left-[115px] text-[10px] text-[rgba(21,37,43,0.5)] top-[14px] tracking-[1px] uppercase whitespace-nowrap">
-                                          <p className="leading-[15px]">это вы</p>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="relative shrink-0" data-name="div.text-sm">
-                                  <div className="content-stretch flex flex-col items-start relative">
-                                    <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
-                                      <p className="leading-[20px]">{entry.score}</p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  <div className="bg-[#b4d3ff] relative rounded-[16px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-name="div.mt-5">
-                    <div className="flex flex-row items-center size-full">
-                      <div className="content-stretch flex items-center justify-between pl-[16px] pr-[15.99px] py-[12px] relative w-full">
-                        <div className="relative shrink-0" data-name="span">
-                          <div className="content-stretch flex flex-col items-start relative">
-                            <div className="flex flex-col font-['SF_Pro_Text:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[0px] whitespace-nowrap">
-                              <p className="text-[14px]">
-                                <span className="font-['PP_Right_Grotesk:Medium',sans-serif] leading-[20px]">Ваш ник:</span>
-                                <span className="font-['SF_Pro_Text:Regular',sans-serif] leading-[20px]"> </span>
-                                <span className="font-['PP_Right_Grotesk:Medium',sans-serif] leading-[20px]">{nickname || '—'}</span>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="relative shrink-0" data-name="span">
-                          <div className="content-stretch flex flex-col items-start relative">
-                            <div className="flex flex-col font-['SF_Pro_Text:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[0px] whitespace-nowrap">
-                              <p className="text-[14px]">
-                                <span className="font-['PP_Right_Grotesk:Regular',sans-serif] leading-[20px]">Рекорд:</span>
-                                <span className="font-['SF_Pro_Text:Regular',sans-serif] leading-[20px]"> </span>
-                                <span className="font-['PP_Right_Grotesk:Medium',sans-serif] leading-[20px]">{score.best}</span>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <div className="my-auto w-full max-w-md rounded-3xl bg-[#f2f5f6] p-5 sm:p-6 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[rgba(255,212,102,0.3)]">
+                <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 22 22">
+                  <path d={svgPaths.p2f60c500} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.83333" />
+                  <path d="M4.58333 19.25H17.4167" stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.83333" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-[10px] leading-[15px] tracking-[1px] uppercase text-[#15252b]">Топ игроков</p>
+                <h2 className="text-[24px] leading-8 font-medium text-[#15252b]">Рейтинг игроков</h2>
               </div>
             </div>
-            <div aria-hidden="true" className="absolute border border-[#f2f5f6] border-solid inset-0 pointer-events-none rounded-[24px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]" />
+            <button
+              type="button"
+              onClick={onCloseLeaderboard}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-[#15252b]/60"
+            >
+              <svg className="h-[14px] w-[14px]" fill="none" viewBox="0 0 14 14">
+                <path d={svgPaths.p2c0cbc0} opacity="0.5" stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
+                <path d="M11.0833 7H2.91667" opacity="0.5" stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.16667" />
+              </svg>
+              Назад
+            </button>
+          </div>
+
+          {leaderboardStatus === 'error' ? (
+            <div className="rounded-2xl bg-[#ffd466] px-4 py-6 text-center text-[14px] leading-5 text-[#15252b]">
+              Рейтинг игроков пока недоступен
+            </div>
+          ) : entries.length === 0 ? (
+            <div className="rounded-2xl bg-[#ffd466] px-4 py-6 text-center text-[14px] leading-5 text-[#15252b]">
+              Игроков в списке пока нет, но вы можете стать первым :)
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {entries.map((entry, index) => {
+                const isUser = entry.nickname === nickname;
+                const rowClass = isUser ? 'bg-[#FFD466]' : 'bg-[#F6E4B7]';
+
+                return (
+                  <div
+                    key={`${entry.nickname}-${entry.score}-${entry.id ?? index}`}
+                    className={`${rowClass} flex items-center justify-between rounded-2xl px-4 py-3 shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]`}
+                  >
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f2f5f6] text-[12px] leading-4 font-medium text-[#15252b]">
+                        {index + 1}
+                      </div>
+                      <div className="flex min-w-0 items-center gap-2">
+                        <span className="truncate text-[16px] leading-6 font-medium text-[#15252b]">{entry.nickname}</span>
+                        {isUser && (
+                          <span className="whitespace-nowrap text-[10px] leading-[15px] tracking-[1px] uppercase text-[rgba(21,37,43,0.5)]">
+                            это вы
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <span className="ml-3 shrink-0 text-[14px] leading-5 font-medium text-[#15252b]">{entry.score}</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="mt-3 rounded-2xl bg-[#b4d3ff] px-4 py-3 shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex min-w-0 items-center gap-1 text-[14px] leading-5 text-[#15252b]">
+                <span className="font-medium">Ваш ник:</span>
+                <span className="max-w-[42vw] truncate font-bold sm:max-w-[220px]">{nickname || '—'}</span>
+              </div>
+              <div className="flex items-center gap-1 text-[14px] leading-5 text-[#15252b]">
+                <span className="font-normal">Рекорд:</span>
+                <span className="font-medium">{score.best}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
