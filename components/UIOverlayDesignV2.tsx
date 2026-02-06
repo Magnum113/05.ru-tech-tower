@@ -93,306 +93,181 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
   );
 
   if (gameState === GameState.START) {
-    if (onboardingStep === 1) {
-      return (
-        <div data-overlay="start-step1" className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
-          <div className="relative my-auto w-full max-w-[448px]">
-            <div className="bg-[#f2f5f6] overflow-clip relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full p-4 sm:p-[25px]" data-name="div.w-full">
-              <div className="content-stretch flex flex-col gap-[12px] items-start w-full" data-name="div.mb-6">
-                <div className="content-stretch flex flex-col items-center relative w-full" data-name="p.relative">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[13px] sm:text-[14px] text-center whitespace-normal">
-                    <p className="leading-[20px]">Рамадан — время заботы и добрых дел</p>
-                  </div>
-                </div>
-                <div className="content-stretch flex flex-col items-center relative w-full" data-name="h1.relative">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#ff2c00] text-[34px] sm:text-[40px] text-center tracking-[-0.75px] whitespace-normal">
-                    <p className="leading-[36px]">Башня доброты</p>
-                  </div>
-                </div>
-              </div>
+    const rules = [
+      '«Отпускайте» ящик, когда он окажется над башней, одним нажатием на экран.',
+      'Старайтесь собирать башню ровно. Если края выйдут за границы, они будут обрезаны.',
+      'Чем выше башня, тем больше баллов будет направлено на благотворительность.',
+    ];
 
-              <div className="content-stretch flex flex-col gap-[10px] items-start pb-[10px] w-full mt-4 mb-6" data-name="div.mb-8">
-                <div className="content-stretch flex flex-col items-center relative w-full" data-name="p">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[18px] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-normal">
-                    <p className="mb-0">Эта игра — ваш небольшой, но значимый вклад.</p>
-                    <p className="mb-0">Постройте ровную и высокую башню из коробок</p>
-                    <p>и зарабатывайте баллы.</p>
-                  </div>
-                </div>
-                <div className="content-stretch flex flex-col items-center pb-[0.625px] relative w-full" data-name="p">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[18px] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-normal">
-                    <p className="mb-0">В конце месяца Рамадан все набранные баллы будут</p>
-                    <p>направлены на благотворительные цели.</p>
-                  </div>
-                </div>
-                <div className="content-stretch flex flex-col items-center pb-[0.75px] relative w-full" data-name="p">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-normal">
-                    <p className="leading-[18px]">Будьте терпеливы, и всё обязательно <em>сложится</em>.</p>
-                  </div>
-                </div>
-              </div>
+    const primaryButtonStyle: React.CSSProperties = {
+      background:
+        'radial-gradient(408.24% 368.51% at 67.25% 87.2%, #FF0000 0%, rgba(255, 92, 0, 0) 100%), #FF5C00',
+      boxShadow: '0px 4px 20px rgba(255, 44, 0, 0.4)',
+      border: '1px solid rgba(255,255,255,0.1)',
+    };
 
-              <div className="content-stretch flex flex-col items-start gap-3 w-full">
-                <button
-                  type="button"
-                  onClick={() => setOnboardingStep(2)}
-                  className="relative content-stretch flex items-start justify-center w-full px-[24px] py-[16px] rounded-[12px] shadow-[0px_4px_20px_0px_rgba(255,44,0,0.4)]"
-                  data-name="button.w-full"
-                >
-                  <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center justify-center min-h-px min-w-px relative" data-name="span.flex">
-                    <div className="relative shrink-0 size-[20px]" data-name="Frame">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
-                        <g id="Frame">
-                          <path d={svgPaths.p1d055380} fill="var(--fill-0, white)" id="Vector" stroke="var(--stroke-2, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
-                        </g>
-                      </svg>
-                    </div>
-                    <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[18px] text-center text-white whitespace-nowrap">
-                      <p className="leading-[28px]">Построить башню!</p>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 rounded-[12px]" data-name="div.absolute">
-                    <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px]" />
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={onOpenLeaderboard}
-                  className="relative bg-[#b4d3ff] content-stretch flex gap-[8px] items-center justify-center w-full px-[17px] py-[13px] rounded-[12px]"
-                  data-name="button.mt-4"
-                >
-                  <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
-                  <div className="relative shrink-0 size-[18px]" data-name="Frame">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 18 18">
-                      <g id="Frame">
-                        <path d={svgPaths.p34d63080} id="Vector" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                        <path d="M3.75 15.75H14.25" id="Vector_2" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                      </g>
-                    </svg>
-                  </div>
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-normal">
-                    <p className="leading-[20px]">Посмотреть рейтинг игроков</p>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setShowParticipationRules(true)}
-                  className="content-stretch flex items-center justify-center w-full"
-                  data-name="button.mt-3"
-                >
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic opacity-60 relative shrink-0 text-[12px] text-[rgba(255,255,255,0.6)] text-center whitespace-nowrap">
-                    <p className="leading-[16px]">Правила участия</p>
-                  </div>
-                </button>
-              </div>
+    const renderRulesModal = () =>
+      showParticipationRules ? (
+        <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-2xl bg-[#f2f5f6] p-5 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+            <div className="mb-3 flex items-start justify-between gap-4">
+              <h3 className="text-lg font-medium text-[#15252b]">Правила участия</h3>
+              <button
+                type="button"
+                onClick={() => setShowParticipationRules(false)}
+                className="text-xs text-[#15252b]/60"
+              >
+                Закрыть
+              </button>
+            </div>
+            <div className="space-y-3 text-sm leading-5 text-[#15252b]/70">
+              <p>Моковый текст. Здесь будут юридические правила участия в акции.</p>
+              <p>Добавьте условия, сроки, ограничения и прочую обязательную информацию.</p>
+              <p>Текст будет заменён позднее.</p>
             </div>
           </div>
+        </div>
+      ) : null;
 
-          {showParticipationRules && (
-            <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-              <div className="bg-[#f2f5f6] content-stretch flex flex-col gap-[12px] items-start max-w-[448px] overflow-clip p-[20px] relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full" data-name="div.w-full">
-                <div className="relative w-full" data-name="div.flex">
-                  <div className="content-stretch flex items-center justify-between relative w-full">
-                    <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[18px] whitespace-nowrap">
-                      <p className="leading-[28px]">Правила участия</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setShowParticipationRules(false)}
-                      className="content-stretch flex flex-col items-end relative shrink-0"
-                    >
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic opacity-50 relative shrink-0 text-[#15252b] text-[12px] text-center whitespace-nowrap">
-                        <p className="leading-[16px]">Закрыть</p>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-                <div className="relative w-full" data-name="div.mt-3">
-                  <div className="content-stretch flex flex-col gap-[12px] items-start relative w-full">
-                    <div className="content-stretch flex flex-col items-start relative w-full" data-name="p">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic opacity-50 relative shrink-0 text-[#15252b] text-[14px] w-full">
-                        <p className="leading-[20px] whitespace-pre-wrap">Моковый текст. Здесь будут юридические правила участия в акции.</p>
-                      </div>
-                    </div>
-                    <div className="content-stretch flex flex-col items-start relative w-full" data-name="p">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic opacity-50 relative shrink-0 text-[#15252b] text-[14px] w-full">
-                        <p className="leading-[20px] whitespace-pre-wrap">Добавьте условия, сроки, ограничения и прочую обязательную информацию.</p>
-                      </div>
-                    </div>
-                    <div className="content-stretch flex flex-col items-start relative w-full" data-name="p">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic opacity-50 relative shrink-0 text-[#15252b] text-[14px] w-full">
-                        <p className="leading-[20px] whitespace-pre-wrap">Текст будет заменён позднее.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    if (onboardingStep === 1) {
+      return (
+        <div
+          data-overlay="start-step1"
+          className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto"
+        >
+          <div className="my-auto w-full max-w-md rounded-2xl bg-[#f2f5f6] p-5 sm:p-6 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+            <div className="mb-4 text-center">
+              <p className="text-[14px] leading-5 font-medium text-[#15252b]">Рамадан — время заботы и добрых дел</p>
+              <h1
+                data-name="h1.relative"
+                className="mt-2 text-[42px] leading-[40px] font-medium text-[#ff2c00]"
+                style={{ letterSpacing: '-0.75px' }}
+              >
+                Башня доброты
+              </h1>
             </div>
-          )}
+
+            <div className="mb-5 space-y-2 text-center text-[14px] leading-[20px] text-[#15252b]">
+              <p>Эта игра — ваш небольшой, но значимый вклад.</p>
+              <p>Постройте ровную и высокую башню из коробок и зарабатывайте баллы.</p>
+              <p>В конце месяца Рамадан все набранные баллы будут направлены на благотворительные цели.</p>
+              <p>
+                Будьте терпеливы, и всё обязательно <em>сложится</em>.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={() => setOnboardingStep(2)}
+                data-name="button.w-full"
+                className="w-full rounded-[12px] px-6 py-4 text-white"
+                style={primaryButtonStyle}
+              >
+                <span className="flex items-center justify-center gap-2 text-[18px] leading-7 font-medium">
+                  <span data-name="Frame" className="inline-flex h-5 w-5 shrink-0 items-center justify-center">
+                    <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
+                      <path d={svgPaths.p1d055380} fill="white" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
+                    </svg>
+                  </span>
+                  Построить башню!
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={onOpenLeaderboard}
+                data-name="button.mt-4"
+                className="w-full rounded-[12px] border border-white/10 bg-[#b4d3ff] px-4 py-[13px] shadow-[2px_2px_12px_rgba(0,0,0,0.05)]"
+              >
+                <span className="flex items-center justify-center gap-2 text-[14px] leading-5 font-medium text-[#15252b]">
+                  <span data-name="Frame" className="inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 18 18">
+                      <path d={svgPaths.p34d63080} stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                      <path d="M3.75 15.75H14.25" stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                    </svg>
+                  </span>
+                  Посмотреть рейтинг игроков
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowParticipationRules(true)}
+                data-name="button.mt-3"
+                className="w-full bg-transparent text-center text-xs leading-4 text-[#15252B]"
+              >
+                Правила участия
+              </button>
+            </div>
+          </div>
+          {renderRulesModal()}
         </div>
       );
     }
 
     return (
-      <div data-overlay="start-step2" className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
-        <div className="relative my-auto w-full max-w-[448px]">
-          <div className="bg-[#f2f5f6] content-stretch flex flex-col gap-[16px] items-start max-w-[448px] overflow-clip p-4 sm:p-[24px] relative rounded-[16px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full" data-name="div.w-full">
-            <div className="relative w-full" data-name="div.mb-4">
-              <div className="content-stretch flex flex-col gap-[8px] items-start relative w-full">
-                <div className="content-stretch flex flex-col items-center relative w-full" data-name="p.uppercase">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[10px] text-center tracking-[1px] uppercase whitespace-nowrap">
-                    <p className="leading-[15px]">Шаг 2 из 2</p>
-                  </div>
-                </div>
-                <div className="content-stretch flex flex-col items-center relative w-full" data-name="h2.text-2xl">
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[24px] text-center whitespace-nowrap">
-                    <p className="leading-[32px]">Правила и награды</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div
+        data-overlay="start-step2"
+        className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto"
+      >
+        <div className="my-auto w-full max-w-md rounded-2xl bg-[#f2f5f6] p-5 sm:p-6 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+          <div className="mb-4 text-center">
+            <p className="text-[10px] leading-[15px] tracking-[1px] uppercase text-[#15252b]">Шаг 2 из 2</p>
+            <h2 className="mt-2 text-[24px] leading-8 font-medium text-[#15252b]">Правила и награды</h2>
+          </div>
 
-            <div className="bg-[#b4d3ff] relative rounded-[12px] shrink-0 w-full" data-name="div.rounded-xl">
-              <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.05)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
-              <div className="content-stretch flex flex-col gap-[12px] items-start p-[17px] relative w-full">
-                <div className="relative shrink-0 w-full" data-name="h3.text-xs">
-                  <div className="content-stretch flex flex-col items-start relative w-full">
-                    <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
-                      <p className="leading-[16px]">Какие же правила?</p>
-                    </div>
-                  </div>
+          <div className="mb-3 rounded-xl bg-[#b4d3ff] p-4 shadow-[2px_2px_12px_rgba(0,0,0,0.05)]">
+            <p className="mb-2 text-[14px] leading-4 font-medium text-[#15252b]">Какие же правила?</p>
+            <div className="space-y-2">
+              {rules.map((rule, index) => (
+                <div key={rule} className="flex items-start gap-2.5">
+                  <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f2f5f6] text-[12px] leading-5 font-bold text-[#ff2c00]">
+                    {index + 1}
+                  </span>
+                  <span className="text-[12px] leading-[16px] text-[#15252b]">{rule}</span>
                 </div>
-                <div className="relative shrink-0 w-full" data-name="div.flex">
-                  <div className="content-stretch flex gap-[12px] items-start relative w-full">
-                    <div className="relative shrink-0 size-[20px]" data-name="span.flex-shrink-0">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
-                        <g id="span.flex-shrink-0">
-                          <rect fill="var(--fill-0, #F2F5F6)" height="20" rx="10" width="20" />
-                          <path d={svgPaths.p2c9b1700} fill="var(--fill-0, #FF2C00)" id="1" />
-                        </g>
-                      </svg>
-                    </div>
-                    <div className="content-stretch flex flex-col items-start relative min-w-0 flex-1" data-name="p.text-xs">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-normal">
-                        <p className="mb-0">«Отпускайте» ящик, когда он окажется над башней,</p>
-                        <p>одним нажатием на экран;</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="relative shrink-0 w-full" data-name="div.flex">
-                  <div className="content-stretch flex gap-[12px] items-start relative w-full">
-                    <div className="relative shrink-0 size-[20px]" data-name="span.flex-shrink-0">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
-                        <g id="span.flex-shrink-0">
-                          <rect fill="var(--fill-0, #F2F5F6)" height="20" rx="10" width="20" />
-                          <path d={svgPaths.p20eb9d00} fill="var(--fill-0, #FF2C00)" id="2" />
-                        </g>
-                      </svg>
-                    </div>
-                    <div className="content-stretch flex flex-col items-start relative min-w-0 flex-1" data-name="p.text-xs">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-normal">
-                        <p className="mb-0">Старайтесь собирать башню ровно. Если края выйдут</p>
-                        <p>за границы, они будут обрезаны;</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="relative shrink-0 w-full" data-name="div.flex">
-                  <div className="content-stretch flex gap-[12px] items-start relative w-full">
-                    <div className="relative shrink-0 size-[20px]" data-name="span.flex-shrink-0">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
-                        <g id="span.flex-shrink-0">
-                          <rect fill="var(--fill-0, #F2F5F6)" height="20" rx="10" width="20" />
-                          <path d={svgPaths.p2cea7a00} fill="var(--fill-0, #FF2C00)" id="3" />
-                        </g>
-                      </svg>
-                    </div>
-                    <div className="content-stretch flex flex-col items-start relative min-w-0 flex-1" data-name="p.text-xs">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[13px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-normal">
-                        <p className="mb-0">Чем выше башня, тем больше баллов будет</p>
-                        <p>направлено на благотворительность.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
+          </div>
 
-            <div className="bg-white relative rounded-[12px] shrink-0 w-full" data-name="div.rounded-xl">
-              <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.05)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
-              <div className="content-stretch flex flex-col gap-[12px] items-start px-[17px] py-[25px] relative w-full">
-                <div className="relative shrink-0 w-full" data-name="h3.text-xs">
-                  <div className="content-stretch flex flex-col items-start relative w-full">
-                    <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
-                      <p className="leading-[16px]">Награды за уровни</p>
-                    </div>
-                  </div>
+          <div className="mb-3 rounded-xl bg-white p-4 shadow-[2px_2px_12px_rgba(0,0,0,0.05)]">
+            <p className="mb-2 text-[14px] leading-4 font-medium text-[#15252b]">Награды за уровни</p>
+            <div className="space-y-2">
+              {PROMO_REWARDS.map((reward) => (
+                <div key={reward.score} className="flex items-center justify-between rounded-lg bg-[rgba(180,211,255,0.2)] px-3 py-2">
+                  <span className="text-[12px] leading-4 text-[#15252b]">{reward.score} очков</span>
+                  <span className="text-[14px] leading-5 font-medium text-[#ff2c00]">Скидка {reward.discount} ₽</span>
                 </div>
-                <div className="relative shrink-0 w-full" data-name="div.space-y-2">
-                  <div className="content-stretch flex flex-col gap-[8px] items-start relative w-full">
-                    {PROMO_REWARDS.map((reward) => (
-                      <div key={reward.score} className="bg-[rgba(180,211,255,0.2)] relative rounded-[8px] shrink-0 w-full" data-name="div.flex">
-                        <div className="flex flex-row items-center size-full">
-                          <div className="content-stretch flex items-center justify-between px-[12px] py-[8px] relative w-full">
-                            <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="span.text-xs">
-                              <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-nowrap">
-                                <p className="leading-[16px]">{reward.score} очков</p>
-                              </div>
-                            </div>
-                            <div className="content-stretch flex flex-col items-end relative shrink-0" data-name="span.font-semibold">
-                              <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#ff2c00] text-[14px] text-right whitespace-nowrap">
-                                <p className="leading-[20px]">Скидка {reward.discount} ₽</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
+          </div>
 
+          <div className="flex flex-col gap-2.5">
             <button
               type="button"
               onClick={onStart}
-              className="relative rounded-[12px] shadow-[0px_4px_20px_0px_rgba(255,44,0,0.4)] shrink-0 w-full"
               data-name="button.w-full"
+              className="w-full rounded-[12px] px-6 py-4 text-white"
+              style={primaryButtonStyle}
             >
-              <div className="content-stretch flex items-start justify-center px-[24px] py-[16px] relative w-full">
-                <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center justify-center min-h-px min-w-px relative" data-name="span.flex">
-                  <div className="relative shrink-0 size-[20px]" data-name="Frame">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
-                      <g id="Frame">
-                        <path d={svgPaths.p1d055380} fill="var(--fill-0, white)" id="Vector" stroke="var(--stroke-2, white)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
-                      </g>
-                    </svg>
-                  </div>
-                  <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[18px] text-center text-white whitespace-nowrap">
-                    <p className="leading-[28px]">Начать игру</p>
-                  </div>
-                </div>
-                <div className="absolute inset-0 rounded-[12px]" data-name="div.absolute">
-                  <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px]" />
-                </div>
-              </div>
+              <span className="flex items-center justify-center gap-2 text-[18px] leading-7 font-medium">
+                <span data-name="Frame" className="inline-flex h-5 w-5 shrink-0 items-center justify-center">
+                  <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
+                    <path d={svgPaths.p1d055380} fill="white" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
+                  </svg>
+                </span>
+                Начать игру
+              </span>
             </button>
 
             <button
               type="button"
               onClick={() => setOnboardingStep(1)}
-              className="bg-[#b4d3ff] relative rounded-[12px] shrink-0 w-full"
               data-name="button.mt-4"
+              className="w-full rounded-[12px] border border-white/10 bg-[#b4d3ff] px-4 py-[13px] text-[14px] leading-5 font-medium text-[#15252b] shadow-[2px_2px_12px_rgba(0,0,0,0.05)]"
             >
-              <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
-              <div className="content-stretch flex items-center justify-center px-[17px] py-[13px] relative w-full">
-                <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
-                  <p className="leading-[20px]">Назад</p>
-                </div>
-              </div>
+              Назад
             </button>
           </div>
         </div>
@@ -813,77 +688,52 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
 
     return (
       <div className="absolute inset-0 z-40 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
-        <div className="relative my-auto w-full max-w-[512px]">
-          <div className="max-w-[512px] relative shrink-0 w-full" data-name="div.w-full">
-            <div className="content-stretch flex flex-col items-start max-w-[inherit] overflow-clip p-[25px] relative w-full">
-              <div className="relative shrink-0 w-[448px]" data-name="div.w-full">
-                <div className="content-stretch flex flex-col gap-[8px] items-start relative w-full">
-                  <div className="content-stretch flex flex-col items-center relative w-full" data-name="h2.text-4xl">
-                    <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#ff2c00] text-[36px] text-center whitespace-nowrap">
-                      <p className="leading-[40px]">Ваша башня упала</p>
-                    </div>
-                  </div>
-                  <div className="content-stretch flex flex-col items-center relative w-full" data-name="p.mb-4">
-                    <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[16px] text-[rgba(255,255,255,0.6)] text-center whitespace-nowrap">
-                      <p className="leading-[24px]">Но можно попробовать ещё раз</p>
-                    </div>
-                  </div>
-                  <div className="relative shrink-0 w-full" data-name="div.flex">
-                    <div className="flex flex-row items-center size-full">
-                      <div className="content-stretch flex items-center justify-between leading-[0] not-italic px-[170px] relative text-center w-full">
-                        <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] h-[28px] justify-center relative shrink-0 text-[18px] text-[rgba(255,255,255,0.6)] w-[70.007px]">
-                          <p className="leading-[28px] whitespace-pre-wrap">Высота:</p>
-                        </div>
-                        <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] h-[48px] justify-center relative shrink-0 text-[#ff2c00] text-[48px] w-[33.711px]">
-                          <p className="leading-[48px] whitespace-pre-wrap">{score.current}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={`content-stretch flex flex-col gap-[12px] items-center pt-[24px] relative w-full ${gameOverCooldown ? 'pointer-events-none opacity-70' : ''}`} data-name="div.flex">
-                    <button
-                      type="button"
-                      onClick={onRestart}
-                      disabled={gameOverCooldown}
-                      className="content-stretch flex gap-[8px] items-center overflow-clip px-[32px] py-[12px] relative rounded-[9999px] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]"
-                      data-name="button.px-8"
-                    >
-                      <div className="relative shrink-0 size-[20px]" data-name="Frame">
-                        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
-                          <g id="Frame">
-                            <path d={svgPaths.pd0f9a00} id="Vector" stroke="var(--stroke-0, #F2F5F6)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
-                            <path d="M17.5 2.5V6.66667H13.3333" id="Vector_2" stroke="var(--stroke-0, #F2F5F6)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
-                          </g>
-                        </svg>
-                      </div>
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#f2f5f6] text-[18px] text-center whitespace-nowrap">
-                        <p className="leading-[28px]">Попробовать снова</p>
-                      </div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={onOpenLeaderboard}
-                      disabled={gameOverCooldown}
-                      className="bg-[rgba(255,255,255,0.05)] content-stretch flex gap-[8px] items-center px-[25px] py-[9px] relative rounded-[9999px]"
-                      data-name="button.px-6"
-                    >
-                      <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.15)] border-solid inset-0 pointer-events-none rounded-[9999px]" />
-                      <div className="relative shrink-0 size-[16px]" data-name="Frame">
-                        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
-                          <g id="Frame">
-                            <path d={svgPaths.p10a7d900} id="Vector" stroke="var(--stroke-0, #F2F5F6)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
-                            <path d="M3.33333 14H12.6667" id="Vector_2" stroke="var(--stroke-0, #F2F5F6)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
-                          </g>
-                        </svg>
-                      </div>
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#f2f5f6] text-[14px] text-center whitespace-nowrap">
-                        <p className="leading-[20px]">Посмотреть рейтинг игроков</p>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="my-auto w-full max-w-md text-center">
+          <h2 className="text-[36px] leading-10 font-medium text-[#ff2c00]">Ваша башня упала</h2>
+          <p className="mt-1 text-[16px] leading-6 text-white/60">Но можно попробовать ещё раз</p>
+
+          <div className="mt-3 flex items-center justify-center gap-3 text-center">
+            <span className="text-[18px] leading-7 text-white/60">Высота:</span>
+            <span className="text-[48px] leading-[48px] font-medium text-[#ff2c00]">{score.current}</span>
+          </div>
+
+          <div className={`mt-6 flex flex-col items-center gap-3 ${gameOverCooldown ? 'pointer-events-none opacity-70' : ''}`}>
+            <button
+              type="button"
+              onClick={onRestart}
+              disabled={gameOverCooldown}
+              data-name="button.px-8"
+              className="inline-flex items-center gap-2 rounded-full px-8 py-3 text-[18px] leading-7 text-[#f2f5f6]"
+              style={{
+                background:
+                  'radial-gradient(408.24% 368.51% at 67.25% 87.2%, #FF0000 0%, rgba(255, 92, 0, 0) 100%), #FF5C00',
+                boxShadow: '0px 4px 20px rgba(255, 44, 0, 0.4)',
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center" data-name="Frame">
+                <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
+                  <path d={svgPaths.pd0f9a00} stroke="#F2F5F6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
+                  <path d="M17.5 2.5V6.66667H13.3333" stroke="#F2F5F6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
+                </svg>
+              </span>
+              Попробовать снова
+            </button>
+            <button
+              type="button"
+              onClick={onOpenLeaderboard}
+              disabled={gameOverCooldown}
+              data-name="button.px-6"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-[9px] text-[14px] leading-5 text-[#f2f5f6]"
+            >
+              <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center" data-name="Frame">
+                <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+                  <path d={svgPaths.p10a7d900} stroke="#F2F5F6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+                  <path d="M3.33333 14H12.6667" stroke="#F2F5F6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+                </svg>
+              </span>
+              Посмотреть рейтинг игроков
+            </button>
           </div>
         </div>
       </div>
@@ -894,7 +744,11 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
     return (
       <>
         {renderHUD()}
-        <div data-overlay="progress" className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,560px)] pointer-events-none bg-[#15252B]">
+        <div
+          data-overlay="progress"
+          className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,560px)] pointer-events-none bg-[#15252B]"
+          style={{ backgroundColor: '#15252B' }}
+        >
           {nextReward ? (
             <div className="backdrop-blur-[4px] bg-[#15252B] relative rounded-[16px] shrink-0 w-full" data-name="div.rounded-2xl">
               <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.35)]" />
