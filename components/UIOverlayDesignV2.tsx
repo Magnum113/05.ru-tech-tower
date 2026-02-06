@@ -72,32 +72,22 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
   }, [gameState]);
 
   const renderHUD = () => (
-    <div className="absolute top-0 left-0 w-full p-4 pointer-events-none z-20">
-      <div className="content-stretch flex items-start justify-between relative w-full" data-name="div.flex">
-        <div className="content-stretch flex flex-col items-start relative" data-name="div.flex">
-          <div className="content-stretch flex flex-col items-start relative w-full" data-name="span.text-xs">
-            <div className="flex flex-col font-['PP_Right_Grotesk:Bold',sans-serif] justify-center leading-[0] not-italic opacity-50 relative shrink-0 text-[#f2f5f6] text-[12px] uppercase whitespace-nowrap">
-              <p className="leading-[16px]">Этаж</p>
-            </div>
-          </div>
-          <div className="content-stretch flex flex-col items-start relative w-full" data-name="span.text-white">
-            <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[36px] text-white whitespace-nowrap">
-              <p className="leading-[40px]">{score.current}</p>
-            </div>
-          </div>
-        </div>
-        <div className="content-stretch flex flex-col items-end relative" data-name="div.flex">
-          <div className="content-stretch flex flex-col items-start relative" data-name="span.text-xs">
-            <div className="flex flex-col font-['PP_Right_Grotesk:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[12px] text-[rgba(255,255,255,0.6)] uppercase whitespace-nowrap">
-              <p className="leading-[16px]">Рекорд</p>
-            </div>
-          </div>
-          <div className="content-stretch flex flex-col items-start relative" data-name="span.text-yellow-400">
-            <div className="flex flex-col font-['PP_Right_Grotesk:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#ffd466] text-[24px] whitespace-nowrap">
-              <p className="leading-[32px]">{score.best}</p>
-            </div>
-          </div>
-        </div>
+    <div className="absolute top-0 left-0 z-20 flex w-full items-start justify-between p-4 pointer-events-none">
+      <div className="flex flex-col">
+        <span className="text-[12px] font-['PP_Right_Grotesk:Bold',sans-serif] uppercase text-[rgba(255,255,255,0.6)] leading-[16px]">
+          Этаж
+        </span>
+        <span className="text-white text-[36px] leading-[40px] font-['PP_Right_Grotesk:Medium',sans-serif]">
+          {score.current}
+        </span>
+      </div>
+      <div className="flex flex-col items-end">
+        <span className="text-[12px] font-['PP_Right_Grotesk:Bold',sans-serif] uppercase text-[rgba(255,255,255,0.6)] leading-[16px]">
+          Рекорд
+        </span>
+        <span className="text-[#ffd466] text-[24px] leading-[32px] font-['PP_Right_Grotesk:Bold',sans-serif]">
+          {score.best}
+        </span>
       </div>
     </div>
   );
@@ -940,14 +930,14 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                     </div>
                   </div>
                 </div>
-                <div className="relative w-full" data-name="div.mt-3">
-                  <div className="content-stretch flex gap-[4px] items-start justify-center pt-[4px] relative w-full">
+                <div className="relative w-full mt-1" data-name="div.mt-3">
+                  <div className="grid grid-cols-3 gap-1 relative w-full">
                     {PROMO_REWARDS.map((reward, index) => {
                       const fill = Math.round(segmentProgress(index) * 100);
                       const isReached = score.current >= reward.score;
                       const partialClass = !isReached ? 'bg-[#f2f5f6]' : '';
                       return (
-                        <div key={reward.score} className="bg-[rgba(255,255,255,0.1)] content-stretch flex flex-col h-[8px] items-start justify-center overflow-clip relative rounded-[9999px] shrink-0 w-[172.67px]" data-name="div.relative">
+                        <div key={reward.score} className="bg-[rgba(255,255,255,0.1)] h-[8px] overflow-clip relative rounded-[9999px] w-full" data-name="div.relative">
                           <div
                             className={`h-full rounded-[9999px] ${partialClass}`}
                             data-name="div.h-full"
