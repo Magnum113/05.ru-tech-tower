@@ -432,7 +432,11 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                   </svg>
                   <div>
                     <p className="text-[14px] leading-5 font-medium text-[#15252b]">Ваша награда:</p>
-                    <p className="text-[14px] leading-5 text-[#15252b]">Скидка на {earnedReward.discount} ₽ при покупке от 25 000 ₽</p>
+                    <p className="text-[14px] leading-5 text-[#15252b]">
+                      <span>Скидка на {earnedReward.discount} ₽ </span>
+                      <span className="whitespace-nowrap">при покупке от 25 000 ₽</span>
+                    </p>
+                    <p className="text-[12px] leading-4 text-[#15252b]/70">(не действует на технику Apple)</p>
                   </div>
                 </div>
                 <button

@@ -654,7 +654,9 @@ export class GameEngine {
         contentWidth: 165.5,
         contentHeight: 89.5,
         topFace: [
-          { x: 27.25, y: 0 },
+          // Keep the same left bevel geometry as the full block so the corner
+          // does not visually "jump" when a flying block becomes a cut block.
+          { x: 21.5, y: 0 },
           { x: 165.5, y: 0 },
           { x: 149, y: 13.5 },
           { x: 0, y: 13.5 },
