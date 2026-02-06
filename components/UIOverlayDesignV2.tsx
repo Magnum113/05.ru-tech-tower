@@ -443,243 +443,124 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
       const donation = score.current;
       return (
         <div className="absolute inset-0 z-40 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto">
-          <div className="relative my-auto w-full max-w-[512px]">
-            <div className="bg-[#f2f5f6] content-stretch flex flex-col items-start max-w-[512px] overflow-clip p-[24px] relative rounded-[24px] shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] w-full" data-name="div.relative">
-              <div className="absolute bg-[rgba(59,130,246,0.1)] blur-[32px] bottom-[-79px] left-[-79px] rounded-[9999px] size-[192px]" data-name="div.absolute" />
-              <div className="relative shrink-0 w-[462px]" data-name="div.relative">
-                <div className="content-stretch flex flex-col gap-[20px] items-start relative w-full">
-                  <div className="content-stretch flex items-start justify-between relative w-full" data-name="div.mb-5">
-                    <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-name="div.flex">
-                      <div className="bg-[rgba(255,44,0,0.2)] content-stretch flex h-[48px] items-center justify-center relative rounded-[16px] shrink-0 w-[39.7px]" data-name="div.flex">
-                        <div className="relative shrink-0 size-[26px]" data-name="Frame">
-                          <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 26 26">
-                            <g id="Frame">
-                              <path d={svgPaths.p10c19f00} fill="var(--fill-0, #FF2C00)" id="Vector" stroke="var(--stroke-3, #FF2C00)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.16667" />
-                            </g>
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="div">
-                        <div className="content-stretch flex flex-col items-start relative w-full" data-name="p.font-bold">
-                          <div className="flex flex-col font-['PP_Right_Grotesk:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[10px] tracking-[1.5px] uppercase whitespace-nowrap">
-                            <p className="leading-[15px]">Благотворительность</p>
-                          </div>
-                        </div>
-                        <div className="content-stretch flex flex-col items-start relative w-full" data-name="h2.text-2xl">
-                          <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[26px] not-italic relative shrink-0 text-[#15252b] text-[24px] whitespace-nowrap">
-                            <p className="mb-0">Каждая игра —</p>
-                            <p>шаг к добру</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {score.current >= score.best && (
-                      <div className="bg-[rgba(255,212,102,0.2)] content-stretch flex items-center justify-between pl-[13px] pr-[41.84px] py-[5px] relative rounded-[9999px] shrink-0 w-[120.31px]" data-name="div.flex">
-                        <div aria-hidden="true" className="absolute border border-[#ffd466] border-solid inset-0 pointer-events-none rounded-[9999px]" />
-                        <div className="h-[14.001px] relative shrink-0 w-[11.47px]" data-name="Frame">
-                          <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 11.47 14.0015">
-                            <g id="Frame">
-                              <path d={svgPaths.p17d743e8} id="Vector" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
-                              <path d={svgPaths.p2a89eb80} id="Vector_2" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
-                              <path d={svgPaths.p54eb100} id="Vector_3" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
-                              <path d="M1.91167 11.7799H9.55753" id="Vector_4" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
-                              <path d={svgPaths.p57a9b00} id="Vector_5" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
-                              <path d={svgPaths.p17482af0} id="Vector_6" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
-                            </g>
-                          </svg>
-                        </div>
-                        <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[12px] not-italic relative shrink-0 text-[#ffd466] text-[12px] whitespace-nowrap">
-                          <p className="mb-0">Новый</p>
-                          <p>рекорд</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="bg-[#b4d3ff] h-[170px] relative rounded-[16px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-name="div.mb-4">
-                    <div className="absolute content-stretch flex items-center justify-between left-[21px] right-[21px] top-[21px]" data-name="div.flex">
-                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="p.uppercase">
-                        <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[11px] tracking-[1px] uppercase whitespace-nowrap">
-                          <p className="leading-[16.5px]">Очки</p>
-                        </div>
-                      </div>
-                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="p.text-3xl">
-                        <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[30px] whitespace-nowrap">
-                          <p className="leading-[36px]">{score.current}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="absolute content-stretch flex items-center justify-between left-[21px] right-[21px] top-[69px]" data-name="div.mt-3">
-                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="p.uppercase">
-                        <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[11px] tracking-[1px] uppercase whitespace-nowrap">
-                          <p className="leading-[16.5px]">Пожертвование</p>
-                        </div>
-                      </div>
-                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="p.text-4xl">
-                        <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#ff2c00] text-[36px] whitespace-nowrap">
-                          <p className="leading-[40px]">{donation} ₽</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="absolute content-stretch flex flex-col items-start left-[21px] right-[21px] top-[117px]" data-name="p.mt-2">
-                      <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[14px] not-italic relative shrink-0 text-[#15252b] text-[12px] whitespace-nowrap">
-                        <p className="mb-0">В конце Рамадана эта сумма будет направлена</p>
-                        <p>на благотворительность</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-[rgba(255,255,255,0.5)] relative rounded-[16px] shrink-0 w-full" data-name="div.mb-6">
-                    <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[16px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
-                    <div className="content-stretch flex flex-col items-start pb-[17px] pt-[13px] px-[17px] relative w-full">
-                      <div className="relative shrink-0 w-[428px]" data-name="div.flex">
-                        <div className="content-stretch flex gap-[12px] items-start relative w-full">
-                          <div className="content-stretch flex flex-col h-[20px] items-start pt-[2px] relative shrink-0 w-[17.7px]" data-name="svg.lucide:margin">
-                            <div className="h-[17.997px] relative shrink-0 w-[17.7px]" data-name="Frame">
-                              <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 17.7 17.9968">
-                                <g id="Frame">
-                                  <path d={svgPaths.p3f949880} id="Vector" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.475" />
-                                  <path d="M14.75 1.62342V4.57394" id="Vector_2" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.475" />
-                                  <path d="M16.2255 3.09842H13.275" id="Vector_3" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.475" />
-                                  <path d={svgPaths.p2491c700} id="Vector_4" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.475" />
-                                </g>
-                              </svg>
-                            </div>
-                          </div>
-                          <div className="content-stretch flex flex-col gap-[5px] items-start min-w-[398.29998779296875px] relative shrink-0" data-name="div">
-                            <div className="content-stretch flex flex-col items-start relative w-full" data-name="p.font-semibold">
-                              <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
-                                <p className="leading-[20px]">Каждый балл — вклад в копилку добра.</p>
-                              </div>
-                            </div>
-                            <div className="content-stretch flex flex-col items-start relative w-full" data-name="p">
-                              <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-none not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
-                                <p className="mb-0">Можно сыграть ещё раз и увеличить сумму</p>
-                                <p>пожертвования</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {earnedReward && (
-                    <div className="bg-white relative rounded-[16px] shrink-0 w-full" data-name="div.mb-6">
-                      <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[16px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
-                      <div className="content-stretch flex flex-col gap-[12px] items-start pb-[17px] pt-[21px] px-[17px] relative w-full">
-                        <div className="relative shrink-0 w-[428px]" data-name="div.flex">
-                          <div className="content-stretch flex gap-[12px] items-start relative w-full">
-                            <div className="content-stretch flex flex-col h-[20px] items-start pt-[2px] relative shrink-0 w-[18px]" data-name="svg.lucide:margin">
-                              <div className="relative shrink-0 size-[18px]" data-name="Frame">
-                                <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 18 18">
-                                  <g id="Frame">
-                                    <path d={svgPaths.p34d63080} id="Vector" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                                    <path d="M3.75 15.75H14.25" id="Vector_2" stroke="var(--stroke-0, #FFD466)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                                  </g>
-                                </svg>
-                              </div>
-                            </div>
-                            <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="div">
-                              <div className="content-stretch flex flex-col items-start relative w-full" data-name="p.font-semibold">
-                                <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
-                                  <p className="leading-[20px]">Ваша награда:</p>
-                                </div>
-                              </div>
-                              <div className="content-stretch flex flex-col items-start relative w-full" data-name="p">
-                                <div className="flex flex-col font-['PP_Right_Grotesk:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] whitespace-nowrap">
-                                  <p className="leading-[20px]">Скидка на {earnedReward.discount} ₽ при покупке от 25 000 ₽</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={copyCode}
-                          className="bg-[#b4d3ff] relative rounded-[12px] shrink-0 w-[428px]"
-                          data-name="div.mt-3"
-                        >
-                          <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.2)] border-dashed inset-0 pointer-events-none rounded-[12px]" />
-                          <div className="content-stretch flex flex-col gap-[4px] items-start p-[13px] relative w-full">
-                            <div className="relative shrink-0 w-[402px]" data-name="p.uppercase">
-                              <div className="content-stretch flex flex-col items-center relative w-full">
-                                <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[10px] text-center tracking-[1px] uppercase whitespace-nowrap">
-                                  <p className="leading-[20px]">Промокод</p>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="relative shrink-0 w-[402px]" data-name="div.flex">
-                              <div className="content-stretch flex gap-[12px] items-center justify-center relative w-full">
-                                <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="span.font-mono">
-                                  <div className="flex flex-col font-['Menlo:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[20px] tracking-[2px] whitespace-nowrap">
-                                    <p className="leading-[28px]">{earnedReward.code}</p>
-                                  </div>
-                                </div>
-                                <div className="relative shrink-0 size-[16px]" data-name="Frame">
-                                  <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
-                                    <g id="Frame">
-                                      <path d={svgPaths.p216f800} id="Vector" opacity="0.2" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
-                                      <path d={svgPaths.p13e4b3c0} id="Vector_2" opacity="0.2" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
-                                    </g>
-                                  </svg>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          {copied && (
-                            <div className="absolute inset-0 flex items-center justify-center rounded-[12px] bg-[#15252b]/90 text-white text-sm font-semibold">
-                              СКОПИРОВАНО!
-                            </div>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className={`content-stretch flex flex-col gap-[12px] items-start pt-[4px] relative w-full ${gameOverCooldown ? 'pointer-events-none opacity-70' : ''}`} data-name="div.flex">
-                    <button
-                      type="button"
-                      onClick={onRestart}
-                      disabled={gameOverCooldown}
-                      className="relative rounded-[12px] shadow-[0px_4px_20px_0px_rgba(255,44,0,0.4)] shrink-0 w-full"
-                      data-name="button.w-full"
-                    >
-                      <div className="flex flex-col items-center justify-center size-full">
-                        <div className="content-stretch flex flex-col items-center justify-center px-[24px] py-[12px] relative w-full">
-                          <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[16px] text-center text-white whitespace-nowrap">
-                            <p className="leading-[24px]">Сыграть ещё раз</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={onOpenLeaderboard}
-                      disabled={gameOverCooldown}
-                      className="bg-[#b4d3ff] relative rounded-[12px] shrink-0 w-full"
-                      data-name="button.w-full"
-                    >
-                      <div aria-hidden="true" className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[12px] shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]" />
-                      <div className="flex flex-row items-center justify-center size-full">
-                        <div className="content-stretch flex gap-[8px] items-center justify-center px-[25px] py-[13px] relative w-full">
-                          <div className="relative shrink-0 size-[16px]" data-name="Frame">
-                            <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
-                              <g id="Frame">
-                                <path d={svgPaths.p10a7d900} id="Vector" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
-                                <path d="M3.33333 14H12.6667" id="Vector_2" stroke="var(--stroke-0, #15252B)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
-                              </g>
-                            </svg>
-                          </div>
-                          <div className="flex flex-col font-['PP_Right_Grotesk:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#15252b] text-[14px] text-center whitespace-nowrap">
-                            <p className="leading-[20px]">Посмотреть рейтинг игроков</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
+          <div className="my-auto w-full max-w-md rounded-3xl bg-[#f2f5f6] p-5 sm:p-6 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+            <div className="mb-4 flex items-start justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[rgba(255,44,0,0.2)]">
+                  <svg className="h-[26px] w-[26px]" fill="none" viewBox="0 0 26 26">
+                    <path d={svgPaths.p10c19f00} fill="#FF2C00" stroke="#FF2C00" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.16667" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[10px] leading-[15px] tracking-[1.5px] uppercase text-[#15252b]">Благотворительность</p>
+                  <h2 className="text-[24px] leading-[26px] font-medium text-[#15252b]">Каждая игра — шаг к добру</h2>
                 </div>
               </div>
+              {score.current >= score.best && (
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#ffd466] bg-[rgba(255,212,102,0.2)] px-3 py-1">
+                  <svg className="h-[14px] w-[12px]" fill="none" viewBox="0 0 11.47 14.0015">
+                    <path d={svgPaths.p17d743e8} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
+                    <path d={svgPaths.p2a89eb80} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
+                    <path d={svgPaths.p54eb100} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
+                    <path d="M1.91167 11.7799H9.55753" stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
+                    <path d={svgPaths.p57a9b00} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
+                    <path d={svgPaths.p17482af0} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.955833" />
+                  </svg>
+                  <span className="text-[12px] leading-4 font-medium text-[#ffd466]">Новый рекорд</span>
+                </div>
+              )}
+            </div>
+
+            <div className="mb-4 rounded-2xl bg-[#b4d3ff] p-4 shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-[11px] leading-[16.5px] tracking-[1px] uppercase text-[#15252b]">Очки</span>
+                <span className="text-[30px] leading-9 font-medium text-[#15252b]">{score.current}</span>
+              </div>
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-[11px] leading-[16.5px] tracking-[1px] uppercase text-[#15252b]">Пожертвование</span>
+                <span className="text-[36px] leading-10 font-medium text-[#ff2c00]">{donation} ₽</span>
+              </div>
+              <p className="text-[12px] leading-[14px] text-[#15252b]">В конце Рамадана эта сумма будет направлена на благотворительность</p>
+            </div>
+
+            <div className="mb-4 rounded-2xl bg-[rgba(255,255,255,0.5)] p-4 shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]">
+              <div className="flex items-start gap-3">
+                <svg className="mt-[2px] h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 17.7 17.9968">
+                  <path d={svgPaths.p3f949880} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.475" />
+                  <path d="M14.75 1.62342V4.57394" stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.475" />
+                  <path d="M16.2255 3.09842H13.275" stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.475" />
+                  <path d={svgPaths.p2491c700} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.475" />
+                </svg>
+                <div>
+                  <p className="text-[14px] leading-5 font-medium text-[#15252b]">Каждый балл — вклад в копилку добра.</p>
+                  <p className="text-[14px] leading-5 text-[#15252b]">Можно сыграть ещё раз и увеличить сумму пожертвования</p>
+                </div>
+              </div>
+            </div>
+
+            {earnedReward && (
+              <div className="mb-4 rounded-2xl bg-white p-4 shadow-[2px_2px_12px_0px_rgba(0,0,0,0.05)]">
+                <div className="mb-3 flex items-start gap-3">
+                  <svg className="mt-[2px] h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 18 18">
+                    <path d={svgPaths.p34d63080} stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                    <path d="M3.75 15.75H14.25" stroke="#FFD466" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                  </svg>
+                  <div>
+                    <p className="text-[14px] leading-5 font-medium text-[#15252b]">Ваша награда:</p>
+                    <p className="text-[14px] leading-5 text-[#15252b]">Скидка на {earnedReward.discount} ₽ при покупке от 25 000 ₽</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={copyCode}
+                  className="relative w-full rounded-xl border border-dashed border-[rgba(255,255,255,0.2)] bg-[#b4d3ff] p-3"
+                >
+                  <p className="text-center text-[10px] leading-5 tracking-[1px] uppercase text-[#15252b]">Промокод</p>
+                  <div className="mt-1 flex items-center justify-center gap-2">
+                    <span className="font-['Menlo:Bold',sans-serif] text-[20px] leading-7 tracking-[2px] text-[#15252b]">{earnedReward.code}</span>
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 16 16">
+                      <path d={svgPaths.p216f800} opacity="0.2" stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+                      <path d={svgPaths.p13e4b3c0} opacity="0.2" stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+                    </svg>
+                  </div>
+                  {copied && (
+                    <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-[#15252b]/90 text-sm font-semibold text-white">
+                      СКОПИРОВАНО!
+                    </div>
+                  )}
+                </button>
+              </div>
+            )}
+
+            <div className={`flex flex-col gap-3 ${gameOverCooldown ? 'pointer-events-none opacity-70' : ''}`}>
+              <button
+                type="button"
+                onClick={onRestart}
+                disabled={gameOverCooldown}
+                data-name="button.w-full"
+                className="w-full rounded-[12px] px-6 py-3 text-[16px] leading-6 font-medium text-white"
+                style={{
+                  background:
+                    'radial-gradient(408.24% 368.51% at 67.25% 87.2%, #FF0000 0%, rgba(255, 92, 0, 0) 100%), #FF5C00',
+                  boxShadow: '0px 4px 20px rgba(255, 44, 0, 0.4)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }}
+              >
+                Сыграть ещё раз
+              </button>
+              <button
+                type="button"
+                onClick={onOpenLeaderboard}
+                disabled={gameOverCooldown}
+                data-name="button.w-full"
+                className="flex w-full items-center justify-center gap-2 rounded-[12px] border border-white/10 bg-[#b4d3ff] px-6 py-3 text-[14px] leading-5 font-medium text-[#15252b]"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 16 16">
+                  <path d={svgPaths.p10a7d900} stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+                  <path d="M3.33333 14H12.6667" stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+                </svg>
+                Посмотреть рейтинг игроков
+              </button>
             </div>
           </div>
         </div>
