@@ -105,6 +105,33 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
       boxShadow: '0px 4px 20px rgba(255, 44, 0, 0.4)',
       border: '1px solid rgba(255,255,255,0.1)',
     };
+    const secondaryButtonStyle: React.CSSProperties = {
+      border: '1px solid rgba(255,255,255,0.1)',
+      background: '#B4D3FF',
+      boxShadow: '2px 2px 12px rgba(0,0,0,0.05)',
+    };
+    const startOverlayStyle: React.CSSProperties = {
+      position: 'absolute',
+      inset: 0,
+      zIndex: 50,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      background: 'rgba(0, 0, 0, 0.7)',
+      backdropFilter: 'blur(4px)',
+      padding: 'max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom))',
+      overflowY: 'auto',
+    };
+    const startCardStyle: React.CSSProperties = {
+      width: '100%',
+      maxWidth: 448,
+      margin: 'auto 0',
+      borderRadius: 16,
+      background: '#f2f5f6',
+      boxShadow: '0px 25px 50px -12px rgba(0,0,0,0.25)',
+      padding: 20,
+    };
 
     const renderRulesModal = () =>
       showParticipationRules ? (
@@ -134,20 +161,23 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
         <div
           data-overlay="start-step1"
           className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto"
+          style={startOverlayStyle}
         >
-          <div className="my-auto w-full max-w-md rounded-2xl bg-[#f2f5f6] p-5 sm:p-6 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+          <div className="my-auto w-full max-w-md rounded-2xl bg-[#f2f5f6] p-5 sm:p-6 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]" style={startCardStyle}>
             <div className="mb-4 text-center">
-              <p className="text-[14px] leading-5 font-medium text-[#15252b]">Рамадан — время заботы и добрых дел</p>
+              <p className="text-[14px] leading-5 font-medium text-[#15252b]" style={{ color: '#15252b', fontSize: 14, lineHeight: '20px', fontWeight: 500 }}>
+                Рамадан — время заботы и добрых дел
+              </p>
               <h1
                 data-name="h1.relative"
                 className="mt-2 text-[42px] leading-[40px] font-medium text-[#ff2c00]"
-                style={{ letterSpacing: '-0.75px' }}
+                style={{ letterSpacing: '-0.75px', color: '#ff2c00', fontSize: 'clamp(40px, 12vw, 56px)', lineHeight: 0.95, fontWeight: 500 }}
               >
                 Башня доброты
               </h1>
             </div>
 
-            <div className="mb-5 space-y-2 text-center text-[14px] leading-[20px] text-[#15252b]">
+            <div className="mb-5 space-y-2 text-center text-[14px] leading-[20px] text-[#15252b]" style={{ color: '#15252b', fontSize: 14, lineHeight: '20px' }}>
               <p>Эта игра — ваш небольшой, но значимый вклад.</p>
               <p>Постройте ровную и высокую башню из коробок и зарабатывайте баллы.</p>
               <p>В конце месяца Рамадан все набранные баллы будут направлены на благотворительные цели.</p>
@@ -162,9 +192,9 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                 onClick={() => setOnboardingStep(2)}
                 data-name="button.w-full"
                 className="w-full rounded-[12px] px-6 py-4 text-white"
-                style={primaryButtonStyle}
+                style={{ ...primaryButtonStyle, color: '#ffffff', borderRadius: 12, padding: '16px 24px' }}
               >
-                <span className="flex items-center justify-center gap-2 text-[18px] leading-7 font-medium">
+                <span className="flex items-center justify-center gap-2 text-[18px] leading-7 font-medium" style={{ color: '#ffffff', fontSize: 18, lineHeight: '28px', fontWeight: 500 }}>
                   <span data-name="Frame" className="inline-flex h-5 w-5 shrink-0 items-center justify-center">
                     <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
                       <path d={svgPaths.p1d055380} fill="white" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
@@ -179,8 +209,9 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                 onClick={onOpenLeaderboard}
                 data-name="button.mt-4"
                 className="w-full rounded-[12px] border border-white/10 bg-[#b4d3ff] px-4 py-[13px] shadow-[2px_2px_12px_rgba(0,0,0,0.05)]"
+                style={{ ...secondaryButtonStyle, borderRadius: 12, padding: '13px 16px' }}
               >
-                <span className="flex items-center justify-center gap-2 text-[14px] leading-5 font-medium text-[#15252b]">
+                <span className="flex items-center justify-center gap-2 text-[14px] leading-5 font-medium text-[#15252b]" style={{ color: '#15252b', fontSize: 14, lineHeight: '20px', fontWeight: 500 }}>
                   <span data-name="Frame" className="inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center">
                     <svg width="18" height="18" fill="none" viewBox="0 0 18 18">
                       <path d={svgPaths.p34d63080} stroke="#15252B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
@@ -196,6 +227,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                 onClick={() => setShowParticipationRules(true)}
                 data-name="button.mt-3"
                 className="w-full bg-transparent text-center text-xs leading-4 text-[#15252B]"
+                style={{ color: '#15252B', fontSize: 12, lineHeight: '16px' }}
               >
                 Правила участия
               </button>
@@ -210,11 +242,16 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
       <div
         data-overlay="start-step2"
         className="absolute inset-0 z-50 flex flex-col items-center justify-start bg-black/70 backdrop-blur-sm p-4 sm:p-6 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto"
+        style={startOverlayStyle}
       >
-        <div className="my-auto w-full max-w-md rounded-2xl bg-[#f2f5f6] p-5 sm:p-6 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+        <div className="my-auto w-full max-w-md rounded-2xl bg-[#f2f5f6] p-5 sm:p-6 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]" style={startCardStyle}>
           <div className="mb-4 text-center">
-            <p className="text-[10px] leading-[15px] tracking-[1px] uppercase text-[#15252b]">Шаг 2 из 2</p>
-            <h2 className="mt-2 text-[24px] leading-8 font-medium text-[#15252b]">Правила и награды</h2>
+            <p className="text-[10px] leading-[15px] tracking-[1px] uppercase text-[#15252b]" style={{ color: '#15252b', fontSize: 10, lineHeight: '15px', letterSpacing: 1 }}>
+              Шаг 2 из 2
+            </p>
+            <h2 className="mt-2 text-[24px] leading-8 font-medium text-[#15252b]" style={{ color: '#15252b', fontSize: 24, lineHeight: '32px', fontWeight: 500 }}>
+              Правила и награды
+            </h2>
           </div>
 
           <div className="mb-3 rounded-xl bg-[#b4d3ff] p-4 shadow-[2px_2px_12px_rgba(0,0,0,0.05)]">
@@ -249,9 +286,9 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
               onClick={onStart}
               data-name="button.w-full"
               className="w-full rounded-[12px] px-6 py-4 text-white"
-              style={primaryButtonStyle}
+              style={{ ...primaryButtonStyle, color: '#ffffff', borderRadius: 12, padding: '16px 24px' }}
             >
-              <span className="flex items-center justify-center gap-2 text-[18px] leading-7 font-medium">
+              <span className="flex items-center justify-center gap-2 text-[18px] leading-7 font-medium" style={{ color: '#ffffff', fontSize: 18, lineHeight: '28px', fontWeight: 500 }}>
                 <span data-name="Frame" className="inline-flex h-5 w-5 shrink-0 items-center justify-center">
                   <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
                     <path d={svgPaths.p1d055380} fill="white" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66667" />
@@ -266,6 +303,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
               onClick={() => setOnboardingStep(1)}
               data-name="button.mt-4"
               className="w-full rounded-[12px] border border-white/10 bg-[#b4d3ff] px-4 py-[13px] text-[14px] leading-5 font-medium text-[#15252b] shadow-[2px_2px_12px_rgba(0,0,0,0.05)]"
+              style={{ ...secondaryButtonStyle, color: '#15252b', borderRadius: 12, padding: '13px 16px', fontSize: 14, lineHeight: '20px', fontWeight: 500 }}
             >
               Назад
             </button>
