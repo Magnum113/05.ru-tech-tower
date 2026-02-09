@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import AppDesignV2 from './AppDesignV2';
-import DesignShowcase from './components/DesignShowcase';
-import DesignShowcaseV2 from './components/DesignShowcaseV2';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -11,19 +9,13 @@ if (!rootElement) {
 }
 
 const pathname = window.location.pathname.replace(/\/+$/, '');
-const isDesignPage = pathname === '/pagefordesign';
-const isDesignPageV2 = pathname === '/pagefordesign2';
 const isGameNewDesign2 = pathname === '/gamenewdesign2';
 const isOldV1 = pathname === '/oldv1';
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    {isDesignPage ? (
-      <DesignShowcase />
-    ) : isDesignPageV2 ? (
-      <DesignShowcaseV2 />
-    ) : isOldV1 ? (
+    {isOldV1 ? (
       <App />
     ) : isGameNewDesign2 ? (
       <AppDesignV2 />
