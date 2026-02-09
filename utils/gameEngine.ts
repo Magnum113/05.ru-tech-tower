@@ -334,8 +334,9 @@ export class GameEngine {
     }
 
     // Camera Logic
-    // Keep the top of the stack a little lower than HUD on the new design overlay.
-    const hudGapOffset = this.boxStyle === 'v2' ? 15 : 0;
+    // Keep the top of the stack below HUD. The new design on mobile has extra top inset.
+    const isMobileViewport = this.canvas.width <= 768;
+    const hudGapOffset = this.boxStyle === 'v2' ? (isMobileViewport ? 30 : 15) : 0;
     const targetY = (this.blocks.length * this.getStackStep()) - (this.canvas.height / 2) + hudGapOffset;
     const safeTargetY = Math.max(0, targetY);
     if (safeTargetY > this.cameraY) {
