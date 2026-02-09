@@ -1,3 +1,20 @@
 {
-  "rewrites": []
+  "rewrites": [
+    {
+      "source": "/vue-preview",
+      "destination": "/vue-preview/index.html"
+    },
+    {
+      "source": "/vue-preview/",
+      "destination": "/vue-preview/index.html"
+    },
+    {
+      "source": "/vue-preview/_nuxt/(.*)",
+      "destination": "/vue-preview/_nuxt/$1"
+    },
+    {
+      "source": "/vue-preview/(.*)",
+      "destination": "/vue-preview/index.html"
+    }
+  ]
 }

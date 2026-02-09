@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:root": "vite build",
+    "build:vue-preview": "npm --prefix vue-preview install --legacy-peer-deps && npm --prefix vue-preview run generate",
+    "build": "npm run build:root && npm run build:vue-preview",
     "preview": "vite preview"
   },
   "dependencies": {
