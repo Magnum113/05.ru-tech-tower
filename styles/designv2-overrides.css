@@ -179,10 +179,7 @@
   .designv2 [data-overlay="progress"] {
     position: absolute;
     top: calc(env(safe-area-inset-top) + 90px);
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 20;
-    width: min(92vw, 560px);
     pointer-events: none;
     background: #15252b;
   }
