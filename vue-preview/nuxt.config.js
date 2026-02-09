@@ -16,20 +16,15 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' }
     ]
   },
-  css: ['~/assets/css/main.pcss'],
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/composition-api/module',
     '@nuxt/postcss8',
-    '@nuxtjs/tailwindcss'
+    ['@nuxtjs/tailwindcss', {
+      cssPath: '~/assets/css/main.pcss',
+      configPath: '~/tailwind.config.js'
+    }]
   ],
-  postcss: {
-    plugins: {
-      'postcss-import': {},
-      tailwindcss: {},
-      autoprefixer: {}
-    }
-  },
   build: {
     transpile: [
       '@supabase/supabase-js',
