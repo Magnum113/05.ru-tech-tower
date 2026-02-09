@@ -14,6 +14,7 @@ const pathname = window.location.pathname.replace(/\/+$/, '');
 const isDesignPage = pathname === '/pagefordesign';
 const isDesignPageV2 = pathname === '/pagefordesign2';
 const isGameNewDesign2 = pathname === '/gamenewdesign2';
+const isOldV1 = pathname === '/oldv1';
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
@@ -22,10 +23,12 @@ root.render(
       <DesignShowcase />
     ) : isDesignPageV2 ? (
       <DesignShowcaseV2 />
+    ) : isOldV1 ? (
+      <App />
     ) : isGameNewDesign2 ? (
       <AppDesignV2 />
     ) : (
-      <App />
+      <AppDesignV2 />
     )}
   </React.StrictMode>
 );
