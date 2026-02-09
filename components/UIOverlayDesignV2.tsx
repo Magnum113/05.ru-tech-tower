@@ -53,8 +53,6 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
   const activePromoCode = earnedReward?.code ?? null;
   const totalGoal = PROMO_REWARDS[PROMO_REWARDS.length - 1]?.score ?? 0;
   const overallProgress = totalGoal > 0 ? Math.min(1, score.current / totalGoal) : 0;
-  const hudTopOffset = 'calc(env(safe-area-inset-top, 0px) + 10px)';
-  const progressTopOffset = 'calc(env(safe-area-inset-top, 0px) + 90px)';
   const segmentCount = PROMO_REWARDS.length;
   const segmentProgress = (index: number) => {
     if (!totalGoal || segmentCount === 0) return 0;
@@ -90,11 +88,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
   }, [gameState]);
 
   const renderHUD = () => (
-    <div
-      data-overlay="hud"
-      className="absolute left-0 z-20 flex w-full items-start justify-between pointer-events-none"
-      style={{ top: hudTopOffset, paddingLeft: 16, paddingRight: 16 }}
-    >
+    <div data-overlay="hud" className="absolute top-0 left-0 z-20 flex w-full items-start justify-between p-4 pointer-events-none">
       <div className="flex flex-col">
         <span className="text-[12px] font-['PP_Right_Grotesk:Bold',sans-serif] uppercase text-[rgba(255,255,255,0.6)] leading-[16px]">
           Этаж
@@ -174,7 +168,7 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
                 <strong>Правила участия в промо-игре «Башня доброты»</strong>
               </p>
               <div className="max-h-[55vh] overflow-y-auto pr-1">
-                <ol className="list-decimal space-y-2 pl-5">
+                <ol className="list-decimal list-inside space-y-2 pl-1">
                   {participationRules.map((rule) => (
                     <li key={rule}>{rule}</li>
                   ))}
@@ -623,8 +617,8 @@ const UIOverlayDesignV2: React.FC<UIOverlayDesignV2Props> = ({
         {renderHUD()}
         <div
           data-overlay="progress"
-          className="absolute left-1/2 -translate-x-1/2 z-20 w-[min(92vw,560px)] pointer-events-none bg-[#15252B]"
-          style={{ backgroundColor: '#15252B', top: progressTopOffset }}
+          className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[min(92vw,560px)] pointer-events-none bg-[#15252B]"
+          style={{ backgroundColor: '#15252B' }}
         >
           {nextReward ? (
             <div className="backdrop-blur-[4px] bg-[#15252B] relative rounded-[16px] shrink-0 w-full" data-name="div.rounded-2xl">

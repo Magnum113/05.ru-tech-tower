@@ -165,7 +165,7 @@
 
   .designv2 [data-overlay="hud"] {
     position: absolute;
-    top: 0;
+    top: env(safe-area-inset-top);
     left: 0;
     z-index: 20;
     width: 100%;
@@ -178,7 +178,7 @@
 
   .designv2 [data-overlay="progress"] {
     position: absolute;
-    top: 80px;
+    top: calc(env(safe-area-inset-top) + 80px);
     left: 50%;
     transform: translateX(-50%);
     z-index: 20;

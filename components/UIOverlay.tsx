@@ -166,7 +166,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ gameState, score, onStart, onRest
                     <strong>Правила участия в промо-игре «Башня доброты»</strong>
                   </p>
                   <div className="max-h-[55vh] overflow-y-auto pr-1">
-                    <ol className="list-decimal space-y-2 pl-5">
+                    <ol className="list-decimal list-inside space-y-2 pl-1">
                       {participationRules.map((rule) => (
                         <li key={rule}>{rule}</li>
                       ))}
